@@ -12,6 +12,11 @@ public class RequestCtrl {
     @Autowired
     CardDao cardDao;
 
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
+
     @RequestMapping(value = {"/view"}, method = RequestMethod.GET)
     public String viewCard(Model model) {
         model.addAttribute("card", cardDao.getRandomCard());
