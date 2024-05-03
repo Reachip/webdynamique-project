@@ -1,10 +1,9 @@
+const cardURL = 'http://tp.cpe.fr:8083/cards'
+const method = 'GET'
+const headers = {'Content-Type': 'application/json'}
+
 document.addEventListener("DOMContentLoaded",  function () {
-    fetch('http://tp.cpe.fr:8083/cards', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => {
+    fetch(cardURL, {method, headers}).then(response => {
         if (!response.ok) {
             throw new Error(response.status + ' ' + response.statusText);
         }
