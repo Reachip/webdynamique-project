@@ -19,19 +19,12 @@ import java.util.Random;
 public class CardDao {
     @Autowired
     private RequestService requestService;
-
-    @Value("${url.card}")
-    private String cardURL;
-
     private final List<Card> cardList = new ArrayList<>();
     private final Random randomGenerator = new Random();
-    private final URL url = new URL(cardURL);
+    private final URL url = new URL("http://tp.cpe.fr:8083/cards");
+    public CardDao() throws MalformedURLException {}
 
-    public CardDao() throws MalformedURLException {
-        createCardList();
-    }
-
-    private void createCardList() {
+    public void createCardList() {
         try {
             JSONArray jsonArray = requestService.getObjects(url);
 
