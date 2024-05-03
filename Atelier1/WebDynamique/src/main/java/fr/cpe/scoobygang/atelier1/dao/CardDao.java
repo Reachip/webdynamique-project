@@ -1,11 +1,11 @@
 package fr.cpe.scoobygang.atelier1.dao;
 
 import fr.cpe.scoobygang.atelier1.model.Card;
+import fr.cpe.scoobygang.atelier1.model.CardFormDto;
 import fr.cpe.scoobygang.atelier1.service.RequestService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -43,9 +43,10 @@ public class CardDao {
         return cardList.get(index);
     }
 
-    public Card addCard(String name, String description, String imgUrl, String family, String affinity, int hp, int energy, double attack, double defence) {
-        Card c = new Card(name, description, family, affinity, imgUrl, imgUrl, hp, energy, attack, defence, attack, defence, 1);
-        cardList.add(c);
-        return c;
+    public Card addCard(CardFormDto cardFormDto) {
+        Card card = Card.fromDTO(cardFormDto);
+        cardList.add(card);
+
+        return card;
     }
 }

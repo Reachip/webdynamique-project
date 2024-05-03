@@ -41,7 +41,7 @@ public class RequestCtrl {
     // Add a card action
     @RequestMapping(value = {"/addCard"}, method = RequestMethod.POST)
     public String addCard(Model model, @ModelAttribute("cardForm") CardFormDto cardFormDto) {
-        Card card = cardDao.addCard(cardFormDto.getName(), cardFormDto.getDescription(), cardFormDto.getImgUrl(), cardFormDto.getFamily(), cardFormDto.getAffinity(), cardFormDto.getHp(), cardFormDto.getEnergy(), cardFormDto.getAttack(), cardFormDto.getDefence());
+        Card card = cardDao.addCard(cardFormDto);
         model.addAttribute("card", card);
         return "cardView";
     }

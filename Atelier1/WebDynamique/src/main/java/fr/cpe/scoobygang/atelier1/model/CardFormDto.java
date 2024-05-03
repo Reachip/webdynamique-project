@@ -16,7 +16,6 @@ public class CardFormDto {
     private int attack;
     private int defence;
 
-
     public CardFormDto() {
         this.name = "";
         this.description = "";
@@ -27,18 +26,5 @@ public class CardFormDto {
         this.energy = 0;
         this.attack = 0;
         this.defence = 0;
-    }
-
-    public CardFormDto(String name, String description, String imgUrl, String family, String affinity, int hp, int energy, int attack, int defence)
-    {
-        this.name = name;
-        this.description = description;
-        this.imgUrl = imgUrl;
-        this.family = family;
-        this.affinity = affinity;
-        this.hp = hp;
-        this.energy = energy;
-        this.attack = attack;
-        this.defence = defence;
     }
 }
