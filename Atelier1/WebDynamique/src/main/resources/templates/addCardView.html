@@ -5,6 +5,9 @@
     <title>AddCard</title>
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}">
+    <h1> THIS IS A DEFAULT HEADER</h1>
+</div>
 <form class="ui form"
       th:action="@{/addCard}"
       th:object="${cardForm}" method="POST">

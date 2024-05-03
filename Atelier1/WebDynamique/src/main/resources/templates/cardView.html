@@ -7,6 +7,9 @@
 
 </head>
 <body>
+<div th:replace="~{fragments/header :: header}">
+    <h1> THIS IS A DEFAULT HEADER</h1>
+</div>
 <a href="/view">Voir une nouvelle carte</a>
 <div>
     <p>Id : <span th:utext="${card.id}">...</span></p>
