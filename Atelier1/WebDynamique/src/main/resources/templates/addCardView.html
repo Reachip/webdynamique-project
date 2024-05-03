@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>AddCard</title>
+</head>
+<body>
+<form class="ui form"
+      th:action="@{/addCard}"
+      th:object="${cardForm}" method="POST">
+    <h3 class="ui dividing header">Add User Information</h3>
+    <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Name" th:field="*{name}">
+    </div>
+    <div class="field">
+        <label>Description</label>
+        <input type="text" name="description" placeholder="Description" th:field="*{description}">
+    </div>
+    <div class="field">
+        <label>Image Url</label>
+        <input type="url" name="imageUrl" placeholder="Image Url" th:field="*{imgUrl}">
+    </div>
+    <div class="field">
+        <label>Family</label>
+        <select name="family">
+            <option></option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Affinity</label>
+        <select name="affinity">
+            <option></option>
+        </select>
+    </div>
+    <div class="field">
+        <label>Hp</label>
+        <input type="range" name="hp" min="0" max="100" step="1" value="0">
+    </div>
+    <div class="field">
+        <label>Energy</label>
+        <input type="range" name="energy" min="0" max="100" step="1" value="0">
+    </div>
+    <div class="field">
+        <label>Attack</label>
+        <input type="range" name="attack" min="0" max="100" step="1" value="0">
+    </div>
+    <div class="field">
+        <label>Defence</label>
+        <input type="range" name="defence" min="0" max="100" step="1" value="0">
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+</form>
+</body>
+</html>

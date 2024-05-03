@@ -40,6 +40,12 @@ public class CardDao {
         return myCardList.get(index);
     }
 
+    public Card addCard(String name, String description, String imgUrl, String family, String affinity, int hp, int energy, double attack, double defence) {
+        Card c = new Card(name, description, family, affinity, imgUrl, imgUrl, hp, energy, attack, defence, attack, defence, 1);
+        this.myCardList.add(c);
+        return c;
+    }
+
     public List<Card> getPoneyList() {
         return this.myCardList;
     }
