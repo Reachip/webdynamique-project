@@ -1,50 +1,91 @@
 package fr.cpe.scoobygang.atelier1.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 @Service
 public class CardDao {
 
+    private List<Card> cardList;
+    private Random randomGenerator;
+
     public CardDao() {
-        myCardList=new ArrayList<>();
+        cardList = new ArrayList<>();
         randomGenerator = new Random();
         createCardList();
     }
 
     private void createCardList() {
-        Card c1 = new Card("name0", "description0", "family0", "affinity0", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg", "https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg", 1, 100, 63.503258, 74.43771, 2.9160202, 4817.1396, 1);
-        Card c2 = new Card("name0", "description0", "family0", "affinity0", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg", "https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg", 3, 100, 94.67086, 79.005554, 24.894882, 5971.426, 1);
-        Card c3 = new Card("name6", "description6", "family6", "affinity6", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg", "https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg", 4, 100, 92.69412, 45.615788, 63.227768, 6030.754, 1);
-        Card c4 = new Card("name0", "description0", "family0", "affinity0", "http://medias.3dvf.com/news/sitegrab/gits2045.jpg", "https://cdn.animenewsnetwork.com/thumbnails/fit600x1000/cms/feature/89858/05.jpg", 5, 100, 74.20037, 73.58286, 49.75799, 5950.824, 1);
-        Card c5 = new Card("string", "string", "string", "string", "string", "string", 6, 0, 0, 0, 0, 0, null);
-        Card c6 = new Card("string", "string", "string", "string", "string", "string", 7, 0, 0, 0, 0, 0, null);
-        Card c7 = new Card("string", "string", "string", "string", "string", "string", 8, 0, 0, 0, 0, 0, null);
 
-        myCardList.add(c1);
-        myCardList.add(c2);
-        myCardList.add(c3);
-        myCardList.add(c4);
-        myCardList.add(c5);
-        myCardList.add(c6);
-        myCardList.add(c7);
+        try {
+            URL url = new URL("http://tp.cpe.fr:8083/cards");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
+            if (conn.getResponseCode() != 200) {
+                throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String output;
+            String response = "";
+
+            while ((output = br.readLine()) != null) {
+                response += output;
+            }
+
+            conn.disconnect();
+
+            JSONArray jsonArray = new JSONArray(response);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                String name = jsonObject.isNull("name") ? "" : jsonObject.getString("name");
+                String description = jsonObject.isNull("description") ?"" : jsonObject.getString("description");
+                String family = jsonObject.isNull("family") ? "" :jsonObject.getString("family");
+                String affinity = jsonObject.isNull("affinity") ? "" :jsonObject.getString("affinity");
+                String imgUrl = jsonObject.isNull("imgUrl") ? "" :jsonObject.getString("imgUrl");
+                String smallImgUrl = jsonObject.isNull("smallImgUrl") ?"" : jsonObject.getString("smallImgUrl");
+                int id = jsonObject.isNull("id") ? 0 :jsonObject.getInt("id");
+                int energy = jsonObject.isNull("energy") ?0: jsonObject.getInt("energy");
+                double hp = jsonObject.isNull("hp") ? 0:jsonObject.getDouble("hp");
+                double defence = jsonObject.isNull("defence") ?0: jsonObject.getDouble("defence");
+                double attack = jsonObject.isNull("attack") ? 0:jsonObject.getDouble("attack");
+                double price = jsonObject.isNull("price") ? 0:jsonObject.getDouble("price");
+                int userId = jsonObject.isNull("userId") ? 0 : jsonObject.getInt("userId");
+
+
+                Card card = new Card(name, description, family, affinity, imgUrl, smallImgUrl, id, energy, hp, defence, attack, price, userId);
+                cardList.add(card);
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    private List<Card> myCardList;
-    private Random randomGenerator;
-    public Card getRandomCard(){
-        int index=randomGenerator.nextInt(myCardList.size());
-        return myCardList.get(index);
+    public Card getRandomCard() {
+        int index = randomGenerator.nextInt(cardList.size());
+        return cardList.get(index);
     }
-
-    public List<Card> getPoneyList() {
-        return this.myCardList;
-    }
-
-
-
 
 }

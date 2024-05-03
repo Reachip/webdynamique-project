@@ -14,7 +14,7 @@ public class RequestCtrl {
 
     @RequestMapping(value = {"/view"}, method = RequestMethod.GET)
     public String viewCard(Model model) {
-        model.addAttribute("myCard", cardDao.getRandomCard());
+        model.addAttribute("card", cardDao.getRandomCard());
         return "cardView";
     }
 }

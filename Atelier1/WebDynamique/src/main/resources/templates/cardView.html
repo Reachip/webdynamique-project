@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+</head>
+<body>
+<div>
+    <p th:utext="${card.id}">...</p>
+    <h3 th:utext="${card.name}">...</h3>
+    <p th:utext="${card.description}">...</p>
+    <p th:utext="${card.energy}">...</p>
+    <p th:utext="${card.hp}">...</p>
+    <img th:src="${card.imgUrl}" alt="">
+
+</div>
+</body>
+
+</html>
