@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier1.controller;
 
-import fr.cpe.scoobygang.atelier1.service.CardDao;
+import fr.cpe.scoobygang.atelier1.dao.CardDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

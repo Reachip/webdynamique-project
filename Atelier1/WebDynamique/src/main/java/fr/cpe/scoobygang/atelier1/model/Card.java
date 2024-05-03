@@ -1,6 +1,5 @@
 package fr.cpe.scoobygang.atelier1.model;
 
-import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
