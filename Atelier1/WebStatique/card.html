@@ -15,78 +15,33 @@
     </head>
 
     <body>
-        <div class="ui pointing menu">
-            <a class="item">
-                Home
-            </a>
-            <a class="item">
-                Messages
-            </a>
-            <a class="item active">
-                Friends
-            </a>
-            <div class="right menu">
-                <div class="item">
-                    <div class="ui transparent icon input">
-                        <input type="text" placeholder="Search...">
-                        <i class="search link icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="ui segment">
-            <div class="ui five column grid" id="gridContainer">
-                <div class="column">1</div>
-                <template id="selectedCard">
-                    <div class="column">   
-                        <div class="ui special cards">
-                            <div class="card">
-                                <div class="content">
-                                    <div class="right floated meta">{{date}}</div>
-                                    <img class="ui avatar image" src={{family_src}}> {{family_name}}
-                                </div>
-                                <div class="image imageCard">
-                                    <div class="blurring dimmable image">
-                                        <div class="ui inverted dimmer">
-                                            <div class="content">
-                                                <div class="center">
-                                                    <div class="ui primary button">Add Friend</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="ui centered tiny  image" src={{image_src}}>
-                                    </div>
-                                </div>
-                                <div class="content">
-                                    <span class="right floated">
-                                        <i class="heart outline like icon"></i>
-                                        {{like}}
-                                    </span>
-                                    <i class="comment icon"></i>
-                                    {{comment}}
-                                </div>
-                                <div class="extra content">
-                                    <div class="ui large transparent left icon input">
-                                        <i class="heart outline icon"></i>
-                                        <input type="text" placeholder="Add Comment...">
-                                    </div>
-                                </div>
-                                <div class="ui bottom attached button">
-                                    <i class="add icon"></i>
-                                    {{button}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
+            <template id="card-template"> 
+                <div id="card-container" class="content">
+                    <div id="name">{{name}}</div>
+                    <div id="description">{{description}}</div>
+                    <div id="family">{{family}}</div>
+                    <div id="affinity">{{affinity}}</div>
+                    <img id="imgUrl" src="{{imgUrl}}">
+                    <img id="smallImgUrl" src="{{smallImgUrl}}">
+                    <div id="id">{{id}}</div>
+                    <div id="energy">{{energy}}</div>
+                    <div id="hp">{{hp}}</div>
+                    <div id="defence">{{defence}}</div>
+                    <div id="attack">{{attack}}</div>
+                    <div id="price">{{price}}</div>
+                    <div id="userId">{{userId}}</div>
+                </div>
+            </template>
+            
+            <div id="card-container" class="content">
             </div>
         </div>
-    
 
         <script src="../lib/jquery-3.3.1.min.js"></script>
         <script src="../lib/Semantic-UI-CSS-master/semantic.js"></script>
         <script src="js/animation-custom.js"></script> 
-        <script src="js/card.js"></script> 
+        <script src="js/getCard.js"></script> 
 
     </body>
 </html>

@@ -1,3 +1,3 @@
-$('.special.cards .image').dimmer({
-  on: 'hover'
-});
+// $('.special.cards .image').dimmer({
+//   on: 'hover'
+// });
