@@ -1,8 +1,9 @@
 package fr.cpe.scoobygang.atelier1.controller;
 
 import fr.cpe.scoobygang.atelier1.model.Card;
-import fr.cpe.scoobygang.atelier1.model.CardDao;
 import fr.cpe.scoobygang.atelier1.model.CardFormDto;
+import fr.cpe.scoobygang.atelier1.dao.CardDao;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +14,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class RequestCtrl {
     @Autowired
-    CardDao cardDao;
+    private CardDao cardDao;
+    @PostConstruct
+    public void init() {
+        cardDao.createCardList();
+    }
+
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+    public String index() {
+        return "index";
+    }
 
     @RequestMapping(value = {"/view"}, method = RequestMethod.GET)
     public String viewCard(Model model) {
-        model.addAttribute("myCard", cardDao.getRandomCard());
+        model.addAttribute("card", cardDao.getRandomCard());
         return "cardView";
     }
 
