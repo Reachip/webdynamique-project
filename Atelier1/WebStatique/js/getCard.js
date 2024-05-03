@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded",  function () {
     fetch('http://tp.cpe.fr:8083/cards', {
         method: 'GET',
         headers: {
@@ -12,9 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
         .then(data => {
             const randomCard = selectRandomCard(data);
-            
-            let template = document.querySelector("#card-template");
-            let clone = document.importNode(template.content, true);
+            const template = document.querySelector("#card-template");
+            const clone = document.importNode(template.content, true);
 
             newContent = clone.firstElementChild.innerHTML
                 .replace(/{{name}}/g, randomCard.name)
@@ -33,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             clone.firstElementChild.innerHTML = newContent;
         
-            let cardContainer= document.querySelector("#card-container");
+            const cardContainer= document.querySelector("#card-container");
             cardContainer.appendChild(clone);
         })
         .catch(error => {
@@ -44,5 +43,4 @@ document.addEventListener('DOMContentLoaded', function () {
         const randomIndex = Math.floor(Math.random() * cards.length);
         return cards[randomIndex];
     }
-
 });
