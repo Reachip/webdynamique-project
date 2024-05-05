@@ -15,7 +15,12 @@
     <p>Id : <span th:utext="${card.id}">...</span></p>
     <h3 th:utext="${card.name}">...</h3>
     <p>Description : <span th:utext="${card.description}">...</span></p>
-    <p>Energy : <span th:utext="${card.energy}">...</span></p>
+    <p>Énergie : <span th:utext="${card.energy}">...</span></p>
+    <p>Famille : <span th:utext="${card.family}">...</span></p>
+    <p>Affinité : <span th:utext="${card.affinity}">...</span></p>
+    <p>Defense : <span th:utext="${card.defence}">...</span></p>
+    <p>Attaque : <span th:utext="${card.attack}">...</span></p>
+    <p>Prix : <span th:utext="${card.price}">...</span> €</p>
     <p><span th:utext="${card.hp}">...</span> HP</p>
     <img th:src="${card.imgUrl}" alt="">
 
