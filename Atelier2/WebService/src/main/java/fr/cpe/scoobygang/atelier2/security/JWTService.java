@@ -7,10 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-<<<<<<< HEAD
 import java.util.Optional;
-=======
->>>>>>> feature/buyCard
+
 
 @Service
 public class JWTService {
@@ -29,7 +27,6 @@ public class JWTService {
         return new JWT(token);
     }
 
-<<<<<<< HEAD
     public Optional<JWT> fromAuthorization(String authorizationString) {
         try {
             String token = authorizationString.split(" ")[1];
@@ -50,13 +47,6 @@ public class JWTService {
             Jwts.parser()
                     .setSigningKey(JWT_SECRET)
                     .parseClaimsJws(jwt.getToken())
-=======
-    public boolean isOk(String jwt) {
-        try {
-            Jwts.parser()
-                    .setSigningKey(JWT_SECRET)
-                    .parseClaimsJws(jwt)
->>>>>>> feature/buyCard
                     .getBody();
             return true;
         } catch (Exception why) {
