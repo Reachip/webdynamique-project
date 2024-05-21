@@ -35,7 +35,7 @@ public class CardService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        card.setUserId(userId);
+        card.setOwner(user);
         user.getCards().add(card);
 
         cardRepository.save(card);
@@ -72,5 +72,4 @@ public class CardService {
     public void saveCards(List<Card> cards) {
         cardRepository.saveAll(cards);
     }
-
 }

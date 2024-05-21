@@ -9,9 +9,10 @@ import org.json.JSONObject;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "cards")
 public class Card {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String description;
@@ -24,7 +25,6 @@ public class Card {
     private double defence;
     private double attack;
     private double price;
-    private Integer userId;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

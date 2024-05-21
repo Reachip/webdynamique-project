@@ -6,8 +6,9 @@ import jakarta.annotation.PostConstruct;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,11 +24,15 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
+    public Resource loadCards() {
+        return new ClassPathResource("card.json");
+    }
+
     @PostConstruct
-    public void init (){
+    public void init() {
         List<Card> cards = new ArrayList<>();
         try {
-            File file = ResourceUtils.getFile("classpath: /ressources/card.json" );
+            File file = loadCards().getFile();
             String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
             JSONArray jsonArray = new JSONArray(content);
 
