@@ -22,6 +22,7 @@ public class User {
     private String name;
     private String surname;
     private String password;
+    private double balance;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards;
