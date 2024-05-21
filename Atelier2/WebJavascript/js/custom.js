@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const balanceBadge = document.createElement("div");
   balanceBadge.classList.add("header-badge");
-  balanceBadge.innerHTML = "Solde: 100$";
+  balanceBadge.innerHTML = "Solde: 100,00 €";
   
   headerBadgesContainer.appendChild(usernameBadge);
   headerBadgesContainer.appendChild(balanceBadge);
