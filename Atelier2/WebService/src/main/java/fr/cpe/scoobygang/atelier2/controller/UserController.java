@@ -1,6 +1,8 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.controller.request.LoginRequest;
+import fr.cpe.scoobygang.atelier2.request.LoginRequest;
+import fr.cpe.scoobygang.atelier2.request.UserRequest;
+import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
@@ -24,8 +26,8 @@ public class UserController {
     }
 
     @PostMapping(value="/register")
-    public void addHero(@RequestBody User user) {
-        userService.addUser(user);
+    public void addHero(@RequestBody UserRequest user) {
+        userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
     }
 
     @PostMapping(value = "/login")

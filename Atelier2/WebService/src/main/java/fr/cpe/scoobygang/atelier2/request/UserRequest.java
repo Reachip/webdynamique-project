@@ -1,11 +1,12 @@
-package fr.cpe.scoobygang.atelier2.controller.request;
+package fr.cpe.scoobygang.atelier2.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-public class LoginRequest {
+@Getter
+public class UserRequest {
+    private String name;
     private String surname;
     private String password;
 }
