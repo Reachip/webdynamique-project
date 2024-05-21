@@ -26,3 +26,15 @@ body{
 .overflowHiden{
     overflow:  auto;
 }
+
+.label {
+    font-weight: bold;
+}
+
+.image {
+    max-width: 35%;
+}
+
+.image-small {
+    max-width: 15%;
+}
