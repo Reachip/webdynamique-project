@@ -36,11 +36,8 @@ public class UserController {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (!jwtService.isOk(jwt.get()))
             return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok(userService.getAllUsers());
     }
