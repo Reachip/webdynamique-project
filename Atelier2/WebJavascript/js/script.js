@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /* GET LOGGED USER */
   const userToken = localStorage.getItem("scoobycards-user-token");
   fetch("http://127.0.0.1:8080/user", {
-    method: "POST",
+    method: "GET",
     body: JSON.stringify({
       token: userToken
     }),
