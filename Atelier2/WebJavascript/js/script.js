@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (response.ok) {
         response.json().then(data => {
           // On a l'user
+          console.log(user);
         }).catch(error => {
           console.error("Error when parsing JSON:", error);
           localStorage.removeItem("scoobycards-user-token");
