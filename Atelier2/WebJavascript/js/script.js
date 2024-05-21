@@ -1,4 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
+  /* GET LOGGED USER */
+  const userToken = localStorage.getItem("scoobycards-user-token");
+  fetch("http://127.0.0.1:8080/user", {
+    method: "GET",
+    body: JSON.stringify({
+      token: userToken
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  })
+    .then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          // On a l'user
+          console.log(user);
+        }).catch(error => {
+          console.error("Error when parsing JSON:", error);
+          localStorage.removeItem("scoobycards-user-token");
+        });
+      } else {
+        localStorage.removeItem("scoobycards-user-token");
+      }
+    });
+
   /* CREATE HEADER */
   const header = document.createElement("header");
 
@@ -54,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
   usernameBadge.classList.add("badge-primary-dark");
   balanceBadge.innerHTML = "Solde : 100,00 €";
   balanceBadge.classList.add("hidden");
-  
+
   headerBadgesContainer.appendChild(usernameBadge);
   headerBadgesContainer.appendChild(balanceBadge);
 
@@ -64,8 +89,4 @@ document.addEventListener("DOMContentLoaded", function () {
   header.appendChild(navbar);
 
   document.body.insertBefore(header, document.body.firstChild);
-
-  /* GET LOGGED USER */
-  const userToken = localStorage.getItem("scoobycards-user-token");
-  console.log(userToken);
 });
