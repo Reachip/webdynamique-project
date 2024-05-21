@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier2.security;
 import fr.cpe.scoobygang.atelier2.model.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +30,15 @@ public class JWT {
     }
 
     public static boolean isOk(String jwt) {
-        return false;
+        try {
+            Jwts.parser()
+                    .setSigningKey(SECRET)
+                    .parseClaimsJws(jwt)
+                    .getBody();
+            return true;
+        } catch (Exception why) {
+            return false;
+        }
     }
 
     @Override

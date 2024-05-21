@@ -28,17 +28,10 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
-    public List<User> getAllUsers(@RequestHeader(value = "Authorization", required = false) String jwt) {
-        if (JWT.isOk(jwt))
-        return userService.getAllUsers();
-    }
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization", required = false) String jwt) {
+        if (!JWT.isOk(jwt))
+            return ResponseEntity.badRequest().build();
 
-    private boolean isValid(String jwt) {
-        try {
-            Jwts.parser().setSigningKey("secret_key").parseClaimsJws(jwt);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }
