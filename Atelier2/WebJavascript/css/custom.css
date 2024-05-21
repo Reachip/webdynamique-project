@@ -8,8 +8,10 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    padding-top: 80px;
 }
 
+/* LOGIN FORM */
 .form-login-container {
     background-color: #fff;
     padding: 20px;
@@ -55,4 +57,135 @@ body {
 .form-login-container input,
 .form-login-container button {
     box-sizing: border-box;
+}
+
+/* HEADER */
+header {
+    width: 100%;
+    background-color: #007BFF;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 70px;
+}
+
+#content {
+    margin-top: 70px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.logo-title-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1em;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.header-badges-container {
+    display: flex;
+    align-items: center;
+}
+
+.header-badge {
+    font-size: 1em;
+    background-color: #0056b3;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    margin-right: 10px;
+}
+
+/* TABLE */
+table {
+    width: 90vw;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 50px;
+    border-radius: 9px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #007BFF;
+    color: white;
+    font-weight: bold;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+table .button-buy {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+table .button-buy i {
+    margin-right: 8px;
+  }
+  
+table .button-buy:hover {
+    background-color: #0056b3;
+}
+
+table .row-image {
+    max-width: 100px;
+    max-height: 100px;
 }

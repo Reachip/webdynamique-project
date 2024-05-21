@@ -52,7 +52,7 @@ for(const card of cardList){
                 .replace(/{{price}}/g, card.price);
     clone.firstElementChild.innerHTML= newContent;
 
-    let cardContainer= document.querySelector("#tableContent");
+    let cardContainer= document.querySelector("#table-cards-body");
     cardContainer.appendChild(clone);
 }
 
