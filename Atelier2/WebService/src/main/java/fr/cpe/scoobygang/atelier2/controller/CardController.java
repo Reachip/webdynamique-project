@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier2.controller;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.resource.CardResource;
 import fr.cpe.scoobygang.atelier2.service.CardService;
+import fr.cpe.scoobygang.atelier2.service.StoreService;
 import jakarta.annotation.PostConstruct;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,11 +20,14 @@ import java.util.List;
 
 @RestController
 public class CardController {
-    @Autowired
-    private CardService cardService;
-
-    @Autowired
-    private CardResource cardResource;
+    private final CardService cardService;
+    private final CardResource cardResource;
+    private final StoreService storeService;
+    public CardController(CardService cardService, CardResource cardResource, StoreService storeService) {
+        this.cardService = cardService;
+        this.cardResource = cardResource;
+        this.storeService = storeService;
+    }
 
     @PostConstruct
     public void init() {
@@ -35,7 +39,7 @@ public class CardController {
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Card card = jsonObjectToCard(jsonObject);
+                Card card = Card.toCard(jsonObject);
                 cards.add(card);
             }
         } catch (Exception e) {
@@ -44,23 +48,6 @@ public class CardController {
         cardService.saveCards(cards);
     }
 
-    private Card jsonObjectToCard(JSONObject jsonObject) {
-        Card card = new Card();
-        card.setName(jsonObject.getString("name"));
-        card.setDescription(jsonObject.getString("description"));
-        card.setFamily(jsonObject.getString("family"));
-        card.setAffinity(jsonObject.getString("affinity"));
-        card.setImgUrl(jsonObject.getString("imgUrl"));
-        card.setSmallImgUrl(jsonObject.getString("smallImgUrl"));
-        card.setEnergy(jsonObject.getInt("energy"));
-        card.setHp(jsonObject.getDouble("hp"));
-        card.setDefence(jsonObject.getDouble("defence"));
-        card.setAttack(jsonObject.getDouble("attack"));
-        card.setPrice(jsonObject.getDouble("price"));
-        return card;
-    }
-
-    // Afficher toutes cartes disponibles à l'achat
     @GetMapping(value = {"/card/buy"})
     public ResponseEntity<List<Card>> buyCard(){
         return ResponseEntity.ok(cardService.getAllCard());
@@ -68,8 +55,8 @@ public class CardController {
 
     @PostMapping(value = {"/card/buy"})
     public ResponseEntity buyCard(@RequestBody int cardId, int userId){
-        if (cardService.buyCard(cardId,userId)) return ResponseEntity.ok(null);
-        else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        storeService.buyCard(cardId, userId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(value = {"/card/sell"})
@@ -79,7 +66,6 @@ public class CardController {
 
     @PostMapping(value = {"/card/sell"})
     public void sellCard(@RequestBody int cardId, int userId){
-        cardService.sellUserCard(cardId, userId);
+        storeService.sellUserCard(cardId, userId);
     }
-
 }

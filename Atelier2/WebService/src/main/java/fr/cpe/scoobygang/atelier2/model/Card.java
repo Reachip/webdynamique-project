@@ -29,4 +29,22 @@ public class Card {
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User owner;
+
+    public static Card toCard(JSONObject jsonObject) {
+        Card card = new Card();
+
+        card.setName(jsonObject.getString("name"));
+        card.setDescription(jsonObject.getString("description"));
+        card.setFamily(jsonObject.getString("family"));
+        card.setAffinity(jsonObject.getString("affinity"));
+        card.setImgUrl(jsonObject.getString("imgUrl"));
+        card.setSmallImgUrl(jsonObject.getString("smallImgUrl"));
+        card.setEnergy(jsonObject.getInt("energy"));
+        card.setHp(jsonObject.getDouble("hp"));
+        card.setDefence(jsonObject.getDouble("defence"));
+        card.setAttack(jsonObject.getDouble("attack"));
+        card.setPrice(jsonObject.getDouble("price"));
+
+        return card;
+    }
 }

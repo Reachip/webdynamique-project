@@ -1,0 +1,67 @@
+### Etape 1 : Inscrire un utilisateur
+POST http://localhost:8080/register
+Content-Type: application/json
+
+{
+  "name": "mejri",
+  "surname": "rached",
+  "password": "123"
+}
+
+<> 2024-05-21T170545.500.json
+<> 2024-05-21T170525.500.json
+<> 2024-05-21T165906.500.json
+<> 2024-05-21T165830.500.json
+<> 2024-05-21T165745.500.json
+<> 2024-05-21T165618.500.json
+
+### Etape 2 : Connecter un utilisateur
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "surname":"rached",
+  "password":"123"
+}
+
+> {%
+    client.global.set("token", response.body.token)
+%}
+
+<> 2024-05-21T175808.200.json
+<> 2024-05-21T175619.200.json
+<> 2024-05-21T175509.200.json
+<> 2024-05-21T174338.200.json
+<> 2024-05-21T174007.200.json
+<> 2024-05-21T171727.200.json
+<> 2024-05-21T171443.200.json
+<> 2024-05-21T144845.200.json
+<> 2024-05-21T144820.200.json
+
+### Etape 3: Récupère tous les utilisateurs
+GET http://localhost:8080/users
+Authorization: Bearer {{ token }}
+
+<> 2024-05-21T175808-1.200.json
+<> 2024-05-21T175621.200.json
+<> 2024-05-21T175511.200.json
+<> 2024-05-21T174344.200.json
+<> 2024-05-21T174010.200.json
+<> 2024-05-21T171447.200.json
+<> 2024-05-21T144845-1.200.json
+<> 2024-05-21T144830.200.json
+
+### Etape 4: Récupère un utilisateur
+GET http://localhost:8080/user
+Authorization: Bearer {{ token }}
+
+<> 2024-05-21T175808-2.200.json
+<> 2024-05-21T175624.500.json
+<> 2024-05-21T175514.500.json
+<> 2024-05-21T174705.500.json
+<> 2024-05-21T174506.200.json
+<> 2024-05-21T174503.200.json
+<> 2024-05-21T174453.200.json
+<> 2024-05-21T174441.200.json
+<> 2024-05-21T174314.500.json
+<> 2024-05-21T174015.404.json
