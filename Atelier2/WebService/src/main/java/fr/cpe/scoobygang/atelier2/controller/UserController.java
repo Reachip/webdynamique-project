@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @PostMapping(value="/register")
-    public void addHero(@RequestBody UserRequest user) {
-        userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
+    public void addHero(@RequestBody User user) {
+        userService.addUser(user);
     }
 
     @PostMapping(value = "/login")
