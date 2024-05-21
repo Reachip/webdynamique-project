@@ -1,20 +1,31 @@
 package fr.cpe.scoobygang.atelier2.security;
 
-import fr.cpe.scoobygang.atelier2.model.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONObject;
 
-import java.util.Date;
+import java.util.Base64;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class JWT {
+    private final JWTInformation jwtInformation;
     private String token;
+
+    public JWT(String token) {
+        this.token = token;
+
+        final Base64.Decoder decoder = Base64.getUrlDecoder();
+        final String[] chunks = this.token.split("\\.");
+
+        final String payload = new String(decoder.decode(chunks[1]));
+
+        JSONObject jsonObject = new JSONObject(payload);
+
+        this.jwtInformation =  JWTInformation.builder()
+                .userID(Integer.parseInt(jsonObject.getString("sub")))
+                .build();
+    }
 
     @Override
     public String toString() {

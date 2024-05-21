@@ -14,12 +14,12 @@ import java.util.Optional;
 public class JWTService {
     private static final long EXPIRATION_TIME = 15;
 
-    @Value("${jwt.secret}")
-    private String JWT_SECRET;
+    // @Value("${jwt.secret}")
+    private String JWT_SECRET = "HRlELXqpSB";
 
     public JWT fromUser(User user) {
         final String token = Jwts.builder()
-                .setSubject(user.getName())
+                .setSubject(String.valueOf(user.getId()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000 * 60))
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
