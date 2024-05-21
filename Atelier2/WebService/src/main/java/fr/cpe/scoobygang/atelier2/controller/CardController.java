@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class CardController {
     private final CardService cardService;
     private final CardResource cardResource;
