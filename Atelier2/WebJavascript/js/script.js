@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  /* CREATE HEADER */
   const header = document.createElement("header");
 
   const navbar = document.createElement("nav");
@@ -61,4 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
   header.appendChild(navbar);
 
   document.body.insertBefore(header, document.body.firstChild);
+
+  /* GET LOGGED USER */
+  const userToken = localStorage.getItem("scoobycards-user-token");
+  console.log(userToken);
 });
