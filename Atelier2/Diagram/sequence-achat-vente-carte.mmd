@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Client
+    participant API
+    participant Database
+
+    Client ->> API: POST /card/buy/{cardID} (session token required)
+    API ->> Database: SELECT * FROM cards WHERE cards.id = ?
+    Database ->> API: Card details
+    API ->> Database: UPDATE cards SET owner = user ID WHERE card ID
+    Database ->> API: [Confirmation]
+    API ->> Client: 200 OK (updated card details)
+
+    Client ->> API: POST /card/sell/{cardID} (session token required)
+    API ->> Database: SELECT * FROM cards WHERE card ID
+    Database ->> API: Card details
+    API ->> Database: UPDATE cards SET owner = NULL WHERE id = ?
+    Database ->> API: [Confirmation]
+    API ->> Client: 200 OK (updated card details)
