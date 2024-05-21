@@ -19,7 +19,7 @@ public class JWTService {
 
     public JWT fromUser(User user) {
         final String token = Jwts.builder()
-                .setSubject(user.getUsername())
+                .setSubject(String.valueOf(user.getId()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000 * 60))
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();

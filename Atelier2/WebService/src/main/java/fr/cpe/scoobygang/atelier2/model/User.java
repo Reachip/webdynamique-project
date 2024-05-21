@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -21,8 +22,8 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private double balance;
+    private double balance = 0;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Card> cards;
+    private List<Card> cards = new ArrayList<>();
 }

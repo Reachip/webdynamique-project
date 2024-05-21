@@ -29,6 +29,7 @@ public class UserController {
 
     @PostMapping(value="/register")
     public void addHero(@RequestBody User user) {
+
         userService.addUser(user);
     }
 

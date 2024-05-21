@@ -35,8 +35,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<JWT> login(String surname, String password) {
-        User existingUser = userRepository.findBySurname(surname);
+    public Optional<JWT> login(String username, String password) {
+        User existingUser = userRepository.findByUsername(username);
 
         if (existingUser == null || !Objects.equals(existingUser.getPassword(), password)) {
             return Optional.empty();
