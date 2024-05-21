@@ -32,9 +32,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String jwt) {
-        if (!jwtService.isOk(jwt))
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
             return ResponseEntity.badRequest().build();
+        }
 
         return ResponseEntity.ok(userService.getAllUsers());
     }

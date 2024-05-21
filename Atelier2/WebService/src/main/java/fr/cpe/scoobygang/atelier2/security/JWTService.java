@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class JWTService {
@@ -25,11 +26,26 @@ public class JWTService {
         return new JWT(token);
     }
 
-    public boolean isOk(String jwt) {
+    public Optional<JWT> fromAuthorization(String authorizationString) {
+        try {
+            String token = authorizationString.split(" ")[1];
+            JWT jwt = new JWT(token);
+
+            if (isOk(jwt)) {
+                return Optional.of(jwt);
+            }
+
+            return Optional.empty();
+        } catch (Exception why) {
+            return Optional.empty();
+        }
+    }
+
+    private boolean isOk(JWT jwt) {
         try {
             Jwts.parser()
                     .setSigningKey(JWT_SECRET)
-                    .parseClaimsJws(jwt)
+                    .parseClaimsJws(jwt.getToken())
                     .getBody();
             return true;
         } catch (Exception why) {
