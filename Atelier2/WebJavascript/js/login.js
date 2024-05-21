@@ -26,12 +26,15 @@ document.addEventListener("DOMContentLoaded", function () {
             
                 response.json().then(data => {
                     localStorage.setItem("scoobycards-user-token", data.token);
+                    window.location.replace("./cardList.html");
                 }).catch(error => {
                     console.error("Error when parsing JSON:", error);
+                    localStorage.removeItem("scoobycards-user-token");
                 });
             } else {
                 alertError.classList.remove("hidden");
                 alertSuccess.classList.add("hidden");
+                localStorage.removeItem("scoobycards-user-token");
             }
         });
     });
