@@ -3,9 +3,9 @@ package fr.cpe.scoobygang.atelier2.controller;
 import fr.cpe.scoobygang.atelier2.controller.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.security.JWT;
+import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
-import io.jsonwebtoken.Jwts;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,33 +13,29 @@ import java.util.Optional;
 
 @RestController
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final JWTService jwtService;
+    private final UserService userService;
 
-    @RequestMapping(method= RequestMethod.POST,value="/register")
+    public UserController(JWTService jwtService, UserService userService) {
+        this.jwtService = jwtService;
+        this.userService = userService;
+    }
+
+    @PostMapping(value="/register")
     public void addHero(@RequestBody User user) {
         userService.addUser(user);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Optional<JWT> login(@RequestBody LoginRequest loginRequest) {
-        return userService.login(loginRequest.getSurname(), loginRequest.getPassword());
+    @PostMapping(value = "/login")
+    public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.login(loginRequest.getSurname(), loginRequest.getPassword()));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/users")
-    public List<User> getAllUsers(@RequestHeader(value = "Authorization", required = false) String jwt) {
-        if (jwt == null || !isValid(jwt)) {
-            throw new RuntimeException("Unauthorized");
-        }
-        return userService.getAllUsers();
-    }
+    @GetMapping(value = "/users")
+    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String jwt) {
+        if (!jwtService.isOk(jwt))
+            return ResponseEntity.badRequest().build();
 
-    private boolean isValid(String jwt) {
-        try {
-            Jwts.parser().setSigningKey("secret_key").parseClaimsJws(jwt);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 }
