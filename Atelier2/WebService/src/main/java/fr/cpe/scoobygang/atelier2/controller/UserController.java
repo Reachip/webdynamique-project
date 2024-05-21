@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
         Optional<JWT> response = userService.login(loginRequest.getSurname(), loginRequest.getPassword());
         if (response.isEmpty()) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         return ResponseEntity.ok(response);
     }
