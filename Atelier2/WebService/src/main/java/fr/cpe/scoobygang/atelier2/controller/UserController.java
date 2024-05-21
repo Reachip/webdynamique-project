@@ -5,6 +5,7 @@ import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,11 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(userService.login(loginRequest.getSurname(), loginRequest.getPassword()));
+        Optional<JWT> response = userService.login(loginRequest.getSurname(), loginRequest.getPassword());
+        if (response.isEmpty()) {
+            ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "/users")
