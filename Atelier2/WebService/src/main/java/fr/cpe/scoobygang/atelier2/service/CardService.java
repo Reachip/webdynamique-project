@@ -18,15 +18,10 @@ public class CardService {
     private UserRepository userRepository;
 
     public List<Card> getAllCard(){
-        Iterable<Card> iterable = cardRepository.findAll();
-        List<Card> listCard = new ArrayList<>();
-        iterable.forEach(card -> {
-            listCard.add(card);
-        });
-        return listCard;
+        return cardRepository.findNotOwnerCards();
     }
 
-    public void buyCard(int cardId, int userId){
+    public boolean buyCard(int cardId, int userId){
         // Recherche de l'utilisateur par ID
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
@@ -40,13 +35,15 @@ public class CardService {
 
         cardRepository.save(card);
         userRepository.save(user);
+
+        return true;
     }
 
     public List<Card> getAllUserCard(int userId){
         return cardRepository.findByOwnerId(userId);
     }
 
-    public void sellUserCard(int cardId, int userId) {
+    public boolean sellUserCard(int cardId, int userId) {
         // Recherche de l'utilisateur par ID
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
@@ -67,6 +64,8 @@ public class CardService {
         // Sauvegarder les modifications
         userRepository.save(user);
         cardRepository.save(card);
+
+        return true;
     }
 
     public void saveCards(List<Card> cards) {

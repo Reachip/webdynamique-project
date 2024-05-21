@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,19 +65,21 @@ public class CardController {
         return card;
     }
 
+    // Afficher toutes cartes disponibles à l'achat
     @RequestMapping(value = {"/card/buy"}, method = RequestMethod.GET)
-    public List<Card> buyCard(){
-        return cardService.getAllCard();
+    public ResponseEntity<List<Card>> buyCard(){
+        return ResponseEntity.ok(cardService.getAllCard());
     }
 
     @RequestMapping(value = {"/card/buy"}, method = RequestMethod.POST)
-    public void buyCard(@RequestBody int cardId, int userId){
-        cardService.buyCard(cardId,userId);
+    public ResponseEntity buyCard(@RequestBody int cardId, int userId){
+        if (cardService.buyCard(cardId,userId)) return ResponseEntity.ok(null);
+        else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
     @RequestMapping(value = {"/card/sell"}, method = RequestMethod.GET)
-    public void sellCard(@RequestBody int userId){
-        cardService.getAllUserCard(userId);
+    public ResponseEntity<List<Card>> sellCard(@RequestBody int userId){
+        return ResponseEntity.ok(cardService.getAllUserCard(userId));
     }
 
     @RequestMapping(value = {"/card/sell"}, method = RequestMethod.POST)
