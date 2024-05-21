@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public class CardResource implements Resource {
     @Override
     public org.springframework.core.io.Resource load() {
-        return new ClassPathResource("card.json");
+        return new ClassPathResource("./card.json");
     }
 }

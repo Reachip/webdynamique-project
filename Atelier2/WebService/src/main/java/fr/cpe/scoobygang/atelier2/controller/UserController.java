@@ -1,8 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.request.LoginRequest;
-import fr.cpe.scoobygang.atelier2.request.UserRequest;
-import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
