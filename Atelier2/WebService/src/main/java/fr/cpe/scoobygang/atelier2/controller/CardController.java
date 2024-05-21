@@ -1,19 +1,15 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.model.Card;
+import fr.cpe.scoobygang.atelier2.resource.CardResource;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import jakarta.annotation.PostConstruct;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -21,20 +17,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class CardController {
     @Autowired
     private CardService cardService;
 
-    public Resource loadCards() {
-        return new ClassPathResource("card.json");
-    }
+    @Autowired
+    private CardResource cardResource;
 
     @PostConstruct
     public void init() {
         List<Card> cards = new ArrayList<>();
         try {
-            File file = loadCards().getFile();
+            File file = cardResource.load().getFile();
             String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
             JSONArray jsonArray = new JSONArray(content);
 
@@ -66,23 +61,23 @@ public class CardController {
     }
 
     // Afficher toutes cartes disponibles à l'achat
-    @RequestMapping(value = {"/card/buy"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/card/buy"})
     public ResponseEntity<List<Card>> buyCard(){
         return ResponseEntity.ok(cardService.getAllCard());
     }
 
-    @RequestMapping(value = {"/card/buy"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/card/buy"})
     public ResponseEntity buyCard(@RequestBody int cardId, int userId){
         if (cardService.buyCard(cardId,userId)) return ResponseEntity.ok(null);
         else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 
-    @RequestMapping(value = {"/card/sell"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/card/sell"})
     public ResponseEntity<List<Card>> sellCard(@RequestBody int userId){
         return ResponseEntity.ok(cardService.getAllUserCard(userId));
     }
 
-    @RequestMapping(value = {"/card/sell"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/card/sell"})
     public void sellCard(@RequestBody int cardId, int userId){
         cardService.sellUserCard(cardId, userId);
     }
