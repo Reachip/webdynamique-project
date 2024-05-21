@@ -35,6 +35,10 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
+    public User getUser(int userID) {
+        return userRepository.findById(userID).get();
+    }
+
     public Optional<JWT> login(String username, String password) {
         User existingUser = userRepository.findByUsername(username);
 

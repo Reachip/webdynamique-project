@@ -1,7 +1,9 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
+import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
+import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
@@ -50,5 +52,17 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping(value = "/user")
+    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        int userID = jwt.get().getJwtInformation().getUserID();
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
     }
 }
