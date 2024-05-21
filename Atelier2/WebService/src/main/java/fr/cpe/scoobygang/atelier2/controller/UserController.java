@@ -6,6 +6,7 @@ import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
-    public Optional<JWT> login(@RequestBody LoginRequest loginRequest) {
-        return userService.login(loginRequest.getSurname(), loginRequest.getPassword());
+    public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(userService.login(loginRequest.getSurname(), loginRequest.getPassword()));
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")

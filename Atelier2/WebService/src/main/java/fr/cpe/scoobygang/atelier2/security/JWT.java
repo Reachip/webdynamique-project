@@ -7,18 +7,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.crypto.spec.SecretKeySpec;
+import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
 public class JWT {
+    private static final long EXPIRATION_TIME = 1000;
+    private static final String SECRET = "HRlELXqpSB";
+
     private String token;
 
     public static JWT fromUser(User user) {
-        String token = Jwts.builder()
+        final String token = Jwts.builder()
                 .setSubject(user.getName())
-                .signWith(new SecretKeySpec((user.getName() + "Bar12345Bar12345"+"Bar12345Bar12345"+"Bar12345Bar12345").getBytes(), "AES"))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
 
         return new JWT(token);
