@@ -8,11 +8,15 @@ import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -46,7 +50,6 @@ public class UserController {
         if (jwt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
-
         return ResponseEntity.ok(userService.getAllUsers());
     }
 }
