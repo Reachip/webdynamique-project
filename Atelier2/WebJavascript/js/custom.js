@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   usernameBadge.classList.add("header-badge");
   usernameBadge.classList.add("pointer");
   usernameBadge.classList.add("no-decoration");
-  usernameBadge.innerHTML = "<i class=\"fa-solid fa-login\"></i> Se connecter";
+  usernameBadge.innerHTML = "<i class=\"fa-solid fa-right-to-bracket\"></i> Se connecter";
   usernameBadge.href = "login.html";
 
   const balanceBadge = document.createElement("div");
