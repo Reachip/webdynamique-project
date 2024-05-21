@@ -14,32 +14,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class JWT {
-    private static final long EXPIRATION_TIME = 15;
-    private static final String SECRET = "HRlELXqpSB";
-
     private String token;
-
-    public static JWT fromUser(User user) {
-        final String token = Jwts.builder()
-                .setSubject(user.getName())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME * 1000 * 60))
-                .signWith(SignatureAlgorithm.HS512, SECRET)
-                .compact();
-
-        return new JWT(token);
-    }
-
-    public static boolean isOk(String jwt) {
-        try {
-            Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(jwt)
-                    .getBody();
-            return true;
-        } catch (Exception why) {
-            return false;
-        }
-    }
 
     @Override
     public String toString() {

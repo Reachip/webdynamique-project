@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier2.controller;
 import fr.cpe.scoobygang.atelier2.controller.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.security.JWT;
+import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import java.util.Optional;
 
 @RestController
 public class UserController {
+    private final JWTService jwtService;
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(JWTService jwtService, UserService userService) {
+        this.jwtService = jwtService;
         this.userService = userService;
     }
 
@@ -30,7 +33,7 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String jwt) {
-        if (!JWT.isOk(jwt))
+        if (!jwtService.isOk(jwt))
             return ResponseEntity.badRequest().build();
 
         return ResponseEntity.ok(userService.getAllUsers());

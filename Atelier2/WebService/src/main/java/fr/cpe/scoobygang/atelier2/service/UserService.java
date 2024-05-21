@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier2.service;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import fr.cpe.scoobygang.atelier2.security.JWT;
+import fr.cpe.scoobygang.atelier2.security.JWTService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,14 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
+    private UserRepository userRepository;
+    private JWTService jwtService;
 
-    @Autowired
-    UserRepository userRepository;
+    public UserService(UserRepository userRepository, JWTService jwtService) {
+        this.userRepository = userRepository;
+        this.jwtService = jwtService;
+    }
+
     public void addUser(User user) {
         userRepository.save(user);
     }
@@ -36,7 +42,7 @@ public class UserService {
             return Optional.empty();
         }
 
-        JWT jwt = JWT.fromUser(existingUser);
+        JWT jwt = jwtService.fromUser(existingUser);
         return Optional.of(jwt);
     }
 }
