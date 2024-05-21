@@ -29,9 +29,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public List<User> getAllUsers(@RequestHeader(value = "Authorization", required = false) String jwt) {
-        if (jwt == null || !isValid(jwt)) {
-            throw new RuntimeException("Unauthorized");
-        }
+        if (JWT.isOk(jwt))
         return userService.getAllUsers();
     }
 
