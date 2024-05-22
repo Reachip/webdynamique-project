@@ -44,4 +44,8 @@ public class User {
 
         return user;
     }
+
+    public boolean canBuy(double price){
+        return this.getAccount() >= price;
+    }
 }

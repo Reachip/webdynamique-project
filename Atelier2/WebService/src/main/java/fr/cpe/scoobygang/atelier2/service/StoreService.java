@@ -51,7 +51,7 @@ public class StoreService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        if (!checkUserAccount(newOwner, card.getPrice())){
+        if (!newOwner.canBuy(card.getPrice())){
             return false;
         }
 
@@ -107,10 +107,6 @@ public class StoreService {
 
     public void saveStores(List<Store> stores) {
         storeRepository.saveAll(stores);
-    }
-
-    public boolean checkUserAccount(User user, double price){
-        return user.getAccount() >= price;
     }
 
     public List<Card> getCardsById(int storeId) {
