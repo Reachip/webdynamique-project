@@ -39,6 +39,8 @@ public class UserInitializer implements Initializer {
                 User user = User.toUser(jsonObject);
                 users.add(user);
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

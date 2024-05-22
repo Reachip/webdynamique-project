@@ -9,6 +9,9 @@ import java.util.List;
 public interface CardRepository extends CrudRepository<Card, Integer> {
     List<Card> findByOwnerId(int userId);
 
-    @Query("SELECT c FROM Card c WHERE c.owner is NULL")
+    @Query("SELECT c FROM Card c WHERE c.isOnSale = TRUE")
+    List<Card> findOnSaleCards();
+
+    @Query("SELECT c FROM Card c WHERE c.owner IS NULL")
     List<Card> findNotOwnerCards();
 }

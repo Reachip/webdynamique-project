@@ -24,7 +24,7 @@ public class Card {
     private double defense;
     private double attack;
     private double price;
-    private Integer lastUserId;
+    private boolean isOnSale;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
@@ -43,6 +43,7 @@ public class Card {
         card.setDefense(jsonObject.getDouble("defense"));
         card.setAttack(jsonObject.getDouble("attack"));
         card.setPrice(jsonObject.getDouble("price"));
+        card.setOnSale(jsonObject.getBoolean("isOnSale"));
 
         return card;
     }
