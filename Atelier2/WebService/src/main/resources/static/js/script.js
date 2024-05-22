@@ -1,33 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
-  /* GET LOGGED USER */
-  const userToken = localStorage.getItem("scoobycards-user-token");
-  fetch("http://localhost:8080/user/current", {
-    method: "GET",
-    headers: {
-      "Authorization": "Bearer " + userToken,
-      "Content-type": "application/json; charset=UTF-8"
-    }
-  })
-    .then(response => {
-      if (response.ok) {
-        response.json().then(data => {
-          console.log(data);
-        }).catch(error => {
-          console.error("Error when parsing JSON:", error);
-          localStorage.removeItem("scoobycards-user-token");
-          showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
-        });
-      } else {
-        localStorage.removeItem("scoobycards-user-token");
-        showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
-      }
-    })
-    .catch(error => {
-      console.error("Fetch error:", error);
-      localStorage.removeItem("scoobycards-user-token");
-      showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
-    });
+import { showAlert, Alert } from './alerts.js';
 
+document.addEventListener("DOMContentLoaded", function () {
   /* CREATE HEADER */
   const header = document.createElement("header");
 
@@ -71,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
   headerBadgesContainer.classList.add("badges-container");
 
   const usernameBadge = document.createElement("a");
+  usernameBadge.id = "badge-username";
   usernameBadge.classList.add("badge");
   usernameBadge.classList.add("badge-primary-dark");
   usernameBadge.classList.add("pointer");
@@ -93,5 +67,62 @@ document.addEventListener("DOMContentLoaded", function () {
   header.appendChild(navbar);
 
   document.body.insertBefore(header, document.body.firstChild);
+
+  /* GET LOGGED USER */
+  const currentPage = window.location.pathname.split("/").pop();
+  const userToken = localStorage.getItem("scoobycards-user-token");
+  const hasToken = !!userToken;
+  if (currentPage !== 'register.html' && currentPage !== 'login.html') {
+    if (hasToken) {
+      fetch("http://127.0.0.1:8080/user/current", {
+        method: "GET",
+        headers: {
+          "Authorization": "Bearer " + userToken,
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            response.json().then(user => {
+              const userIdentityStr = `${user.surname} ${user.name}`;
+
+              usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${userIdentityStr}`;
+              usernameBadge.href = `user.html`;
+
+              const identities = document.querySelectorAll(".identity");
+              identities.forEach(identity => {
+                identity.innerHTML = userIdentityStr;
+              });
+
+              const identityInputSurname = document.querySelector("#form-user-surname");
+              const identityInputName = document.querySelector("#form-user-name");
+              const identityInputEmail = document.querySelector("#form-user-email");
+              const identityInputUsername = document.querySelector("#form-user-username");
+
+              if (currentPage == 'user.html') {
+                if (identityInputSurname) identityInputSurname.value = user.surname;
+                if (identityInputName) identityInputName.value = user.name;
+                if (identityInputEmail) identityInputEmail.value = user.email;
+                if (identityInputUsername) identityInputUsername.value = user.username;
+              }
+            }).catch(error => {
+              console.error("Error when parsing JSON:", error);
+              if (hasToken) {
+                localStorage.removeItem("scoobycards-user-token");
+              }
+            });
+          } else if (hasToken) {
+            localStorage.removeItem("scoobycards-user-token");
+          }
+        });
+    }
+
+    if (hasToken && !localStorage.getItem("scoobycards-user-token")) {
+      showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
+    }
+  }
+  else if (hasToken) {
+    localStorage.removeItem("scoobycards-user-token");
+  }
 });
 
