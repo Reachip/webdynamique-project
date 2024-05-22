@@ -18,8 +18,8 @@ public interface UserMapper {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "username", source = "username")
     @Mapping(target = "password", source = "password")
-    @Mapping(target = "surName", source = "surName")
-    @Mapping(target = "lastName", source = "lastName")
+    @Mapping(target = "surname", source = "surname")
+    @Mapping(target = "name", source = "name")
     @Mapping(target = "email", source = "email")
     @Mapping(target = "account", source = "account")
     void userApply(@MappingTarget User userToUpdate, User user);
