@@ -1,15 +1,18 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
+import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.Store;
 import fr.cpe.scoobygang.atelier2.model.StoreOrder;
 import fr.cpe.scoobygang.atelier2.model.Transaction;
+import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import fr.cpe.scoobygang.atelier2.service.TransactionService;
 import jakarta.annotation.PostConstruct;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,13 +54,16 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/store/cards_to_sell/{storeId}"})
-    public ResponseEntity<List<Card>> sellCard(@PathVariable int storeId){
-        return ResponseEntity.ok(storeService.getCardsById(storeId));
+    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int storeId){
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(storeId)));
     }
 
     @PostMapping(value = {"/store/sell"})
-    public void sellCard(@RequestBody StoreOrderRequest storeOrderRequest){
-        storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId());
+    public ResponseEntity sellCard(@RequestBody StoreOrderRequest storeOrderRequest){
+        if (storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping(value = {"/store/transaction"})
