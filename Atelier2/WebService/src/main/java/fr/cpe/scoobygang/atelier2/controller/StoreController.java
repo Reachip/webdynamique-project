@@ -2,12 +2,14 @@ package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.Store;
 import fr.cpe.scoobygang.atelier2.model.StoreOrder;
 import fr.cpe.scoobygang.atelier2.model.Transaction;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
+import fr.cpe.scoobygang.atelier2.request.StoreResponse;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import fr.cpe.scoobygang.atelier2.service.TransactionService;
@@ -36,8 +38,8 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/stores"})
-    public ResponseEntity<List<Store>> getStores() {
-        return ResponseEntity.ok(storeService.getStores());
+    public ResponseEntity<List<StoreResponse>> getStores() {
+        return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }
 
     @GetMapping(value = {"/store/buy"})
