@@ -2,7 +2,7 @@
   "username": "admin",
   "password": "admin",
   "account": 500,
-  "lastName": "Admin",
-  "surName": "Admin",
+  "name": "Admin",
+  "surname": "Admin",
   "email": "admin.admin@gmail.com"
 }]
