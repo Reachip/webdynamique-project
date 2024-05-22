@@ -68,8 +68,8 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping(value = {"/store/transaction"})
-    public ResponseEntity<List<Transaction>> getTransaction(@RequestBody int userId){
-        return ResponseEntity.ok(transactionService.getTransaction(userId));
+    @GetMapping(value = {"/store/transaction/{id}"})
+    public ResponseEntity<List<Transaction>> getTransaction(@PathVariable int id){
+        return ResponseEntity.ok(transactionService.getTransaction(id));
     }
 }
