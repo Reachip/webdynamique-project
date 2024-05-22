@@ -34,4 +34,6 @@ public class Transaction
     private TransactionAction action;
 
     private Timestamp timestamp;
+
+    private double amount;
 }
