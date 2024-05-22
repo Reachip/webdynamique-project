@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @Getter
 public class UserRequest {
+    private int id;
     private String username;
     private String password;
     private String surName;

@@ -33,7 +33,7 @@ public class UserController {
         this.userInitializer = userInitializer;
     }
 
-    @PostMapping(value="/user")
+    @PostMapping(value="/register")
     public ResponseEntity<Optional<JWT>> addUser(@RequestBody UserRequest user) {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
@@ -48,7 +48,7 @@ public class UserController {
         userInitializer.initialize();
     }
 
-    @PostMapping(value = "/auth")
+    @PostMapping(value = "/login")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
         Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (response.isEmpty()) {
@@ -67,8 +67,8 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    @GetMapping(value = "/user")
-    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @RequestParam int id) {
+    @GetMapping(value = "/user/{id}")
+    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
@@ -79,15 +79,14 @@ public class UserController {
     }
 
     @PutMapping(value = "/user")
-    public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization) {
+    public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        int userID = jwt.get().getJwtInformation().getUserID();
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.putUser(user)));
     }
 
     @DeleteMapping(value = "/user/{id}")
