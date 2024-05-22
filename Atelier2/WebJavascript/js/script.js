@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   /* GET LOGGED USER */
   const userToken = localStorage.getItem("scoobycards-user-token");
-  fetch("http://127.0.0.1:8080/user", {
-    method: "GET",
+  fetch("http://127.0.0.1:8080/currentUser", {
+    method: "POST",
     body: JSON.stringify({
       token: userToken
     }),
@@ -13,8 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then(response => {
       if (response.ok) {
         response.json().then(data => {
-          // On a l'user
-          console.log(user);
+          console.log(data);
         }).catch(error => {
           console.error("Error when parsing JSON:", error);
           localStorage.removeItem("scoobycards-user-token");
@@ -90,3 +89,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertBefore(header, document.body.firstChild);
 });
+
