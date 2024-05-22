@@ -63,3 +63,13 @@ Content-Type: application/json
   "email": "admin",
   "balance": 0
 }
+
+###
+PUT http://localhost:8080/user/current/reset/password
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "newPasword": "123"
+}
+
