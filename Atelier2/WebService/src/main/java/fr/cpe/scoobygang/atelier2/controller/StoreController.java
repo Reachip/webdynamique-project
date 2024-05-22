@@ -1,7 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.CardInitializer;
-import fr.cpe.scoobygang.atelier2.initializer.StoreInitializer;
+import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.Transaction;
 import fr.cpe.scoobygang.atelier2.service.CardService;
@@ -18,17 +17,12 @@ import java.util.List;
 public class StoreController {
     private final CardService cardService;
     private final StoreService storeService;
-    private final StoreInitializer storeInitializer;
+    private final StoreApplicationRunner storeApplicationRunner;
 
-    public StoreController(CardService cardService, StoreService storeService, StoreInitializer storeInitializer) {
+    public StoreController(CardService cardService, StoreService storeService, StoreApplicationRunner storeApplicationRunner) {
         this.cardService = cardService;
         this.storeService = storeService;
-        this.storeInitializer = storeInitializer;
-    }
-
-    @PostConstruct
-    public void init() {
-        storeInitializer.initialize();
+        this.storeApplicationRunner = storeApplicationRunner;
     }
 
     @GetMapping(value = {"/store/buy"})

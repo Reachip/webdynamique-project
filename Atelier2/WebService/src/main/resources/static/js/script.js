@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   /* GET LOGGED USER */
   const userToken = localStorage.getItem("scoobycards-user-token");
-  console.log("token : ", localStorage.getItem("scoobycards-user-token"))
   fetch("http://localhost:8080/user/current", {
-    method: "POST",
+    method: "GET",
     headers: {
       "Authorization": "Bearer " + userToken,
       "Content-type": "application/json; charset=UTF-8"
@@ -16,10 +15,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }).catch(error => {
           console.error("Error when parsing JSON:", error);
           localStorage.removeItem("scoobycards-user-token");
+          showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
         });
       } else {
         localStorage.removeItem("scoobycards-user-token");
+        showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
       }
+    })
+    .catch(error => {
+      console.error("Fetch error:", error);
+      localStorage.removeItem("scoobycards-user-token");
+      showAlert(Alert.ERROR, "Votre session a expiré. Veuillez vous reconnecter.");
     });
 
   /* CREATE HEADER */
