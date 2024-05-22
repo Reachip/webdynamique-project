@@ -51,8 +51,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<UserResponse>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
+        return ResponseEntity.ok(UserMapper.INSTANCE.usersToUserResponses(userService.getAllUsers()));
     }
 
     @GetMapping(value = "/user/{id}")
@@ -75,21 +75,21 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/current")
-    public ResponseEntity<CurrentUserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
+    public ResponseEntity<UserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
 
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(userService.getUser(userID)));
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(userService.getUser(userID)));
     }
 
     @PutMapping(value = "/user/edit/password")
-    public ResponseEntity<CurrentUserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<UserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody ChangePasswordRequest changePasswordRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
 
         try {
             User user = userService.changePassword(userID, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
-            return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(user));
+            return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(user));
         } catch (UserChangePasswordException why) {
             return ResponseEntity.status(401).build();
         }
