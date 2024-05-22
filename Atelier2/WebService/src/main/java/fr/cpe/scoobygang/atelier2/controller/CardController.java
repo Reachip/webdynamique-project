@@ -1,8 +1,10 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
+import fr.cpe.scoobygang.atelier2.initializer.CardInitializer;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import fr.cpe.scoobygang.atelier2.service.CardService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -14,9 +16,16 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class CardController {
     private final CardService cardService;
+    private final CardInitializer cardInitializer;
 
-    public CardController(CardService cardService) {
+    public CardController(CardService cardService, CardInitializer cardInitializer) {
         this.cardService = cardService;
+        this.cardInitializer = cardInitializer;
+    }
+
+    @PostConstruct
+    public void init() {
+        cardInitializer.initialize();
     }
 
     @DeleteMapping(value = {"/card/{id}"})
