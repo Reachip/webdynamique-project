@@ -1,7 +1,7 @@
 package fr.cpe.scoobygang.atelier2.mapper;
 
 import fr.cpe.scoobygang.atelier2.model.User;
-import fr.cpe.scoobygang.atelier2.request.CurrentUserResponse;
+import fr.cpe.scoobygang.atelier2.request.UserResponse;
 import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import org.mapstruct.BeanMapping;
@@ -9,6 +9,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -25,5 +27,7 @@ public interface UserMapper {
     @Mapping(target = "account", source = "account")
     void userApply(@MappingTarget User userToUpdate, User user);
     UserRequest userToUserRequest(User car);
-    CurrentUserResponse userToCurrentUserResponse(User user);
+    UserResponse userToUserResponse(User user);
+
+    List<UserResponse> usersToUserResponses(List<User> users);
 }
