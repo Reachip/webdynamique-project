@@ -21,45 +21,76 @@
         <div id="cards">
             <h3>Liste des cartes</h3>
             <div id="alerts"></div>
-            <table id="table-cards">
-                <thead>
-                    <tr>
-                        <th class="three wide">Nom</th>
-                        <th class="three wide">Description</th>
-                        <th>Famille</th>
-                        <th>PV</th>
-                        <th>Énergie</th>
-                        <th>Défense</th>
-                        <th>Attaque</th>
-                        <th>Prix</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="table-cards-body">
-                    <template id="row">
+            <div class="table-and-preview">
+                <table id="table-cards">
+                    <thead>
                         <tr>
-                            <td>
-                                <img class="row-image" src={{imgUrl}}><br><span>{{name}}</span>
-                            </td>
-                            <td>{{description}}</td>
-                            <td>{{family}}</td>
-                            <td>{{hp}}</td>
-                            <td>{{energy}}</td>
-                            <td>{{defense}}</td>
-                            <td>{{attack}}</td>
-                            <td>{{price}}$</td>
-                            <td>
+                            <th class="three wide">Nom</th>
+                            <th class="three wide">Description</th>
+                            <th>Famille</th>
+                            <th>Affinité</th>
+                            <th>PV</th>
+                            <th>Énergie</th>
+                            <th>Défense</th>
+                            <th>Attaque</th>
+                            <th>Prix</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-cards-body">
+                        <template id="row">
+                            <tr class="card-row pointer">
+                                <td>
+                                    <img class="row-image" src={{imgUrl}}><br><span>{{name}}</span>
+                                </td>
+                                <td>{{description}}</td>
+                                <td>{{family}}</td>
+                                <td>{{affinity}}</td>
+                                <td>{{hp}}</td>
+                                <td>{{energy}}</td>
+                                <td>{{defense}}</td>
+                                <td>{{attack}}</td>
+                                <td>{{price}}$</td>
+                                <td>
+                                    <button class="button button-primary">
+                                        <i class="fa-solid fa-cart-arrow-down"></i> Acheter
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <div id="card-preview" class="hidden">
+                    <div class="card-image">
+                        <img id="preview-image"
+                            src="https://static.wikia.nocookie.net/force-of-will-tcg/images/b/b5/Water_Sprite.png"
+                            alt="Aperçu de la carte">
+                    </div>
+                    <div class="card-details">
+                        <h1 id="preview-name"></h1>
+                        <p id="preview-description"></p>
+                        <br>
+                        <ul class="preview-list">
+                            <li><strong>Famille :</strong> <span id="preview-family"></span></li>
+                            <li><strong>Affinité :</strong> <span id="preview-affinity"></span></li>
+                            <li><strong>PV :</strong> <span id="preview-hp"></span></li>
+                            <li><strong>Énergie :</strong> <span id="preview-energy"></span></li>
+                            <li><strong>Défense :</strong> <span id="preview-defense"></span></li>
+                            <li><strong>Attaque :</strong> <span id="preview-attack"></span></li>
+                        </ul>
+                        <span class="price"><strong>Prix :</strong> <span id="preview-price"></span>$
+                            <div>
                                 <button class="button button-primary">
                                     <i class="fa-solid fa-cart-arrow-down"></i> Acheter
                                 </button>
-                            </td>
-                        </tr>
-                    </template>
-                </tbody>
-            </table>
+                            </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="module" src="js/cardList.js"></script>
-    <script type="module" src="js/script.js"></script> 
-    </body>
+    <script type="module" src="js/script.js"></script>
+</body>
+
 </html>

@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.ok) {
                     showAlert(Alert.SUCCESS, "Modification des informations effectuée.");
                     const usernameBadge = document.querySelector("#badge-username");
-                    usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${surname} ${name}`;
+                    const userIdentityStr = `${surname} ${name}`;
+                    usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${userIdentityStr}`;
 
                     const identities = document.querySelectorAll(".identity");
                     identities.forEach(identity => {
