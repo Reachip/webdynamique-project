@@ -38,6 +38,9 @@ public class User {
         user.setUsername(jsonObject.getString("username"));
         user.setPassword(jsonObject.getString("password"));
         user.setAccount(jsonObject.getDouble("account"));
+        user.setSurName(jsonObject.getString("surName"));
+        user.setLastName(jsonObject.getString("lastName"));
+        user.setEmail(jsonObject.getString("email"));
 
         return user;
     }
