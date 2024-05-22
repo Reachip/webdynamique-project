@@ -30,6 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     showAlert(Alert.SUCCESS, "Modification des informations effectuée.");
                     const usernameBadge = document.querySelector("#badge-username");
                     usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${surname} ${name}`;
+
+                    const identities = document.querySelectorAll(".identity");
+                    identities.forEach(identity => {
+                      identity.innerHTML = userIdentityStr;
+                    });
                 } else {
                     showAlert(Alert.ERROR, "Une erreur est survenue.");
                 }
