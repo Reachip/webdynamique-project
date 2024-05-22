@@ -1,10 +1,8 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.CardInitializer;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
