@@ -38,6 +38,7 @@ public class StoreService {
 
         // Retirer la carte de la liste de l'utilisateur
         user.getCardList().remove(card);
+        card.setLastUserId(userId);
         card.setOwner(null); // Mise à jour de la relation à null
 
         // Sauvegarder les modifications
@@ -45,21 +46,32 @@ public class StoreService {
         cardRepository.save(card);
     }
 
-    public void buyCard(int cardId, int userId, int storeId){
+    public boolean buyCard(int cardId, int userId, int storeId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
 
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
+        if (!checkUserAccount(user, card.getPrice())){
+            return false;
+        }
+
         card.setOwner(user);
         user.getCardList().add(card);
+        user.setAccount(user.getAccount() - card.getPrice());
+        int newOwnerId = card.getLastUserId();
+        User newOwner = userRepository.findById(newOwnerId).orElseThrow(() -> new RuntimeException("User not found"));
+        newOwner.setAccount(newOwner.getAccount() + card.getPrice());
 
         cardRepository.save(card);
         userRepository.save(user);
+        userRepository.save(newOwner);
 
         createTransaction(userId, cardId, storeId, TransactionAction.BUY);
         createTransaction(card.getLastUserId(), cardId, storeId, TransactionAction.SELL);
+
+        return true;
     }
 
     public void createTransaction(int userId, int cardId, int storeId, TransactionAction action) {
@@ -73,6 +85,7 @@ public class StoreService {
         transaction.setCard(card);
         transaction.setStore(store);
         transaction.setAction(action);
+        transaction.setAmount(card.getPrice());
         transaction.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         // Save the new Transaction
@@ -90,5 +103,9 @@ public class StoreService {
 
     public void saveStores(List<Store> stores) {
         storeRepository.saveAll(stores);
+    }
+
+    public boolean checkUserAccount(User user, double price){
+        return user.getAccount() >= price;
     }
 }
