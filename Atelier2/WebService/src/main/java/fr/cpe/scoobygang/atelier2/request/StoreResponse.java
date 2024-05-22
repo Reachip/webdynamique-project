@@ -8,5 +8,6 @@ import lombok.Setter;
 public class StoreResponse {
     private int id;
     private String name;
+    private int cardCount;
 
 }
