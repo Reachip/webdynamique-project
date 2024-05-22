@@ -25,8 +25,8 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
-    public void addUser(User user) {
-        userRepository.save(user);
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 
     public List<User> getAllUsers() {

@@ -21,9 +21,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
+    private String surName;
+    private String lastName;
+    private String email;
     private String password;
-    private double balance = 0;
+    private double account = 0;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Card> cards = new ArrayList<>();
+    private List<Card> cardList = new ArrayList<>();
 }

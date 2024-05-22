@@ -29,12 +29,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(value="/register")
-    public void addUser(@RequestBody UserRequest user) {
-        userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
+    @PostMapping(value="/user")
+    public ResponseEntity<Optional<JWT>> addUser(@RequestBody UserRequest user) {
+        User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
+        Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
+        if (response.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        return ResponseEntity.ok(response);
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/auth")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
         Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (response.isEmpty()) {
@@ -54,7 +59,18 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization) {
+    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @RequestParam int userId) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userId)));
+    }
+
+    @PutMapping(value = "/user")
+    public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
@@ -64,4 +80,5 @@ public class UserController {
         int userID = jwt.get().getJwtInformation().getUserID();
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
     }
+
 }
