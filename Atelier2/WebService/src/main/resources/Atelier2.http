@@ -1,5 +1,5 @@
 ### Etape 2 : Connecter un utilisateur
-POST http://localhost:8080/auth
+POST http://localhost:8080/login
 Content-Type: application/json
 
 {
@@ -48,3 +48,18 @@ Authorization: Bearer {{ token }}
 <> 2024-05-21T174441.200.json
 <> 2024-05-21T174314.500.json
 <> 2024-05-21T174015.404.json
+
+###
+PUT http://localhost:8080/user
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "oldPassword": "admin",
+  "password": "admin",
+  "surName": "admin",
+  "lastName": "admin",
+  "email": "admin",
+  "balance": 0
+}
