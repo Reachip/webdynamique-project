@@ -4,14 +4,10 @@ import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.repository.CardRepository;
-import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import fr.cpe.scoobygang.atelier2.request.CardRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CardService {
@@ -21,7 +17,7 @@ public class CardService {
     }
 
     public List<Card> getAllCard(){
-        return cardRepository.findNotOwnerCards();
+        return cardRepository.findOnSaleCards();
     }
     public List<Card> getAllUserCard(int userId){
         return cardRepository.findByOwnerId(userId);
@@ -62,5 +58,23 @@ public class CardService {
         }
 
         return Optional.empty();
+    }
+
+    public void attachUserToCard(User user)
+    {
+        // Récupère les cartes qui n'ont pas de propriétaire
+        List<Card> cards = cardRepository.findNotOwnerCards();
+
+        List<Card> shuffled = new ArrayList<>(cards);
+        // Mélange les cartes
+        Collections.shuffle(shuffled, new Random());
+
+        List<Card> userCards = shuffled.subList(0, Math.min(5, shuffled.size()));
+        // Save pour chaque carte
+        userCards.forEach(card -> {
+            card.setOwner(user);
+        });
+
+        cardRepository.saveAll(userCards);
     }
 }

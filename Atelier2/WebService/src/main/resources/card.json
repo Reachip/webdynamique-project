@@ -10,7 +10,8 @@
     "hp": 300.5,
     "defence": 150.0,
     "attack": 200.0,
-    "price": 120.0
+    "price": 120.0,
+    "isOnSale": false
   },
   {
     "name": "Water Sprite",
@@ -23,7 +24,8 @@
     "hp": 200.0,
     "defence": 100.0,
     "attack": 80.0,
-    "price": 85.0
+    "price": 85.0,
+    "isOnSale": false
   },
   {
     "name": "Earth Golem",
@@ -36,7 +38,8 @@
     "hp": 400.0,
     "defence": 300.0,
     "attack": 100.0,
-    "price": 150.0
+    "price": 150.0,
+    "isOnSale": false
   },
   {
     "name": "Wind Falcon",
@@ -49,7 +52,8 @@
     "hp": 150.0,
     "defence": 50.0,
     "attack": 130.0,
-    "price": 90.0
+    "price": 90.0,
+    "isOnSale": false
   },
   {
     "name": "Thunder Wolf",
@@ -62,7 +66,8 @@
     "hp": 250.0,
     "defence": 120.0,
     "attack": 180.0,
-    "price": 110.0
+    "price": 110.0,
+    "isOnSale": false
   },
   {
     "name": "Shadow Assassin",
@@ -75,7 +80,8 @@
     "hp": 100.0,
     "defence": 30.0,
     "attack": 200.0,
-    "price": 95.0
+    "price": 95.0,
+    "isOnSale": false
   },
   {
     "name": "Light Guardian",
@@ -88,7 +94,8 @@
     "hp": 350.0,
     "defence": 200.0,
     "attack": 150.0,
-    "price": 140.0
+    "price": 140.0,
+    "isOnSale": false
   },
   {
     "name": "Mystic Elf",
@@ -101,7 +108,8 @@
     "hp": 180.0,
     "defence": 80.0,
     "attack": 110.0,
-    "price": 100.0
+    "price": 100.0,
+    "isOnSale": false
   },
   {
     "name": "Ice Giant",
@@ -114,7 +122,8 @@
     "hp": 500.0,
     "defence": 400.0,
     "attack": 170.0,
-    "price": 160.0
+    "price": 160.0,
+    "isOnSale": false
   },
   {
     "name": "Phoenix",
@@ -127,6 +136,7 @@
     "hp": 300.0,
     "defence": 150.0,
     "attack": 220.0,
-    "price": 130.0
+    "price": 130.0,
+    "isOnSale": true
   }
 ]

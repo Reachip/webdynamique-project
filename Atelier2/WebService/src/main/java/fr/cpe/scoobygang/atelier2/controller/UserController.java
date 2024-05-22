@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
+import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
@@ -26,17 +27,22 @@ public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
     private final UserInitializer userInitializer;
+    private final CardService cardService;
 
-    public UserController(JWTService jwtService, UserService userService, UserInitializer userInitializer) {
+    public UserController(JWTService jwtService, UserService userService, UserInitializer userInitializer, CardService cardService) {
         this.jwtService = jwtService;
         this.userService = userService;
         this.userInitializer = userInitializer;
+        this.cardService = cardService;
     }
 
     @PostMapping(value="/user")
     public ResponseEntity<Optional<JWT>> addUser(@RequestBody UserRequest user) {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
+
+        cardService.attachUserToCard(createdUser);
+
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
