@@ -25,6 +25,7 @@ public class Card {
     private double defence;
     private double attack;
     private double price;
+    private Integer lastUserId;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

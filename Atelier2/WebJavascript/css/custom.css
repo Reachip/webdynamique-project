@@ -24,24 +24,6 @@ body {
     box-sizing: border-box;
 }
 
-header {
-    width: 100%;
-    background-color: var(--primary);
-    color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    height: 70px;
-}
-
-#content {
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    margin-top: 70px;   
-}
-
 /* SCOOBY TITLE */
 .scooby {
     margin-top: 0;
@@ -93,28 +75,29 @@ header {
     margin-bottom: 30px;
 }
 
-/* LOGIN FORM */
-.form-login-container {
+/* LOGIN/REGISTER FORMS */
+.form-login-container, .form-register-container{
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
     text-align: center;
-    max-width: 500px;
+    max-width: 450px;
+    margin: 0 auto;
+    justify-content: center;
 }
 
-.form-login-container h2 {
+.form-login-container h2, .form-register-container h2 {
     margin-bottom: 20px;
 }
 
-.form-login-container label {
+.form-login-container label, .form-register-container label {
     display: block;
     margin-bottom: 5px;
     text-align: left;
 }
 
-.form-login-container input {
+.form-login-container input, .form-register-container input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -122,7 +105,7 @@ header {
     border-radius: 4px;
 }
 
-.form-login-container button {
+.form-login-container button, .form-register-container button {
     width: 100%;
     padding: 10px;
     background-color: var(--primary);
@@ -133,16 +116,18 @@ header {
     margin-top: 10px;
 }
 
-.form-login-container button:hover {
+.form-login-container button:hover, .form-register-container button:hover {
     background-color: var(--primary-dark);
 }
 
 .form-login-container input,
-.form-login-container button {
+.form-login-container button,
+.form-register-container input,
+.form-register-container button {
     box-sizing: border-box;
 }
 
-.form-login-container .form-login-logo {
+.form-login-container .form-login-logo, .form-register-container .form-register-logo  {
     width: 180px;
     height: 180px;
 }
@@ -161,10 +146,9 @@ header {
 
 #content {
     width: 100%;
-    max-width: 500px;
     margin: auto;
     padding: 20px;
-    margin-top: 70px; /* Ensure this compensates for the header height */
+    margin-top: 70px;
 }
 
 .navbar {
@@ -257,7 +241,7 @@ header {
 
 /* TABLE */
 table {
-    width: 90vw;
+    width: 100%;
     margin-top: 20px;
     border-collapse: collapse;
     background-color: #fff;
@@ -409,6 +393,7 @@ ul.details-list li::before {
     margin-top: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
+    text-align: left;
 }
 
 .alert-success {

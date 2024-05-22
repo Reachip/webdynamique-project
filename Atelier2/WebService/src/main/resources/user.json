@@ -1,5 +1,8 @@
 [{
   "username": "admin",
   "password": "admin",
-  "account": 500
+  "account": 500,
+  "lastName": "Admin",
+  "surName": "Admin",
+  "email": "admin.admin@gmail.com"
 }]

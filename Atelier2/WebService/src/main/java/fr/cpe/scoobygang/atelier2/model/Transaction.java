@@ -1,12 +1,18 @@
 package fr.cpe.scoobygang.atelier2.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction
 {
     @Id
@@ -24,4 +30,10 @@ public class Transaction
     @ManyToOne
     @JoinColumn(name = "storeId", referencedColumnName = "id")
     private Store store;
+
+    private TransactionAction action;
+
+    private Timestamp timestamp;
+
+    private double amount;
 }

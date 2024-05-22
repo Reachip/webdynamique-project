@@ -1,7 +1,9 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.CardInitializer;
+import fr.cpe.scoobygang.atelier2.initializer.StoreInitializer;
 import fr.cpe.scoobygang.atelier2.model.Card;
+import fr.cpe.scoobygang.atelier2.model.Transaction;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import jakarta.annotation.PostConstruct;
@@ -16,10 +18,17 @@ import java.util.List;
 public class StoreController {
     private final CardService cardService;
     private final StoreService storeService;
+    private final StoreInitializer storeInitializer;
 
-    public StoreController(CardService cardService, StoreService storeService) {
+    public StoreController(CardService cardService, StoreService storeService, StoreInitializer storeInitializer) {
         this.cardService = cardService;
         this.storeService = storeService;
+        this.storeInitializer = storeInitializer;
+    }
+
+    @PostConstruct
+    public void init() {
+        storeInitializer.initialize();
     }
 
     @GetMapping(value = {"/store/buy"})
@@ -28,9 +37,11 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/buy"})
-    public ResponseEntity buyCard(@RequestBody int cardId, int userId){
-        storeService.buyCard(cardId, userId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity buyCard(@RequestBody int cardId, int userId, int storeId){
+        if (storeService.buyCard(cardId, userId, storeId)){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping(value = {"/store/sell"})
@@ -41,5 +52,10 @@ public class StoreController {
     @PostMapping(value = {"/store/sell"})
     public void sellCard(@RequestBody int cardId, int userId){
         storeService.sellUserCard(cardId, userId);
+    }
+
+    @GetMapping(value = {"/store/transaction"})
+    public ResponseEntity<List<Transaction>> getTransaction(@RequestBody int userId){
+        return ResponseEntity.ok(storeService.getTransaction(userId));
     }
 }
