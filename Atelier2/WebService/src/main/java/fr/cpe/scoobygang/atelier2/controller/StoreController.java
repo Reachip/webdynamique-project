@@ -38,8 +38,10 @@ public class StoreController {
 
     @PostMapping(value = {"/store/buy"})
     public ResponseEntity buyCard(@RequestBody int cardId, int userId, int storeId){
-        storeService.buyCard(cardId, userId, storeId);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        if (storeService.buyCard(cardId, userId, storeId)){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping(value = {"/store/sell"})

@@ -90,6 +90,18 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
     }
 
+    @DeleteMapping(value = "/user/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @GetMapping(value = "/currentUser")
     public ResponseEntity<UserRequest> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
