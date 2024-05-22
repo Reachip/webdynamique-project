@@ -50,7 +50,7 @@ public class UserController {
 
     @PostMapping(value = "/auth")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
-²        Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+        Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
@@ -88,6 +88,18 @@ public class UserController {
 
         int userID = jwt.get().getJwtInformation().getUserID();
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
+    }
+
+    @DeleteMapping(value = "/user/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping(value = "/currentUser")
