@@ -11,10 +11,9 @@ public class CardRequest {
     private String family;
     private String affinity;
     private String imgUrl;
-    private String smallImgUrl;
     private int energy;
     private int hp;
-    private int defence;
+    private int defense;
     private int attack;
     private int price;
     private int userId;
