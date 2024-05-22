@@ -66,8 +66,8 @@ public class CardController {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCards()));
     }
 
-    @GetMapping(value = {"/cards/{userId}"})
-    public ResponseEntity<List<CardResponse>> getCards(@PathVariable("userId") int userId) {
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userId)));
+    @GetMapping(value = {"/cards/user/{id}"})
+    public ResponseEntity<List<CardResponse>> getCards(@PathVariable("id") int id) {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(id)));
     }
 }
