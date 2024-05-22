@@ -15,18 +15,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class StoreController {
     private final CardService cardService;
-    private final CardInitializer cardInitializer;
     private final StoreService storeService;
 
-    public StoreController(CardService cardService, CardInitializer cardInitializer, StoreService storeService) {
+    public StoreController(CardService cardService, StoreService storeService) {
         this.cardService = cardService;
-        this.cardInitializer = cardInitializer;
         this.storeService = storeService;
-    }
-
-    @PostConstruct
-    public void init() {
-        cardInitializer.initialize();
     }
 
     @GetMapping(value = {"/store/buy"})

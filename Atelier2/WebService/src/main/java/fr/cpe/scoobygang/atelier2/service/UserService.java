@@ -25,13 +25,13 @@ public class UserService {
         this.jwtService = jwtService;
     }
 
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
     public void addAllUser(List<User> users) {
         userRepository.saveAll(users);
     }
 
-    public void addUser(User user) {
-        userRepository.save(user);
-    }
 
     public List<User> getAllUsers() {
         Iterable<User> iterable = userRepository.findAll();
