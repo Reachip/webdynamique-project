@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   /* GET LOGGED USER */
   const userToken = localStorage.getItem("scoobycards-user-token");
-  fetch("http://127.0.0.1:8080/currentUser", {
+  console.log("token : ", localStorage.getItem("scoobycards-user-token"))
+  fetch("http://localhost:8080/user/current", {
     method: "POST",
-    body: JSON.stringify({
-      token: userToken
-    }),
     headers: {
+      "Authorization": "Bearer " + userToken,
       "Content-type": "application/json; charset=UTF-8"
     }
   })
