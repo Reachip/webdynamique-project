@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -26,7 +25,7 @@ public class UserApplicationRunner implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         List<User> users = new ArrayList<>();
 
         try {
