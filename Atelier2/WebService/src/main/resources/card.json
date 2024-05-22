@@ -9,7 +9,8 @@
     "hp": 300.5,
     "defense": 150.0,
     "attack": 200.0,
-    "price": 120.0
+    "price": 120.0,
+    "isOnSale": false
   },
   {
     "name": "Water Sprite",
@@ -21,7 +22,8 @@
     "hp": 200.0,
     "defense": 100.0,
     "attack": 80.0,
-    "price": 85.0
+    "price": 85.0,
+    "isOnSale": false
   },
   {
     "name": "Earth Golem",
@@ -33,7 +35,8 @@
     "hp": 400.0,
     "defense": 300.0,
     "attack": 100.0,
-    "price": 150.0
+    "price": 150.0,
+    "isOnSale": false
   },
   {
     "name": "Wind Falcon",
@@ -45,7 +48,8 @@
     "hp": 150.0,
     "defense": 50.0,
     "attack": 130.0,
-    "price": 90.0
+    "price": 90.0,
+    "isOnSale": false
   },
   {
     "name": "Thunder Wolf",
@@ -57,7 +61,8 @@
     "hp": 250.0,
     "defense": 120.0,
     "attack": 180.0,
-    "price": 110.0
+    "price": 110.0,
+    "isOnSale": false
   },
   {
     "name": "Shadow Assassin",
@@ -69,7 +74,8 @@
     "hp": 100.0,
     "defense": 30.0,
     "attack": 200.0,
-    "price": 95.0
+    "price": 95.0,
+    "isOnSale": false
   },
   {
     "name": "Light Guardian",
@@ -81,7 +87,8 @@
     "hp": 350.0,
     "defense": 200.0,
     "attack": 150.0,
-    "price": 140.0
+    "price": 140.0,
+    "isOnSale": false
   },
   {
     "name": "Mystic Elf",
@@ -93,7 +100,8 @@
     "hp": 180.0,
     "defense": 80.0,
     "attack": 110.0,
-    "price": 100.0
+    "price": 100.0,
+    "isOnSale": false
   },
   {
     "name": "Frost Giant",
@@ -105,7 +113,8 @@
     "hp": 500.0,
     "defense": 400.0,
     "attack": 170.0,
-    "price": 160.0
+    "price": 160.0,
+    "isOnSale": false
   },
   {
     "name": "Phoenix",
@@ -117,7 +126,8 @@
     "hp": 300.0,
     "defense": 150.0,
     "attack": 220.0,
-    "price": 130.0
+    "price": 130.0,
+    "isOnSale": false
   },
   {
     "name": "Ice Drake",
@@ -129,7 +139,8 @@
     "defense": 200.0,
     "attack": 250.0,
     "price": 180.0,
-    "imgUrl": "https://i.ebayimg.com/images/g/KoQAAOSwffZhpqVY/s-l1600.png"
+    "imgUrl": "https://i.ebayimg.com/images/g/KoQAAOSwffZhpqVY/s-l1600.png",
+    "isOnSale": false
   },
   {
     "name": "Storm Elemental",
@@ -141,7 +152,8 @@
     "defense": 180.0,
     "attack": 230.0,
     "price": 150.0,
-    "imgUrl": "https://boutique.magiccorporation.com/scan.php?num=1590"
+    "imgUrl": "https://boutique.magiccorporation.com/scan.php?num=1590",
+    "isOnSale": false
   },
   {
     "name": "Rock Behemoth",
@@ -153,7 +165,8 @@
     "defense": 500.0,
     "attack": 180.0,
     "price": 200.0,
-    "imgUrl": "https://static-7.studiobebop.net/ygo_data/card_images/Subterror_Behemoth_Stalagmo.jpg"
+    "imgUrl": "https://static-7.studiobebop.net/ygo_data/card_images/Subterror_Behemoth_Stalagmo.jpg",
+    "isOnSale": false
   },
   {
     "name": "Tidal Leviathan",
@@ -165,7 +178,8 @@
     "defense": 600.0,
     "attack": 300.0,
     "price": 300.0,
-    "imgUrl": "https://www.mtgnexus.com/img/ccc/ren/15776/132348.jpg"
+    "imgUrl": "https://www.mtgnexus.com/img/ccc/ren/15776/132348.jpg",
+    "isOnSale": false
   },
   {
     "name": "Flame Salamander",
@@ -177,7 +191,8 @@
     "defense": 120.0,
     "attack": 190.0,
     "price": 100.0,
-    "imgUrl": "https://product-images.tcgplayer.com/256289.jpg"
+    "imgUrl": "https://product-images.tcgplayer.com/256289.jpg",
+    "isOnSale": false
   },
   {
     "name": "Aero Serpent",
@@ -189,7 +204,8 @@
     "defense": 80.0,
     "attack": 150.0,
     "price": 90.0,
-    "imgUrl": "https://i.ebayimg.com/images/g/p98AAOSwDyFjTryz/s-l1600.jpg"
+    "imgUrl": "https://i.ebayimg.com/images/g/p98AAOSwDyFjTryz/s-l1600.jpg",
+    "isOnSale": false
   },
   {
     "name": "Lunar Owl",
@@ -201,7 +217,8 @@
     "defense": 60.0,
     "attack": 110.0,
     "price": 80.0,
-    "imgUrl": "https://cdn11.bigcommerce.com/s-3b5vpig99v/images/stencil/1280x1280/products/147480/85470/FableOfWolfAndOwl__07588.1590612110.jpg"
+    "imgUrl": "https://cdn11.bigcommerce.com/s-3b5vpig99v/images/stencil/1280x1280/products/147480/85470/FableOfWolfAndOwl__07588.1590612110.jpg",
+    "isOnSale": false
   },
   {
     "name": "Sand Wraith",
@@ -213,7 +230,8 @@
     "defense": 100.0,
     "attack": 160.0,
     "price": 110.0,
-    "imgUrl": "https://www.mypokecard.com/en/Gallery/my/galery/vlvuAsODlE5o.jpg"
+    "imgUrl": "https://www.mypokecard.com/en/Gallery/my/galery/vlvuAsODlE5o.jpg",
+    "isOnSale": false
   },
   {
     "name": "Inferno Demon",
@@ -225,7 +243,8 @@
     "defense": 250.0,
     "attack": 300.0,
     "price": 220.0,
-    "imgUrl": "https://www.mtgnexus.com/img/ccc/ren/8512/37771.jpg"
+    "imgUrl": "https://www.mtgnexus.com/img/ccc/ren/8512/37771.jpg",
+    "isOnSale": false
   },
   {
     "name": "Celestial Unicorn",
@@ -237,6 +256,7 @@
     "defense": 150.0,
     "attack": 180.0,
     "price": 120.0,
-    "imgUrl": "https://en.play-in.com/images/cartes/dungeons_and_dragons_adventures_in_the_forgotten_realms/imported_celestial_unicorn84053.png"
+    "imgUrl": "https://en.play-in.com/images/cartes/dungeons_and_dragons_adventures_in_the_forgotten_realms/imported_celestial_unicorn84053.png",
+    "isOnSale": false
   }
 ]

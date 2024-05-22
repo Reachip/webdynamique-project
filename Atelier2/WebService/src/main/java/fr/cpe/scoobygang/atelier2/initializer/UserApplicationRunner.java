@@ -38,6 +38,8 @@ public class UserApplicationRunner implements ApplicationRunner {
                 User user = User.toUser(jsonObject);
                 users.add(user);
             }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

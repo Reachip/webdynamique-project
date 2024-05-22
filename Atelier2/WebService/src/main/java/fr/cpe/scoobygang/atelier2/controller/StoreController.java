@@ -38,9 +38,9 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping(value = {"/store/sell"})
-    public ResponseEntity<List<Card>> sellCard(@RequestBody int userId){
-        return ResponseEntity.ok(cardService.getAllUserCard(userId));
+    @GetMapping(value = {"/store/cards_to_sell/{storeId}"})
+    public ResponseEntity<List<Card>> sellCard(@PathVariable int storeId){
+        return ResponseEntity.ok(storeService.getCardsById(storeId));
     }
 
     @PostMapping(value = {"/store/sell"})

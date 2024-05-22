@@ -1,4 +1,4 @@
-let card = {
+const card = {
             family_src:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/DC_Comics_logo.png/280px-DC_Comics_logo.png",
             family_name:"DC comics",
             img_src:"http://www.superherobroadband.com/app/themes/superhero/assets/img/superhero.gif",
@@ -8,9 +8,9 @@ let card = {
             energy:"100 Energy",
             attack:"17 Attack",
             defense: "80 defence"  
-        };
-let template = document.querySelector("#selectedCard");
-let clone = document.importNode(template.content, true);
+};
+const template = document.querySelector("#selectedCard");
+const clone = document.importNode(template.content, true);
 
 newContent= clone.firstElementChild.innerHTML
             .replace(/{{family_src}}/g, card.family_src)
@@ -24,7 +24,7 @@ newContent= clone.firstElementChild.innerHTML
             .replace(/{{defense}}/g, card.defense);
 clone.firstElementChild.innerHTML= newContent;
 
-let cardContainer= document.querySelector("#cardContainer");
+const cardContainer= document.querySelector("#cardContainer");
 cardContainer.appendChild(clone);
 
 

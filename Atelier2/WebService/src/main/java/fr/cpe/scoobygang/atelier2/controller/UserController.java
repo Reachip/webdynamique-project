@@ -8,6 +8,7 @@ import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
+import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,21 @@ import java.util.Optional;
 public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
-    private final UserApplicationRunner userApplicationRunner;
+    private final CardService cardService;
 
-    public UserController(JWTService jwtService, UserService userService, UserApplicationRunner userApplicationRunner) {
+    public UserController(JWTService jwtService, UserService userService, CardService cardService) {
         this.jwtService = jwtService;
         this.userService = userService;
-        this.userApplicationRunner = userApplicationRunner;
+        this.cardService = cardService;
     }
 
     @PostMapping(value="/register")
     public ResponseEntity<Optional<JWT>> addUser(@RequestBody UserRequest user) {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
+
+        cardService.attachUserToCard(createdUser);
+
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }

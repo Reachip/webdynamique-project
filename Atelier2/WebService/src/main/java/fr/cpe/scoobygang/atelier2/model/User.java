@@ -23,8 +23,8 @@ public class User {
     private int id;
     @Column(unique = true)
     private String username;
-    private String surName;
-    private String lastName;
+    private String surname;
+    private String name;
     private String email;
     private String password;
     private double account = 0;
@@ -38,10 +38,14 @@ public class User {
         user.setUsername(jsonObject.getString("username"));
         user.setPassword(jsonObject.getString("password"));
         user.setAccount(jsonObject.getDouble("account"));
-        user.setSurName(jsonObject.getString("surName"));
-        user.setLastName(jsonObject.getString("lastName"));
+        user.setSurname(jsonObject.getString("surname"));
+        user.setName(jsonObject.getString("name"));
         user.setEmail(jsonObject.getString("email"));
 
         return user;
+    }
+
+    public boolean canBuy(double price){
+        return this.getAccount() >= price;
     }
 }

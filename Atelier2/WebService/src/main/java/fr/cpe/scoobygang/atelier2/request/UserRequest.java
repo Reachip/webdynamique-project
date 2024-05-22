@@ -13,8 +13,8 @@ public class UserRequest {
     private int id;
     private String username;
     private String password;
-    private String surName;
-    private String lastName;
+    private String surname;
+    private String name;
     private String email;
     private double balance = 0;
     private List<Card> cardList = new ArrayList<>();
