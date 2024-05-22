@@ -2,14 +2,12 @@ package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.model.User;
-import fr.cpe.scoobygang.atelier2.request.CurrentUserResponse;
-import fr.cpe.scoobygang.atelier2.request.LoginRequest;
-import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
-import fr.cpe.scoobygang.atelier2.request.UserRequest;
+import fr.cpe.scoobygang.atelier2.request.*;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
+import fr.cpe.scoobygang.atelier2.service.exceptions.UserChangePasswordException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,7 +83,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/user/edit/password")
-    public ResponseEntity<CurrentUserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody String newPasword) {
+    public ResponseEntity<CurrentUserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody ChangePasswordRequest changePasswordRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
 
