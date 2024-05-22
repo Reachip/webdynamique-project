@@ -18,7 +18,7 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @GetMapping(value = {"/store/transaction/{id}"})
+    @GetMapping(value = {"/transaction/{id}"})
     public ResponseEntity<List<Transaction>> getTransaction(@PathVariable int id){
         return ResponseEntity.ok(transactionService.getTransaction(id));
     }
