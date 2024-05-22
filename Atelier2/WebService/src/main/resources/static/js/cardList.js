@@ -1,6 +1,45 @@
 import { showAlert, Alert } from './alerts.js';
 
 document.addEventListener("DOMContentLoaded", function () {
+    fetch("http://127.0.0.1:8080/stores", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                const storeTabs = document.querySelector(".stores-tabs");
+                response.json().then(stores => {
+                    stores.forEach(store => {
+                        const input = document.createElement("input");
+                        input.type = "radio";
+                        input.id = `store-${store.id}`;
+                        input.name = "stores-tabs";
+                        input.checked = true;
+
+                        const label = document.createElement("label");
+                        label.setAttribute("for", `store-${store.id}`);
+                        label.className = "store-tab";
+                        label.textContent = store.name;
+
+                        const span = document.createElement("span");
+                        span.className = "items-count";
+                        span.textContent = store.cardCount;
+
+                        label.appendChild(span);
+
+                        storeTabs.appendChild(input);
+                        storeTabs.appendChild(label);
+                    });
+
+                    const glider = document.createElement("span");
+                    glider.className = "glider";
+                    storeTabs.appendChild(glider);
+                });
+            }
+        });
+
     fetch("http://127.0.0.1:8080/cards", {
         method: "GET",
         headers: {
