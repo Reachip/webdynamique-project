@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.CardInitializer;
+import fr.cpe.scoobygang.atelier2.initializer.CardApplicationRunner;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import fr.cpe.scoobygang.atelier2.service.CardService;
@@ -16,16 +16,11 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class CardController {
     private final CardService cardService;
-    private final CardInitializer cardInitializer;
+    private final CardApplicationRunner cardApplicationRunner;
 
-    public CardController(CardService cardService, CardInitializer cardInitializer) {
+    public CardController(CardService cardService, CardApplicationRunner cardApplicationRunner) {
         this.cardService = cardService;
-        this.cardInitializer = cardInitializer;
-    }
-
-    @PostConstruct
-    public void init() {
-        cardInitializer.initialize();
+        this.cardApplicationRunner = cardApplicationRunner;
     }
 
     @DeleteMapping(value = {"/card/{id}"})

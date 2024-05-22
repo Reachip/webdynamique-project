@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.UserInitializer;
+import fr.cpe.scoobygang.atelier2.initializer.UserApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
@@ -9,7 +9,6 @@ import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import jakarta.annotation.PostConstruct;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
@@ -25,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
-    private final UserInitializer userInitializer;
+    private final UserApplicationRunner userApplicationRunner;
 
-    public UserController(JWTService jwtService, UserService userService, UserInitializer userInitializer) {
+    public UserController(JWTService jwtService, UserService userService, UserApplicationRunner userApplicationRunner) {
         this.jwtService = jwtService;
         this.userService = userService;
-        this.userInitializer = userInitializer;
+        this.userApplicationRunner = userApplicationRunner;
     }
 
     @PostMapping(value="/register")
@@ -41,11 +40,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         return ResponseEntity.ok(response);
-    }
-
-    @PostConstruct
-    public void init() {
-        userInitializer.initialize();
     }
 
     @PostMapping(value = "/login")
