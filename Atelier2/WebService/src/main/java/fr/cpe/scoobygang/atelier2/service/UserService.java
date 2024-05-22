@@ -42,6 +42,12 @@ public class UserService {
         return userRepository.findById(userID).get();
     }
 
+    public User changePassword(int userID, String newPassword) {
+        User user = userRepository.findById(userID).get();
+        user.setPassword(newPassword);
+        return userRepository.save(user);
+    }
+
     public Optional<JWT> login(String username, String password) {
         User existingUser = userRepository.findByUsername(username);
 

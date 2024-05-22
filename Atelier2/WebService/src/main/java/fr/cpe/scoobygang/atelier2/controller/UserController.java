@@ -80,6 +80,15 @@ public class UserController {
     public ResponseEntity<CurrentUserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
+
         return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(userService.getUser(userID)));
+    }
+
+    @GetMapping(value = "/user/current/reset/password")
+    public ResponseEntity<CurrentUserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody String newPasword) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+        int userID = jwt.get().getJwtInformation().getUserID();
+
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(userService.changePassword(userID, newPasword)));
     }
 }
