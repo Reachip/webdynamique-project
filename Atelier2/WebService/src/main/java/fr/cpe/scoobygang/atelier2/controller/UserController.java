@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
+import fr.cpe.scoobygang.atelier2.initializer.UserInitializer;
 import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
@@ -8,19 +9,11 @@ import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
 import jakarta.annotation.PostConstruct;
-import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,39 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
+    private final UserInitializer userInitializer;
 
-    public UserController(JWTService jwtService, UserService userService) {
+    public UserController(JWTService jwtService, UserService userService, UserInitializer userInitializer) {
         this.jwtService = jwtService;
         this.userService = userService;
+        this.userInitializer = userInitializer;
     }
 
-    public Resource loadUsers() {
-        return new ClassPathResource("/user.json");
-    }
     @PostConstruct
     public void init() {
-        List<User> users = new ArrayList<>();
-        try {
-            File file = loadUsers().getFile();
-            String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
-            JSONArray jsonArray = new JSONArray(content);
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                User user = jsonObjectToCard(jsonObject);
-                users.add(user);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        userService.addAllUser(users);
-    }
-    private User jsonObjectToCard(JSONObject jsonObject) {
-        User user = new User();
-        user.setUsername(jsonObject.getString("username"));
-        user.setPassword(jsonObject.getString("password"));
-        user.setBalance(jsonObject.getDouble("balance"));
-        return user;
+        userInitializer.initialize();
     }
 
     @PostMapping(value="/register")

@@ -8,6 +8,7 @@ import jakarta.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +27,14 @@ public class User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cards = new ArrayList<>();
+
+    public static User toUser(JSONObject jsonObject) {
+        User user = new User();
+
+        user.setUsername(jsonObject.getString("username"));
+        user.setPassword(jsonObject.getString("password"));
+        user.setBalance(jsonObject.getDouble("balance"));
+
+        return user;
+    }
 }
