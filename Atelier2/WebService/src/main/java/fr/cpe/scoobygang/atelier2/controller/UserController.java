@@ -59,44 +59,22 @@ public class UserController {
 
     @GetMapping(value = "/users")
     public ResponseEntity<List<User>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
-        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-
-        if (jwt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping(value = "/user/{id}")
     public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
-        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-
-        if (jwt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
 
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(id)));
     }
 
     @PutMapping(value = "/user")
     public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
-        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-
-        if (jwt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.putUser(user)));
     }
 
     @DeleteMapping(value = "/user/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
-        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-
-        if (jwt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
         userService.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
@@ -104,11 +82,6 @@ public class UserController {
     @GetMapping(value = "/currentUser")
     public ResponseEntity<UserRequest> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-
-        if (jwt.isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        }
-
         int userID = jwt.get().getJwtInformation().getUserID();
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
     }

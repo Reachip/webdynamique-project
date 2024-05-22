@@ -19,10 +19,9 @@ public class Card {
     private String family;
     private String affinity;
     private String imgUrl;
-    private String smallImgUrl;
     private int energy;
     private double hp;
-    private double defence;
+    private double defense;
     private double attack;
     private double price;
     private Integer lastUserId;
@@ -39,10 +38,9 @@ public class Card {
         card.setFamily(jsonObject.getString("family"));
         card.setAffinity(jsonObject.getString("affinity"));
         card.setImgUrl(jsonObject.getString("imgUrl"));
-        card.setSmallImgUrl(jsonObject.getString("smallImgUrl"));
         card.setEnergy(jsonObject.getInt("energy"));
         card.setHp(jsonObject.getDouble("hp"));
-        card.setDefence(jsonObject.getDouble("defence"));
+        card.setDefense(jsonObject.getDouble("defense"));
         card.setAttack(jsonObject.getDouble("attack"));
         card.setPrice(jsonObject.getDouble("price"));
 
