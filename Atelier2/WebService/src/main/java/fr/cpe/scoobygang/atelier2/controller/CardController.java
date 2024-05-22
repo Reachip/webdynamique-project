@@ -1,8 +1,10 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.CardApplicationRunner;
+import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.request.CardRequest;
+import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -59,12 +62,12 @@ public class CardController {
     }
 
     @GetMapping(value = {"/cards"})
-    public ResponseEntity<Iterable<Card>> getCards() {
-        return ResponseEntity.ok(cardService.getCards());
+    public ResponseEntity<List<CardResponse>> getCards() {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCards()));
     }
 
     @GetMapping(value = {"/cards/{userId}"})
-    public ResponseEntity<Iterable<Card>> getCards(@PathVariable("userId") int userId) {
-        return ResponseEntity.ok(cardService.getAllUserCard(userId));
+    public ResponseEntity<List<CardResponse>> getCards(@PathVariable("userId") int userId) {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userId)));
     }
 }

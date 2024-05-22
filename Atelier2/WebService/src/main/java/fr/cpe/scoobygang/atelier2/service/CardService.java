@@ -8,6 +8,8 @@ import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CardService {
@@ -20,7 +22,9 @@ public class CardService {
         return cardRepository.findOnSaleCards();
     }
     public List<Card> getAllUserCard(int userId){
-        return cardRepository.findByOwnerId(userId);
+        Iterable<Card> iterable = cardRepository.findByOwnerId(userId);
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
     public void saveCards(List<Card> cards) {
         cardRepository.saveAll(cards);
@@ -45,8 +49,10 @@ public class CardService {
         return cardRepository.findById(id);
     }
 
-    public Iterable<Card> getCards() {
-        return cardRepository.findAll();
+    public List<Card> getCards() {
+        Iterable<Card> iterable = cardRepository.findAll();
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .collect(Collectors.toList());
     }
 
     public Optional<Card> deleteCard(int id) {
