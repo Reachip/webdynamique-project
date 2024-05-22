@@ -3,18 +3,12 @@ package fr.cpe.scoobygang.atelier2.controller;
 import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
-import fr.cpe.scoobygang.atelier2.model.Card;
-import fr.cpe.scoobygang.atelier2.model.Store;
-import fr.cpe.scoobygang.atelier2.model.StoreOrder;
-import fr.cpe.scoobygang.atelier2.model.Transaction;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier2.request.StoreResponse;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import fr.cpe.scoobygang.atelier2.service.TransactionService;
-import jakarta.annotation.PostConstruct;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +20,7 @@ import java.util.List;
 public class StoreController {
     private final CardService cardService;
     private final StoreService storeService;
-    private final TransactionService transactionService;
+
 
     private final StoreApplicationRunner storeApplicationRunner;
 
@@ -34,7 +28,6 @@ public class StoreController {
         this.cardService = cardService;
         this.storeService = storeService;
         this.storeApplicationRunner = storeApplicationRunner;
-        this.transactionService = transactionService;
     }
 
     @GetMapping(value = {"/stores"})
@@ -43,28 +36,25 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/buy"})
-    public ResponseEntity buyCard(@RequestBody StoreOrderRequest storeOrderRequest){
-        if (storeService.buyCard(storeOrderRequest.getCardId(), storeOrderRequest.getUserId(), storeOrderRequest.getStoreId())){
+    public ResponseEntity buyCard(@RequestBody StoreOrderRequest storeOrderRequest) {
+        if (storeService.buyCard(storeOrderRequest.getCardId(), storeOrderRequest.getUserId(), storeOrderRequest.getStoreId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @GetMapping(value = {"/store/cards_to_sell/{storeId}"})
-    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int storeId){
+    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int storeId) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(storeId)));
     }
 
     @PostMapping(value = {"/store/sell"})
-    public ResponseEntity sellCard(@RequestBody StoreOrderRequest storeOrderRequest){
+    public ResponseEntity sellCard(@RequestBody StoreOrderRequest storeOrderRequest) {
         if (storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping(value = {"/store/transaction/{id}"})
-    public ResponseEntity<List<Transaction>> getTransaction(@PathVariable int id){
-        return ResponseEntity.ok(transactionService.getTransaction(id));
-    }
+
 }
