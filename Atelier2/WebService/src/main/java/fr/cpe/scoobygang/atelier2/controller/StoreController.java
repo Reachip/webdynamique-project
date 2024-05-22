@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class CardController {
+public class StoreController {
     private final CardService cardService;
     private final CardInitializer cardInitializer;
     private final StoreService storeService;
 
-    public CardController(CardService cardService, CardInitializer cardInitializer, StoreService storeService) {
+    public StoreController(CardService cardService, CardInitializer cardInitializer, StoreService storeService) {
         this.cardService = cardService;
         this.cardInitializer = cardInitializer;
         this.storeService = storeService;
@@ -29,23 +29,23 @@ public class CardController {
         cardInitializer.initialize();
     }
 
-    @GetMapping(value = {"/card/buy"})
+    @GetMapping(value = {"/store/buy"})
     public ResponseEntity<List<Card>> buyCard(){
         return ResponseEntity.ok(cardService.getAllCard());
     }
 
-    @PostMapping(value = {"/card/buy"})
+    @PostMapping(value = {"/store/buy"})
     public ResponseEntity buyCard(@RequestBody int cardId, int userId){
         storeService.buyCard(cardId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = {"/card/sell"})
+    @GetMapping(value = {"/store/sell"})
     public ResponseEntity<List<Card>> sellCard(@RequestBody int userId){
         return ResponseEntity.ok(cardService.getAllUserCard(userId));
     }
 
-    @PostMapping(value = {"/card/sell"})
+    @PostMapping(value = {"/store/sell"})
     public void sellCard(@RequestBody int cardId, int userId){
         storeService.sellUserCard(cardId, userId);
     }
