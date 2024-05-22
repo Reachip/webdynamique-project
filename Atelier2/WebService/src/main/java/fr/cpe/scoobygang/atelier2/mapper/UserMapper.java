@@ -1,6 +1,7 @@
 package fr.cpe.scoobygang.atelier2.mapper;
 
 import fr.cpe.scoobygang.atelier2.model.User;
+import fr.cpe.scoobygang.atelier2.request.CurrentUserResponse;
 import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import org.mapstruct.BeanMapping;
@@ -24,4 +25,5 @@ public interface UserMapper {
     @Mapping(target = "account", source = "account")
     void userApply(@MappingTarget User userToUpdate, User user);
     UserRequest userToUserRequest(User car);
+    CurrentUserResponse userToCurrentUserResponse(User user);
 }
