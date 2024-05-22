@@ -5,7 +5,9 @@ import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Optional;
 
 @RestController
@@ -18,23 +20,38 @@ public class CardController {
     }
 
     @DeleteMapping(value = {"/card/{id}"})
-    public ResponseEntity<Optional<Card>> deleteCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
-        return ResponseEntity.ok(cardService.deleteCard(id));
+    public ResponseEntity<Void> deleteCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
+        Optional<Card> card = cardService.deleteCard(id);
+        if (card.isPresent()) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 
     @PostMapping(value = {"/card"})
     public ResponseEntity<Card> createCard(@RequestBody CardRequest cardRequest) {
-        return ResponseEntity.ok(cardService.saveCard(cardRequest));
+        Card createdCard = cardService.saveCard(cardRequest);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(createdCard.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(createdCard);
     }
 
+
     @PutMapping(value = {"/card/{id}"})
-    public ResponseEntity<Optional<Card>> updateCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
-        return ResponseEntity.ok(cardService.updateCard(id, cardRequest));
+    public ResponseEntity<Card> updateCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
+        Optional<Card> updatedCard = cardService.updateCard(id, cardRequest);
+        return updatedCard.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = {"/card/{id}"})
     public ResponseEntity<Card> getCard(@PathVariable("id") int id) {
-        return cardService.getCard(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return cardService.getCard(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = {"/cards"})
