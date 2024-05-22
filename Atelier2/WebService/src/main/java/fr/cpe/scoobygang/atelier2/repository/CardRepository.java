@@ -14,4 +14,6 @@ public interface CardRepository extends CrudRepository<Card, Integer> {
 
     @Query("SELECT c FROM Card c WHERE c.owner IS NULL")
     List<Card> findNotOwnerCards();
+
+    List<Card> findByStoreId(int storeId);
 }

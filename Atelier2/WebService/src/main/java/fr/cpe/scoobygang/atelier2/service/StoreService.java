@@ -23,18 +23,18 @@ public class StoreService {
         this.transactionService = transactionService;
     }
 
-    public void sellUserCard(int cardId, int storeId) {
+    public boolean sellUserCard(int cardId, int storeId) {
 
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
         // Mettre la carte en vente
         card.setOnSale(true);
-
-        cardRepository.save(card);
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("Store not found for id " + storeId));
-        store.getCardList().add(card);
-        storeRepository.save(store);
+        card.setStore(store);
+        cardRepository.save(card);
+
+        return true;
     }
 
     public boolean buyCard(int cardId, int userId, int storeId){
@@ -71,13 +71,12 @@ public class StoreService {
         return true;
     }
 
-
     public void saveStores(List<Store> stores) {
         storeRepository.saveAll(stores);
     }
 
     public List<Card> getCardsById(int storeId) {
-        return storeRepository.findCardsById(storeId);
+        return cardRepository.findByStoreId(storeId);
     }
 
     public List<Store> getStores() {
