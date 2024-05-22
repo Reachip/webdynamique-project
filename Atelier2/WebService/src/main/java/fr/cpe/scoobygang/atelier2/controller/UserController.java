@@ -97,18 +97,30 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @RequestParam int userId) {
+    public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @RequestParam int id) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userId)));
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(id)));
     }
 
     @PutMapping(value = "/user")
     public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        int userID = jwt.get().getJwtInformation().getUserID();
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
+    }
+
+    @GetMapping(value = "/currentUser")
+    public ResponseEntity<UserRequest> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
         if (jwt.isEmpty()) {
