@@ -2,23 +2,20 @@ package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.UserApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
-import fr.cpe.scoobygang.atelier2.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.model.User;
+import fr.cpe.scoobygang.atelier2.request.LoginRequest;
+import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
-import jakarta.annotation.PostConstruct;
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -66,8 +63,11 @@ public class UserController {
     }
 
     @PutMapping(value = "/user")
-    public ResponseEntity<UserRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.putUser(user)));
+    public ResponseEntity<UserPutRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody UserPutRequest userPutRequest) {
+        JWT jwt = jwtService.fromAuthorization(authorization).get();
+        UserPutRequest body = userService.putUser(jwt, userPutRequest);
+
+        return ResponseEntity.ok(body);
     }
 
     @DeleteMapping(value = "/user/{id}")

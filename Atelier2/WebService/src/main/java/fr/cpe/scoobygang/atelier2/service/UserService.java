@@ -1,12 +1,11 @@
 package fr.cpe.scoobygang.atelier2.service;
 
+import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.repository.UserRepository;
+import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,8 +57,13 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public User putUser(User user) {
-        userRepository.save(user);
-        return user;
+    public UserPutRequest putUser(JWT jwt, UserPutRequest userPutRequest) {
+        User mappedUser = UserMapper.INSTANCE.userPutRequestToUser(userPutRequest);
+        User userToUpdate = userRepository.findById(jwt.getJwtInformation().getUserID()).get();
+
+        UserMapper.INSTANCE.userApply(userToUpdate, mappedUser);
+        userRepository.save(userToUpdate);
+
+        return userPutRequest;
     }
 }
