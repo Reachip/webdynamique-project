@@ -1,8 +1,8 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.UserApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
 import fr.cpe.scoobygang.atelier2.model.User;
+import fr.cpe.scoobygang.atelier2.request.CurrentUserResponse;
 import fr.cpe.scoobygang.atelier2.request.LoginRequest;
 import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.request.UserRequest;
@@ -77,9 +77,9 @@ public class UserController {
     }
 
     @GetMapping(value = "/user/current")
-    public ResponseEntity<UserRequest> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
+    public ResponseEntity<CurrentUserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
+        return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(userService.getUser(userID)));
     }
 }
