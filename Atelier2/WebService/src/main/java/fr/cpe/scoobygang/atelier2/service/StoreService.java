@@ -28,6 +28,11 @@ public class StoreService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
+        if (card.isOnSale())
+        {
+            return false;
+        }
+
         // Mettre la carte en vente
         card.setOnSale(true);
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("Store not found for id " + storeId));
@@ -44,7 +49,7 @@ public class StoreService {
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        if (!newOwner.canBuy(card.getPrice())){
+        if (!newOwner.canBuy(card.getPrice()) || newOwner.getId() == card.getOwner().getId()){
             return false;
         }
 
