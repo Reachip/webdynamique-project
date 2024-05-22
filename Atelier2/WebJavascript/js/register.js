@@ -1,17 +1,28 @@
 import { showAlert, Alert } from './alerts.js';
 
 document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.querySelector("#form-login");
+    const registerForm = document.querySelector("#form-register");
 
-    loginForm.addEventListener("submit", function (event) {
+    registerForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const username = document.querySelector("#form-login-username").value;
-        const password = document.querySelector("#form-login-password").value;
+        const surname = document.querySelector("#form-register-surname").value;
+        const name = document.querySelector("#form-register-name").value;
+        const email = document.querySelector("#form-register-email").value;
+        const username = document.querySelector("#form-register-username").value;
+        const password = document.querySelector("#form-register-password").value;
+        const passwordConfirmation = document.querySelector("#form-register-password-confirmation").value;
 
-        fetch("http://127.0.0.1:8080/login", {
+        if(password != passwordConfirmation) {
+            return showAlert(Alert.ERROR, "Les mots de passe sont différents.");
+        }
+
+        fetch("http://127.0.0.1:8080/register", {
             method: "POST",
             body: JSON.stringify({
+                surname: surname,
+                name: name,
+                email: email,
                 username: username,
                 password: password
             }),
