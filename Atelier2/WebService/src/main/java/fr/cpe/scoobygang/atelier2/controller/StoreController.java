@@ -2,7 +2,10 @@ package fr.cpe.scoobygang.atelier2.controller;
 
 import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.model.Card;
+import fr.cpe.scoobygang.atelier2.model.Store;
+import fr.cpe.scoobygang.atelier2.model.StoreOrder;
 import fr.cpe.scoobygang.atelier2.model.Transaction;
+import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import jakarta.annotation.PostConstruct;
@@ -25,6 +28,11 @@ public class StoreController {
         this.storeApplicationRunner = storeApplicationRunner;
     }
 
+    @GetMapping(value = {"/stores"})
+    public ResponseEntity<List<Store>> getStores() {
+        return ResponseEntity.ok(storeService.getStores());
+    }
+
     @GetMapping(value = {"/store/buy"})
     public ResponseEntity<List<Card>> buyCard(){
         return ResponseEntity.ok(cardService.getAllCard());
@@ -44,8 +52,8 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/sell"})
-    public void sellCard(@RequestBody int cardId, int userId){
-        storeService.sellUserCard(cardId, userId);
+    public void sellCard(@RequestBody StoreOrderRequest storeOrderRequest){
+        storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId());
     }
 
     @GetMapping(value = {"/store/transaction"})

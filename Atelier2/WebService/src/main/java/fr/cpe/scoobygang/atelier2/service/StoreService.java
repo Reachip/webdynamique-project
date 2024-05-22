@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -25,23 +26,18 @@ public class StoreService {
         this.storeRepository = storeRepository;
     }
 
-    public void sellUserCard(int cardId, int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
+    public void sellUserCard(int cardId, int storeId) {
 
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        if (!user.getCardList().contains(card)) {
-            throw new IllegalStateException("Card not owned by the user.");
-        }
-
         // Mettre la carte en vente
         card.setOnSale(true);
 
-        // Sauvegarder les modifications
-        userRepository.save(user);
         cardRepository.save(card);
+        Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("Store not found for id " + storeId));
+        store.getCardList().add(card);
+        storeRepository.save(store);
     }
 
     public boolean buyCard(int cardId, int userId, int storeId){
@@ -110,6 +106,11 @@ public class StoreService {
     }
 
     public List<Card> getCardsById(int storeId) {
-        return  null;
+        return storeRepository.findCardsById(storeId);
+    }
+
+    public List<Store> getStores() {
+        Iterable<Store> iterable = storeRepository.findAll();
+        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
     }
 }
