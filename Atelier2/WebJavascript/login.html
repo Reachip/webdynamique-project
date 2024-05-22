@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,31 @@
     <link rel="stylesheet" href="css/custom.css">
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 </head>
+
 <body>
-    <div class="form-login-container">
-        <img class="form-login-logo" src="assets/login.png" alt="Logo ScoobyCards">
-        <h2>Connexion</h2>
-        <form id="form-login" method="POST">
-            <label for="username">Nom d'utilisateur</label>
-            <input type="text" id="form-login-username" name="username" required>
-            <label for="password">Mot de passe</label>
-            <input type="password" id="form-login-password" name="password" required>
-            <span>Pas encore de compte ? <a class="no-decoration badge badge-primary badge-small" href="register.html">S'inscrire</a></span>
-            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i> Se connecter</button>
-        </form>
-        <div class="alert alert-success hidden">
-            Connexion réussie.
-        </div>
-        <div class="alert alert-error hidden">
-            Échec de la connexion. L'identifiant ou le mot de passe sont invalides.
+    <div id="content">
+        <div class="form-login-container">
+            <img class="form-login-logo" src="assets/login.png" alt="Logo ScoobyCards">
+            <h2>Connexion</h2>
+            <form id="form-login" method="POST">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" id="form-login-username" name="username" required>
+                <label for="password">Mot de passe</label>
+                <input type="password" id="form-login-password" name="password" required>
+                <span>Pas encore de compte ? <a class="no-decoration badge badge-primary badge-small"
+                        href="register.html">S'inscrire</a></span>
+                <button type="submit"><i class="fa-solid fa-right-to-bracket"></i> Se connecter</button>
+            </form>
+            <div class="alert alert-success hidden">
+                Connexion réussie.
+            </div>
+            <div class="alert alert-error hidden">
+                Échec de la connexion. L'identifiant ou le mot de passe sont invalides.
+            </div>
         </div>
     </div>
     <script src="js/script.js"></script>
     <script src="js/login.js"></script>
 </body>
+
 </html>
