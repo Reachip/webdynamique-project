@@ -1,27 +1,10 @@
-### Etape 1 : Inscrire un utilisateur
-POST http://localhost:8080/register
-Content-Type: application/json
-
-{
-  "name": "mejri",
-  "surname": "rached",
-  "password": "123"
-}
-
-<> 2024-05-21T170545.500.json
-<> 2024-05-21T170525.500.json
-<> 2024-05-21T165906.500.json
-<> 2024-05-21T165830.500.json
-<> 2024-05-21T165745.500.json
-<> 2024-05-21T165618.500.json
-
 ### Etape 2 : Connecter un utilisateur
 POST http://localhost:8080/auth
 Content-Type: application/json
 
 {
-  "surname":"admin",
-  "password":"admin"
+  "username": "admin",
+  "password": "admin"
 }
 
 > {%
@@ -40,7 +23,7 @@ Content-Type: application/json
 
 ### Etape 3: Récupère tous les utilisateurs
 GET http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzUiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE2MzcxMDYxfQ.GM8zGtZvUF5f-0NgYDrX_How8ooF_qq9yzqyuMXrdhmBlq4oMPcG5BKQCDEzRVjI6Bhc1DwQdG7y9CUKIj4a_Q
+Authorization: Bearer {{ token }}
 
 <> 2024-05-21T175808-1.200.json
 <> 2024-05-21T175621.200.json

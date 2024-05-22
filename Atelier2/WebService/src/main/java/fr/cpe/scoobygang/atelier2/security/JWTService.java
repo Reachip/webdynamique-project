@@ -30,27 +30,9 @@ public class JWTService {
     public Optional<JWT> fromAuthorization(String authorizationString) {
         try {
             String token = authorizationString.split(" ")[1];
-            JWT jwt = new JWT(token);
-
-            if (isOk(jwt)) {
-                return Optional.of(jwt);
-            }
-
-            return Optional.empty();
+            return Optional.of(new JWT(token));
         } catch (Exception why) {
             return Optional.empty();
-        }
-    }
-
-    private boolean isOk(JWT jwt) {
-        try {
-            Jwts.parser()
-                    .setSigningKey(JWT_SECRET)
-                    .parseClaimsJws(jwt.getToken())
-                    .getBody();
-            return true;
-        } catch (Exception why) {
-            return false;
         }
     }
 }

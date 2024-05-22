@@ -31,8 +31,6 @@ public class AuthorizationFilter extends GenericFilterBean {
         Map<String, String> headers = WebUtils.getHeadersInfo((HttpServletRequest)servletRequest);
         String bearer = headers.get(AUTHORIZATION_HEADER_NAME);
 
-        System.out.println("headers : " + headers);
-
         if (bearer != null) {
             Optional<JWT> optionalJWT = jwtService.fromAuthorization(bearer);
 
