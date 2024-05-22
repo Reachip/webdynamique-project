@@ -1,3 +1,5 @@
+import { showAlert, Alert } from './alerts.js';
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("http://127.0.0.1:8080/cards", {
         method: "GET",
@@ -32,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Error when parsing JSON:", error);
                 });
             } else {
-                showAlert(Alert.ERROR, "Impossible de récupérer les cartes.");
+                showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des cartes.");
             }
         })
         .catch(error => {
             console.error("Fetch error:", error);
-            showAlert(Alert.ERROR, "Une erreur est survenue.");
+            showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des cartes.");
         });
 });
