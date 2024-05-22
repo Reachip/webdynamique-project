@@ -50,7 +50,7 @@ public class UserController {
 
     @PostMapping(value = "/auth")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
-        Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
+²        Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
