@@ -62,4 +62,9 @@ public class CardController {
     public ResponseEntity<Iterable<Card>> getCards() {
         return ResponseEntity.ok(cardService.getCards());
     }
+
+    @GetMapping(value = {"/cards/{userId}"})
+    public ResponseEntity<Iterable<Card>> getCards(@PathVariable("userId") int userId) {
+        return ResponseEntity.ok(cardService.getAllUserCard(userId));
+    }
 }
