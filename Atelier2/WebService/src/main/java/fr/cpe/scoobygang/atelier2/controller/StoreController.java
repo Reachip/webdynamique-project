@@ -42,11 +42,6 @@ public class StoreController {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }
 
-    @GetMapping(value = {"/store/buy"})
-    public ResponseEntity<List<Card>> buyCard(){
-        return ResponseEntity.ok(cardService.getAllCard());
-    }
-
     @PostMapping(value = {"/store/buy"})
     public ResponseEntity buyCard(@RequestBody StoreOrderRequest storeOrderRequest){
         if (storeService.buyCard(storeOrderRequest.getCardId(), storeOrderRequest.getUserId(), storeOrderRequest.getStoreId())){
