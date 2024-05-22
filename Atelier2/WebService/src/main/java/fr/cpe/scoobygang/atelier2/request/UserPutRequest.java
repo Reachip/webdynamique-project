@@ -7,10 +7,7 @@ import lombok.Setter;
 @Getter
 public class UserPutRequest {
     private String username;
-    private String oldPassword;
-    private String password;
-    private String surName;
-    private String lastName;
+    private String surname;
+    private String name;
     private String email;
-    private double account;
 }
