@@ -46,7 +46,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #ffffff;
+    background-color: var(--white);
 }
 
 .index-left-side img {
@@ -61,7 +61,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background-color: #007BFF;
+    background-color: var(--primary);
     color: white;
 }
 
@@ -75,7 +75,46 @@ body {
     margin-bottom: 30px;
 }
 
-/* LOGIN/REGISTER FORMS */
+/* USER PAGE */
+.user-container {
+    display: flex;
+    height: 80vh;
+}
+
+.user-left-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.user-left-side img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.user-right-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: var(--white);
+}
+
+.user-right-side h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.user-right-side p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+/* LOGIN/REGISTER/USER FORMS */
 .form-login-container, .form-register-container{
     background-color: #fff;
     padding: 20px;
@@ -87,17 +126,28 @@ body {
     justify-content: center;
 }
 
-.form-login-container h2, .form-register-container h2 {
+.form-user-container{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 auto;
+    justify-content: center;
+    width: 80%;
+}
+
+.form-login-container h2, .form-register-container h2, .form-user-container h2 {
     margin-bottom: 20px;
 }
 
-.form-login-container label, .form-register-container label {
+.form-login-container label, .form-register-container label, .form-user-container label {
     display: block;
     margin-bottom: 5px;
     text-align: left;
 }
 
-.form-login-container input, .form-register-container input {
+.form-login-container input, .form-register-container input, .form-user-container input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -105,7 +155,7 @@ body {
     border-radius: 4px;
 }
 
-.form-login-container button, .form-register-container button {
+.form-login-container button, .form-register-container button, .form-user-container button {
     width: 100%;
     padding: 10px;
     background-color: var(--primary);
@@ -116,14 +166,16 @@ body {
     margin-top: 10px;
 }
 
-.form-login-container button:hover, .form-register-container button:hover {
+.form-login-container button:hover, .form-register-container button:hover, .form-user-container button:hover {
     background-color: var(--primary-dark);
 }
 
 .form-login-container input,
 .form-login-container button,
 .form-register-container input,
-.form-register-container button {
+.form-register-container button,
+.form-user-container input,
+.form-user-container button {
     box-sizing: border-box;
 }
 
@@ -208,6 +260,10 @@ header {
     margin-right: 10px;
 }
 
+.badge i {
+    margin-right: 5px;
+}
+
 .badge-primary {
     background-color: var(--primary);
 }
@@ -237,6 +293,11 @@ header {
 /* HIDDEN */
 .hidden {
     display: none;
+}
+
+/* FW LIGHT */
+.fw-light {
+    font-weight: 300;
 }
 
 /* TABLE */

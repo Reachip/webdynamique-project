@@ -60,7 +60,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(id)));
     }
 
-    @PutMapping(value = "/user")
+    @PutMapping(value = "/user/edit")
     public ResponseEntity<UserPutRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody UserPutRequest userPutRequest) {
         JWT jwt = jwtService.fromAuthorization(authorization).get();
         UserPutRequest body = userService.putUser(jwt, userPutRequest);
@@ -88,7 +88,7 @@ public class UserController {
         int userID = jwt.get().getJwtInformation().getUserID();
 
         try {
-            User user = userService.changePassword(userID, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPasword());
+            User user = userService.changePassword(userID, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
             return ResponseEntity.ok(UserMapper.INSTANCE.userToCurrentUserResponse(user));
         } catch (UserChangePasswordException why) {
             return ResponseEntity.status(401).build();
