@@ -28,6 +28,10 @@ public class UserService {
     public User addUser(User user) {
         return userRepository.save(user);
     }
+    public void addAllUser(List<User> users) {
+        userRepository.saveAll(users);
+    }
+
 
     public List<User> getAllUsers() {
         Iterable<User> iterable = userRepository.findAll();

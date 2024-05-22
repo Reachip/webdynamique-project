@@ -7,11 +7,20 @@ import fr.cpe.scoobygang.atelier2.request.UserRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.UserService;
+import jakarta.annotation.PostConstruct;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +46,35 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
         return ResponseEntity.ok(response);
+    }
+
+    public Resource loadUsers() {
+        return new ClassPathResource("/user.json");
+    }
+    @PostConstruct
+    public void init() {
+        List<User> users = new ArrayList<>();
+        try {
+            File file = loadUsers().getFile();
+            String content = new String(Files.readAllBytes(Paths.get(file.toURI())));
+            JSONArray jsonArray = new JSONArray(content);
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                User user = jsonObjectToCard(jsonObject);
+                users.add(user);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        userService.addAllUser(users);
+    }
+    private User jsonObjectToCard(JSONObject jsonObject) {
+        User user = new User();
+        user.setUsername(jsonObject.getString("username"));
+        user.setPassword(jsonObject.getString("password"));
+        user.setAccount(jsonObject.getDouble("account"));
+        return user;
     }
 
     @PostMapping(value = "/auth")

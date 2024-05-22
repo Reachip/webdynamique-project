@@ -21,8 +21,25 @@ body {
     align-items: center;
     height: 100vh;
     background-color: var(--white);
-    padding-top: 70px; 
     box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 70px;
+}
+
+#content {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 70px;   
 }
 
 /* SCOOBY TITLE */
@@ -82,9 +99,9 @@ body {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+    width: 100%;
     text-align: center;
-    margin-top: -70px;
+    max-width: 500px;
 }
 
 .form-login-container h2 {
@@ -143,7 +160,11 @@ header {
 }
 
 #content {
-    margin-top: 90px;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 70px; /* Ensure this compensates for the header height */
 }
 
 .navbar {
@@ -302,11 +323,11 @@ table .row-image {
     background-color: var(--white);
     color: var(--primary);
 }
-  
+
 .button i {
     margin-right: 8px;
-  }
-  
+}
+
 .button-primary:hover {
     background-color: var(--primary-dark);
 }
