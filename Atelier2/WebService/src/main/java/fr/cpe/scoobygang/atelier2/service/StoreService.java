@@ -112,4 +112,8 @@ public class StoreService {
     public boolean checkUserAccount(User user, double price){
         return user.getAccount() >= price;
     }
+
+    public List<Card> getCardsById(int storeId) {
+        return  null;
+    }
 }
