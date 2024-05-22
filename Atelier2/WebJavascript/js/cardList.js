@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     const template = document.querySelector("#row");
 
                     for (const card of data) {
-                        let clone = document.importNode(template.content, true);
+                        const clone = document.importNode(template.content, true);
 
-                        newContent = clone.firstElementChild.innerHTML
+                        const newContent = clone.firstElementChild.innerHTML
                             .replace(/{{family}}/g, card.family)
                             .replace(/{{imgUrl}}/g, card.imgUrl)
                             .replace(/{{name}}/g, card.name)
