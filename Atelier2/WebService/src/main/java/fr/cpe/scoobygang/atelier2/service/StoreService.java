@@ -81,5 +81,7 @@ public class StoreService {
         storeRepository.saveAll(stores);
     }
 
-
+    public List<Card> getCardsById(int storeId) {
+        return  null;
+    }
 }
