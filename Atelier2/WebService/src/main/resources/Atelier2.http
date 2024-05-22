@@ -16,12 +16,12 @@ Content-Type: application/json
 <> 2024-05-21T165618.500.json
 
 ### Etape 2 : Connecter un utilisateur
-POST http://localhost:8080/login
+POST http://localhost:8080/auth
 Content-Type: application/json
 
 {
-  "surname":"rached",
-  "password":"123"
+  "surname":"admin",
+  "password":"admin"
 }
 
 > {%
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 ### Etape 3: Récupère tous les utilisateurs
 GET http://localhost:8080/users
-Authorization: Bearer {{ token }}
+Authorization: Bearer eyJhbGciOiJIUzUiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE2MzcxMDYxfQ.GM8zGtZvUF5f-0NgYDrX_How8ooF_qq9yzqyuMXrdhmBlq4oMPcG5BKQCDEzRVjI6Bhc1DwQdG7y9CUKIj4a_Q
 
 <> 2024-05-21T175808-1.200.json
 <> 2024-05-21T175621.200.json
