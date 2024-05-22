@@ -53,4 +53,8 @@ public class UserService {
         JWT jwt = jwtService.fromUser(existingUser);
         return Optional.of(jwt);
     }
+
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
 }

@@ -48,7 +48,7 @@ public class UserController {
         userInitializer.initialize();
     }
 
-    @PostMapping(value = "/auth")
+    @PostMapping(value = "/login")
     public ResponseEntity<Optional<JWT>> login(@RequestBody LoginRequest loginRequest) {
         Optional<JWT> response = userService.login(loginRequest.getUsername(), loginRequest.getPassword());
         if (response.isEmpty()) {
@@ -72,6 +72,18 @@ public class UserController {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         int userID = jwt.get().getJwtInformation().getUserID();
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(userID)));
+    }
+
+    @DeleteMapping(value = "/user/{id}")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        userService.deleteUser(id);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @GetMapping(value = "/currentUser")
