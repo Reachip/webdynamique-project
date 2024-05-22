@@ -5,12 +5,14 @@ import fr.cpe.scoobygang.atelier2.repository.CardRepository;
 import fr.cpe.scoobygang.atelier2.repository.StoreRepository;
 import fr.cpe.scoobygang.atelier2.repository.TransactionRepository;
 import fr.cpe.scoobygang.atelier2.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Service
 public class TransactionService {
     private final UserRepository userRepository;
     private final CardRepository cardRepository;
