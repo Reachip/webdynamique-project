@@ -50,16 +50,24 @@ Authorization: Bearer {{ token }}
 <> 2024-05-21T174015.404.json
 
 ###
-PUT http://localhost:8080/user
+PUT http://localhost:8080/user/edit
 Authorization: Bearer {{ token }}
 Content-Type: application/json
 
 {
   "username": "admin",
-  "oldPassword": "admin",
-  "password": "admin",
   "surName": "admin",
   "lastName": "admin",
-  "email": "admin",
-  "balance": 0
+  "email": "admin"
 }
+
+###
+PUT http://localhost:8080/user/edit/password
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "oldPassword": "admin",
+  "newPasword": "123"
+}
+
