@@ -6,6 +6,7 @@ import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
+import fr.cpe.scoobygang.atelier2.service.exceptions.UserChangePasswordException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +43,13 @@ public class UserService {
         return userRepository.findById(userID).get();
     }
 
-    public User changePassword(int userID, String newPassword) {
+    public User changePassword(int userID, String oldPassword, String newPassword) throws UserChangePasswordException {
         User user = userRepository.findById(userID).get();
+
+        if (!user.getPassword().equals(oldPassword)) {
+            throw new UserChangePasswordException("Pas possible de changer le mot de passe de cet utilisateur");
+        }
+
         user.setPassword(newPassword);
         return userRepository.save(user);
     }

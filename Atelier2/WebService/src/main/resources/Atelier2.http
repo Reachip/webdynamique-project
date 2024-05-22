@@ -70,6 +70,7 @@ Content-Type: application/json
 Authorization: Bearer {{ token }}
 
 {
+  "oldPassword": "admin",
   "newPasword": "123"
 }
 
