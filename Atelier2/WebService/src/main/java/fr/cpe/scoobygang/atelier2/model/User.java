@@ -30,7 +30,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private double account = 0;
+    private double balance = 0;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Card> cardList = new ArrayList<>();
@@ -40,7 +40,7 @@ public class User {
 
         user.setUsername(jsonObject.getString("username"));
         user.setPassword(jsonObject.getString("password"));
-        user.setAccount(jsonObject.getDouble("account"));
+        user.setBalance(jsonObject.getDouble("balance"));
         user.setSurname(jsonObject.getString("surname"));
         user.setName(jsonObject.getString("name"));
         user.setEmail(jsonObject.getString("email"));
@@ -64,6 +64,6 @@ public class User {
     }
 
     public boolean canBuy(double price){
-        return this.getAccount() >= price;
+        return this.getBalance() >= price;
     }
 }

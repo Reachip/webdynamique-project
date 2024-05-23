@@ -24,7 +24,7 @@ public interface UserMapper {
     @Mapping(target = "surname", source = "surname")
     @Mapping(target = "name", source = "name")
     @Mapping(target = "email", source = "email")
-    @Mapping(target = "account", source = "account")
+    @Mapping(target = "balance", source = "balance")
     void userApply(@MappingTarget User userToUpdate, User user);
     UserRequest userToUserRequest(User car);
     UserResponse userToUserResponse(User user);
