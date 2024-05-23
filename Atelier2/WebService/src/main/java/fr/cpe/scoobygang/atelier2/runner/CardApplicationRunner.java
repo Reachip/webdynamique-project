@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @Order(3)
@@ -58,7 +59,15 @@ public class CardApplicationRunner implements ApplicationRunner {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Card card = Card.toCard(jsonObject);
 
-                card.setStore(stores.stream().findFirst().orElse(null));
+                Random random = new Random();
+                boolean shouldAddStore = random.nextBoolean();
+
+                if (shouldAddStore) {
+                    card.setStore(stores.stream().findFirst().orElse(null));
+                } else {
+                    card.setStore(null);
+                }
+
                 card.setOwner(users.stream().findFirst().orElse(null));
 
                 cards.add(card);
