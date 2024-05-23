@@ -77,5 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Fetch error:", error);
                 showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des cartes.");
             });
+    } else {
+        window.location.replace("./login.html");
     }
 });
