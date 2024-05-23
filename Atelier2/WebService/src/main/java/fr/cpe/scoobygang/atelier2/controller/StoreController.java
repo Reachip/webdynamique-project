@@ -37,7 +37,7 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/stores"})
-    public ResponseEntity<List<StoreResponse>> getStores(@RequestHeader(value = "Authorization") String authorization) {
+    public ResponseEntity<List<StoreResponse>> getStores() {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }
 
@@ -50,7 +50,7 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/store/{id}/cards"})
-    public ResponseEntity<List<CardResponse>> sellCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
+    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(id)));
     }
 
