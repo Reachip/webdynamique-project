@@ -5,6 +5,8 @@ import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;
+import fr.cpe.scoobygang.atelier2.security.JWT;
+import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,12 @@ import java.util.Optional;
 @RestController
 @CrossOrigin(origins = "*")
 public class CardController {
+    private final JWTService jwtService;
     private final CardService cardService;
     private final CardApplicationRunner cardApplicationRunner;
 
-    public CardController(CardService cardService, CardApplicationRunner cardApplicationRunner) {
+    public CardController(JWTService jwtService, CardService cardService, CardApplicationRunner cardApplicationRunner) {
+        this.jwtService = jwtService;
         this.cardService = cardService;
         this.cardApplicationRunner = cardApplicationRunner;
     }
@@ -46,7 +50,6 @@ public class CardController {
         return ResponseEntity.created(location).body(createdCard);
     }
 
-
     @PutMapping(value = {"/card/{id}"})
     public ResponseEntity<Card> updateCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
         Optional<Card> updatedCard = cardService.updateCard(id, cardRequest);
@@ -66,8 +69,10 @@ public class CardController {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCards()));
     }
 
-    @GetMapping(value = {"/cards/user/{id}"})
-    public ResponseEntity<List<CardResponse>> getCards(@PathVariable("id") int id) {
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(id)));
+    @GetMapping(value = {"/cards/user"})
+    public ResponseEntity<List<CardResponse>> getCurrentUserCards(@RequestHeader(value = "Authorization") String authorization) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+        int userID = jwt.get().getJwtInformation().getUserID();
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userID)));
     }
 }
