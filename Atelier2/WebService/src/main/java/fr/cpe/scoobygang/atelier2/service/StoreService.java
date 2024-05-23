@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -73,7 +74,7 @@ public class StoreService {
         userRepository.save(newOwner);
         userRepository.save(currentOwner);
 
-        transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
+        Transaction buyTransaction = transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
         transactionService.createTransaction(currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
 
         return true;

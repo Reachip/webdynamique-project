@@ -26,7 +26,7 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
-    public void createTransaction(int userId, int cardId, int storeId, TransactionAction action) {
+    public Transaction createTransaction(int userId, int cardId, int storeId, TransactionAction action) {
         User owner = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         Card card = cardRepository.findById(cardId).orElseThrow(() -> new RuntimeException("Card not found"));
         Store store = storeRepository.findById(storeId).orElseThrow(() -> new RuntimeException("Store not found"));
@@ -41,7 +41,7 @@ public class TransactionService {
         transaction.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         // Save the new Transaction
-        transactionRepository.save(transaction);
+        return transactionRepository.save(transaction);
     }
 
     public List<Transaction> getTransaction(int userId){

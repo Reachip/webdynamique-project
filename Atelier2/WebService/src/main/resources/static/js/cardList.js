@@ -1,5 +1,7 @@
 import { showAlert, Alert } from './alerts.js';
 
+const userToken = localStorage.getItem("scoobycards-user-token");
+
 document.addEventListener("DOMContentLoaded", function () {
     function loadStore(id) {
         fetch(`http://127.0.0.1:8080/store/${id}/cards`, {
@@ -68,9 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             });
                         }
 
-                        console.log("brn", document.querySelectorAll(".buy-btn"))
                         document.querySelectorAll(".buy-btn").forEach(buyBtn => {
-                            const userToken = localStorage.getItem("scoobycards-user-token");
 
                             if (userToken == null) {
                                 buyBtn.classList.add("unclickable")
@@ -98,8 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                         "Content-type": "application/json; charset=UTF-8"
                                     }
                                 })
-                                    .then(response => response.json())
-                                    .then(json => console.log(json))
+                                    .then(_ => {
+                                        showAlert(Alert.SUCCESS, "Carte achetée avec succès !")
+                                        buyBtn.classList.add("unclickable")
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 2000)
+                                    })
                             })
                         })
                     }).catch(error => {
