@@ -96,9 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
               dropdownMenu.classList.add("dropdown-menu");
               dropdownMenu.classList.add("hidden");
 
-              const accountLink = document.createElement("a");
-              accountLink.href = "user.html";
-              accountLink.textContent = "Mon compte";
+              const balanceLink = document.createElement("a");
+              balanceLink.href = "user.html";
+              balanceLink.textContent = "Mon compte";
 
               const logoutLink = document.createElement("a");
               logoutLink.href = "#";
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.location.replace("./cardList.html");
               });
 
-              dropdownMenu.appendChild(accountLink);
+              dropdownMenu.appendChild(balanceLink);
               dropdownMenu.appendChild(logoutLink);
 
               usernameBadge.appendChild(dropdownMenu);

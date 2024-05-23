@@ -57,14 +57,14 @@ public class StoreService {
         // Récupération du propriétaire actuel de la carte
         User currentOwner = card.getOwner();
         // On lui crédite l'argent de la vente
-        currentOwner.setAccount(currentOwner.getAccount() + card.getPrice());
+        currentOwner.setBalance(currentOwner.getBalance() + card.getPrice());
         // On définit le nouveau propriétaire de la carte
         card.setOwner(newOwner);
         //card.setOnSale(false);
         card.setStore(null);
 
         // On lui débite le prix de la carte
-        newOwner.setAccount(newOwner.getAccount() - card.getPrice());
+        newOwner.setBalance(newOwner.getBalance() - card.getPrice());
 
         cardRepository.save(card);
         userRepository.save(newOwner);
