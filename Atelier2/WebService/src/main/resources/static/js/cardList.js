@@ -17,8 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         input.type = "radio";
                         input.id = `store-${store.id}`;
                         input.name = "stores-tabs";
-                        if(isFirstShop) {
-                            input.setAttribute("checked", "true")
+                        if (isFirstShop) {
+                            isFirstShop = false;
+                            input.setAttribute("checked", "true");
                         }
 
                         const label = document.createElement("label");
@@ -34,14 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         storeTabs.appendChild(input);
                         storeTabs.appendChild(label);
-
-                        if(isFirstShop) {
-                            isFirstShop = false;
-                            const glider = document.createElement("span");
-                            glider.className = "glider";
-                            storeTabs.appendChild(glider);
-                        }
                     });
+
+                    const glider = document.createElement("span");
+                    glider.className = "glider";
+                    storeTabs.appendChild(glider);
                 });
             }
         });
