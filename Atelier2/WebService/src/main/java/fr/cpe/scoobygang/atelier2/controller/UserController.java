@@ -77,21 +77,26 @@ public class UserController {
     @GetMapping(value = "/user/current")
     public ResponseEntity<UserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-        int userID = jwt.get().getJwtInformation().getUserID();
-
-        return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(userService.getUser(userID)));
+        if (jwt.isPresent()) {
+            int userID = jwt.get().getJwtInformation().getUserID();
+            return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(userService.getUser(userID)));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PutMapping(value = "/user/edit/password")
     public ResponseEntity<UserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody ChangePasswordRequest changePasswordRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-        int userID = jwt.get().getJwtInformation().getUserID();
+        if (jwt.isPresent()) {
+            int userID = jwt.get().getJwtInformation().getUserID();
 
-        try {
-            User user = userService.changePassword(userID, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
-            return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(user));
-        } catch (UserChangePasswordException why) {
-            return ResponseEntity.status(401).build();
+            try {
+                User user = userService.changePassword(userID, changePasswordRequest.getOldPassword(), changePasswordRequest.getNewPassword());
+                return ResponseEntity.ok(UserMapper.INSTANCE.userToUserResponse(user));
+            } catch (UserChangePasswordException why) {
+                return ResponseEntity.status(401).build();
+            }
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
