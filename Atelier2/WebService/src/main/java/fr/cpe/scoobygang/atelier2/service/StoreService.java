@@ -61,6 +61,9 @@ public class StoreService {
         currentOwner.setAccount(currentOwner.getAccount() + card.getPrice());
         // On définit le nouveau propriétaire de la carte
         card.setOwner(newOwner);
+        card.setOnSale(false);
+        card.setStore(null);
+
         // On lui ajoute la carte à sa liste car elle lui appartient désormais
         newOwner.getCardList().add(card);
         // On lui débite le prix de la carte
@@ -75,6 +78,23 @@ public class StoreService {
 
         return true;
     }
+
+
+    public boolean cancelSellCard(int cardId, int storeId, int userId){
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
+
+        // Si la carte n'appartient pas à l'utilisateur ou n'est pas dans le magasin
+        if (card.getOwner().getId() != userId || card.getStore().getId() != storeId) return false;
+
+        card.setStore(null);
+        card.setOnSale(false);
+
+        cardRepository.save(card);
+
+        return true;
+    }
+
 
     public void saveStores(List<Store> stores) {
         storeRepository.saveAll(stores);
