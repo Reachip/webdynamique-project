@@ -31,7 +31,7 @@ public class CardController {
     }
 
     @DeleteMapping(value = {"/card/{id}"})
-    public ResponseEntity<Void> deleteCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
+    public ResponseEntity<Void> deleteCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
         Optional<Card> card = cardService.deleteCard(id);
         if (card.isPresent()) {
             return ResponseEntity.noContent().build(); // 204 No Content
@@ -41,7 +41,7 @@ public class CardController {
     }
 
     @PostMapping(value = {"/card"})
-    public ResponseEntity<Card> createCard(@RequestBody CardRequest cardRequest) {
+    public ResponseEntity<Card> createCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
         Card createdCard = cardService.saveCard(cardRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
@@ -51,21 +51,21 @@ public class CardController {
     }
 
     @PutMapping(value = {"/card/{id}"})
-    public ResponseEntity<Card> updateCard(@PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
+    public ResponseEntity<Card> updateCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
         Optional<Card> updatedCard = cardService.updateCard(id, cardRequest);
         return updatedCard.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = {"/card/{id}"})
-    public ResponseEntity<Card> getCard(@PathVariable("id") int id) {
+    public ResponseEntity<Card> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
         return cardService.getCard(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping(value = {"/cards"})
-    public ResponseEntity<List<CardResponse>> getCards() {
+    public ResponseEntity<List<CardResponse>> getCards(@RequestHeader(value = "Authorization") String authorization) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCards()));
     }
 
