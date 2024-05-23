@@ -68,6 +68,5 @@ public class CardApplicationRunner implements ApplicationRunner {
         }
 
         cardService.saveCards(cards);
-        System.out.println("lol");
     }
 }
