@@ -53,17 +53,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             const previewPrice = document.querySelector('#preview-price');
 
                             rows.forEach(row => {
-                                row.addEventListener('click', () => {
+                                row.querySelector(".button-details").addEventListener("click", () => {
                                     previewImage.src = row.querySelector('.row-image').src;
                                     previewName.textContent = row.querySelector('span').textContent;
-                                    previewDescription.textContent = row.children[1].textContent;
-                                    previewFamily.textContent = row.children[2].textContent;
-                                    previewAffinity.textContent = row.children[3].textContent;
-                                    previewHp.textContent = row.children[4].textContent;
-                                    previewEnergy.textContent = row.children[5].textContent;
-                                    previewDefense.textContent = row.children[6].textContent;
-                                    previewAttack.textContent = row.children[7].textContent;
-                                    previewPrice.textContent = row.children[8].textContent.replace('$', '');
+                                    previewDescription.textContent = row.children[2].textContent;
+                                    previewFamily.textContent = row.children[3].textContent;
+                                    previewAffinity.textContent = row.children[4].textContent;
+                                    previewHp.textContent = row.children[5].textContent;
+                                    previewEnergy.textContent = row.children[6].textContent;
+                                    previewDefense.textContent = row.children[7].textContent;
+                                    previewAttack.textContent = row.children[8].textContent;
+                                    previewPrice.textContent = row.children[9].textContent.replace('$', '');
 
                                     preview.classList.remove('hidden');
                                 });
