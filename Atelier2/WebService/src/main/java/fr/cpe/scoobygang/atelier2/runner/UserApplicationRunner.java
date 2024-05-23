@@ -1,5 +1,7 @@
 package fr.cpe.scoobygang.atelier2.runner;
 
+import com.arakelian.faker.model.Person;
+import com.arakelian.faker.service.RandomPerson;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.resource.UserResource;
 import fr.cpe.scoobygang.atelier2.service.UserService;
@@ -29,6 +31,12 @@ public class UserApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         List<User> users = new ArrayList<>();
+
+        RandomPerson.get()
+                .listOf(20)
+                .stream()
+                .map(User::toUser)
+                .forEach(users::add);
 
         try {
             File file = userResource.load().getFile();

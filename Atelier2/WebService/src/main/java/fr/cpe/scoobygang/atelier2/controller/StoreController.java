@@ -55,17 +55,19 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/sell"})
-    public ResponseEntity sellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
+    public ResponseEntity<ResponseStatus> sellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-        int userID = jwt.get().getJwtInformation().getUserID();
-        if (cardService.getAllUserCard(userID).stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
-            return ResponseEntity.status(HttpStatus.OK).build();
+        if (jwt.isPresent()) {
+            int userID = jwt.get().getJwtInformation().getUserID();
+            if (cardService.getAllUserCard(userID).stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
     @PostMapping(value = {"/store/sell/cancel"})
-    public ResponseEntity cancelSellCard(@RequestBody StoreOrderRequest storeOrderRequest){
+    public ResponseEntity<ResponseStatus> cancelSellCard(@RequestBody StoreOrderRequest storeOrderRequest){
         if (storeService.cancelSellCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId(), storeOrderRequest.getUserId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }

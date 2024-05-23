@@ -8,6 +8,7 @@ import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -71,7 +72,10 @@ public class CardController {
     @GetMapping(value = {"/cards/user"})
     public ResponseEntity<List<CardResponse>> getCurrentUserCards(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-        int userID = jwt.get().getJwtInformation().getUserID();
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userID)));
+        if (jwt.isPresent()) {
+            int userID = jwt.get().getJwtInformation().getUserID();
+            return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userID)));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 }
