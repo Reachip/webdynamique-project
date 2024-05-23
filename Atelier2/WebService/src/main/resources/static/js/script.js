@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
   usernameBadge.classList.add("badge-primary-dark");
   usernameBadge.classList.add("pointer");
   usernameBadge.classList.add("no-decoration");
+  usernameBadge.classList.add("centered-icon-text");
   usernameBadge.innerHTML = "<i class=\"fa-solid fa-right-to-bracket\"></i> Se connecter";
   usernameBadge.href = "login.html";
 
@@ -88,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
             response.json().then(user => {
               const userIdentityStr = `${user.surname} ${user.name}`;
 
-              usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${userIdentityStr}`;
+              usernameBadge.innerHTML = `<img class="user-icon" src="https://api.dicebear.com/8.x/thumbs/svg?seed=${user.username}"></img> ${userIdentityStr}`;
               usernameBadge.href = `user.html`;
 
               const identities = document.querySelectorAll(".identity");
@@ -106,6 +107,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (identityInputName) identityInputName.value = user.name;
                 if (identityInputEmail) identityInputEmail.value = user.email;
                 if (identityInputUsername) identityInputUsername.value = user.username;
+
+                const userIcon = document.querySelector("#user-icon");
+                userIcon.src = `https://api.dicebear.com/8.x/thumbs/svg?seed=${user.username}`;
               }
 
               const balanceBadgeAmount = document.querySelector("#balance-badge-amount");
