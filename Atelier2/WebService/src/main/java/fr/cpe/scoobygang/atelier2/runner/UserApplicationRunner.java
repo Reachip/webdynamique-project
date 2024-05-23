@@ -33,7 +33,7 @@ public class UserApplicationRunner implements ApplicationRunner {
         List<User> users = new ArrayList<>();
         Faker faker = new Faker(new Locale("es-MX"));
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             users.add(User.toUser(faker));
         }
 
