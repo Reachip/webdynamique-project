@@ -34,6 +34,10 @@ Authorization: Bearer {{ token }}
 <> 2024-05-21T144845-1.200.json
 <> 2024-05-21T144830.200.json
 
+### Récupère toutes les cartes
+GET http://localhost:8080/cards
+Authorization: Bearer {{ token }}
+
 ### Etape 4: Récupère un utilisateur
 GET http://localhost:8080/user
 Authorization: Bearer {{ token }}
