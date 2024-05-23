@@ -11,12 +11,15 @@ document.addEventListener("DOMContentLoaded", function () {
             if (response.ok) {
                 const storeTabs = document.querySelector(".stores-tabs");
                 response.json().then(stores => {
+                    let isFirstShop = true;
                     stores.forEach(store => {
                         const input = document.createElement("input");
                         input.type = "radio";
                         input.id = `store-${store.id}`;
                         input.name = "stores-tabs";
-                        input.checked = true;
+                        if(isFirstShop) {
+                            input.setAttribute("checked", "true")
+                        }
 
                         const label = document.createElement("label");
                         label.setAttribute("for", `store-${store.id}`);
@@ -31,11 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         storeTabs.appendChild(input);
                         storeTabs.appendChild(label);
-                    });
 
-                    const glider = document.createElement("span");
-                    glider.className = "glider";
-                    storeTabs.appendChild(glider);
+                        if(isFirstShop) {
+                            isFirstShop = false;
+                            const glider = document.createElement("span");
+                            glider.className = "glider";
+                            storeTabs.appendChild(glider);
+                        }
+                    });
                 });
             }
         });
