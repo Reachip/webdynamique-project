@@ -6,6 +6,8 @@ import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier2.request.StoreResponse;
+import fr.cpe.scoobygang.atelier2.security.JWT;
+import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
 import fr.cpe.scoobygang.atelier2.service.StoreService;
 import fr.cpe.scoobygang.atelier2.service.TransactionService;
@@ -14,17 +16,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class StoreController {
     private final CardService cardService;
     private final StoreService storeService;
+    private final JWTService jwtService;
 
 
     private final StoreApplicationRunner storeApplicationRunner;
 
-    public StoreController(CardService cardService, StoreService storeService, StoreApplicationRunner storeApplicationRunner, TransactionService transactionService) {
+    public StoreController(JWTService jwtService, CardService cardService, StoreService storeService, StoreApplicationRunner storeApplicationRunner, TransactionService transactionService) {
+        this.jwtService = jwtService;
         this.cardService = cardService;
         this.storeService = storeService;
         this.storeApplicationRunner = storeApplicationRunner;
@@ -50,7 +55,9 @@ public class StoreController {
 
     @PostMapping(value = {"/store/sell"})
     public ResponseEntity sellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
-        if (storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+        int userID = jwt.get().getJwtInformation().getUserID();
+        if (cardService.getAllUserCard(userID).stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
