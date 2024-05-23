@@ -1,5 +1,7 @@
 package fr.cpe.scoobygang.atelier2.model;
 
+import com.arakelian.faker.model.Person;
+import fr.cpe.scoobygang.atelier2.utils.StringUtils;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Getter
 @Setter
@@ -41,6 +44,21 @@ public class User {
         user.setSurname(jsonObject.getString("surname"));
         user.setName(jsonObject.getString("name"));
         user.setEmail(jsonObject.getString("email"));
+
+        return user;
+    }
+
+    public static User toUser(Person person) {
+        User user = new User();
+
+        user.setName(StringUtils.capitalizeFirstLetter(person.getFirstName()));
+        user.setSurname(StringUtils.capitalizeFirstLetter(person.getLastName()));
+        user.setPassword("123");
+
+        String username = (person.getFirstName() + "." + person.getLastName()).toLowerCase();
+
+        user.setUsername(username);
+        user.setEmail(username + "@cpe.fr");
 
         return user;
     }
