@@ -1,5 +1,7 @@
 import { showAlert, Alert } from './alerts.js';
 
+const userToken = localStorage.getItem("scoobycards-user-token");
+
 document.addEventListener("DOMContentLoaded", function () {
     function loadStore(id) {
         fetch(`http://127.0.0.1:8080/store/${id}/cards`, {
@@ -21,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             const clone = document.importNode(template.content, true);
 
                             const newContent = clone.firstElementChild.innerHTML
+                                .replace(/{{id}}/g, card.id)
                                 .replace(/{{family}}/g, card.family)
                                 .replace(/{{affinity}}/g, card.affinity)
                                 .replace(/{{imgUrl}}/g, card.imgUrl)
@@ -66,6 +69,44 @@ document.addEventListener("DOMContentLoaded", function () {
                                 });
                             });
                         }
+
+                        document.querySelectorAll(".buy-btn").forEach(buyBtn => {
+
+                            if (userToken == null) {
+                                buyBtn.classList.add("unclickable")
+                                return;
+                            }
+
+                            buyBtn.addEventListener("click", () => {
+                                const cardId = parseInt(buyBtn.parentNode
+                                    .parentNode
+                                    .querySelector(".hidden")
+                                    .dataset
+                                    .imageId
+                                )
+
+                                const storeId = 1
+
+                                fetch("http://127.0.0.1:8080/store/buy", {
+                                    method: "POST",
+                                    body: JSON.stringify({
+                                        cardId,
+                                        storeId,
+                                    }),
+                                    headers: {
+                                        "Authorization": "Bearer " + userToken,
+                                        "Content-type": "application/json; charset=UTF-8"
+                                    }
+                                })
+                                    .then(_ => {
+                                        showAlert(Alert.SUCCESS, "Carte achetée avec succès !")
+                                        buyBtn.classList.add("unclickable")
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 2000)
+                                    })
+                            })
+                        })
                     }).catch(error => {
                         console.error("Error when parsing JSON:", error);
                     });

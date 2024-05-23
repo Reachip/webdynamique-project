@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -73,19 +74,18 @@ public class StoreService {
         userRepository.save(newOwner);
         userRepository.save(currentOwner);
 
-        transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
+        Transaction buyTransaction = transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
         transactionService.createTransaction(currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
 
         return true;
     }
 
 
-    public boolean cancelSellCard(int cardId, int storeId, int userId){
+    public boolean cancelSellCard(int cardId, int storeId){
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        // Si la carte n'appartient pas à l'utilisateur ou n'est pas dans le magasin
-        if (card.getOwner().getId() != userId || card.getStore().getId() != storeId) return false;
+        if (card.getStore().getId() != storeId) return false;
 
         card.setStore(null);
         card.setOnSale(false);
