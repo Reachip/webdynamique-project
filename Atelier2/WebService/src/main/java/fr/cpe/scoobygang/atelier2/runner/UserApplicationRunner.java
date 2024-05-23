@@ -1,7 +1,6 @@
 package fr.cpe.scoobygang.atelier2.runner;
 
-import com.arakelian.faker.model.Person;
-import com.arakelian.faker.service.RandomPerson;
+import com.github.javafaker.Faker;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.resource.UserResource;
 import fr.cpe.scoobygang.atelier2.service.UserService;
@@ -17,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Component
 @Order(1)
@@ -31,12 +31,11 @@ public class UserApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         List<User> users = new ArrayList<>();
+        Faker faker = new Faker(new Locale("es-MX"));
 
-        RandomPerson.get()
-                .listOf(20)
-                .stream()
-                .map(User::toUser)
-                .forEach(users::add);
+        for (int i = 0; i < 7; i++) {
+            users.add(User.toUser(faker));
+        }
 
         try {
             File file = userResource.load().getFile();

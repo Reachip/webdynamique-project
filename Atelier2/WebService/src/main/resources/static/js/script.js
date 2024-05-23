@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
   usernameBadge.classList.add("badge-primary-dark");
   usernameBadge.classList.add("pointer");
   usernameBadge.classList.add("no-decoration");
+  usernameBadge.classList.add("centered-icon-text");
   usernameBadge.innerHTML = "<i class=\"fa-solid fa-right-to-bracket\"></i> Se connecter";
   usernameBadge.href = "login.html";
 
@@ -88,8 +89,39 @@ document.addEventListener("DOMContentLoaded", function () {
             response.json().then(user => {
               const userIdentityStr = `${user.surname} ${user.name}`;
 
-              usernameBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${userIdentityStr}`;
-              usernameBadge.href = `user.html`;
+              usernameBadge.innerHTML = `<img class="user-icon" src="https://api.dicebear.com/8.x/thumbs/svg?seed=${user.username}"></img> ${userIdentityStr}`;
+              usernameBadge.href = `#`;
+
+              const dropdownMenu = document.createElement("div");
+              dropdownMenu.classList.add("dropdown-menu");
+              dropdownMenu.classList.add("hidden");
+
+              const accountLink = document.createElement("a");
+              accountLink.href = "user.html";
+              accountLink.textContent = "Mon compte";
+
+              const logoutLink = document.createElement("a");
+              logoutLink.href = "#";
+              logoutLink.textContent = "Se déconnecter";
+              logoutLink.addEventListener("click", () => {
+                localStorage.removeItem("scoobycards-user-token");
+                window.location.replace("./cardList.html");
+              });
+
+              dropdownMenu.appendChild(accountLink);
+              dropdownMenu.appendChild(logoutLink);
+
+              usernameBadge.appendChild(dropdownMenu);
+
+              usernameBadge.addEventListener("click", () => {
+                dropdownMenu.classList.toggle("hidden");
+              });
+
+              document.addEventListener("click", (event) => {
+                if (!usernameBadge.contains(event.target)) {
+                  dropdownMenu.classList.add("hidden");
+                }
+              });
 
               const identities = document.querySelectorAll(".identity");
               identities.forEach(identity => {
@@ -106,6 +138,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (identityInputName) identityInputName.value = user.name;
                 if (identityInputEmail) identityInputEmail.value = user.email;
                 if (identityInputUsername) identityInputUsername.value = user.username;
+
+                const userIcon = document.querySelector("#user-icon");
+                userIcon.src = `https://api.dicebear.com/8.x/thumbs/svg?seed=${user.username}`;
               }
 
               const balanceBadgeAmount = document.querySelector("#balance-badge-amount");

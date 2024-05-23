@@ -20,12 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .then(response => {
-            if (response.ok) {
-                showAlert(Alert.SUCCESS, "Connexion réussie.");
-            
+            if (response.ok) {            
                 response.json().then(data => {
                     localStorage.setItem("scoobycards-user-token", data.token);
-                    window.location.replace("./cardList.html");
+                    window.location.replace("./cards.html");
                 }).catch(error => {
                     console.error("Error when parsing JSON:", error);
                     localStorage.removeItem("scoobycards-user-token");

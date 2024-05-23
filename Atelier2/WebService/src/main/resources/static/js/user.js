@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const identities = document.querySelectorAll(".identity");
                     identities.forEach(identity => {
-                      identity.innerHTML = userIdentityStr;
+                        identity.innerHTML = userIdentityStr;
                     });
                 } else {
                     showAlert(Alert.ERROR, "Une erreur est survenue.");
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const newPassword = document.querySelector("#form-user-password-new").value;
         const newPasswordConfirmation = document.querySelector("#form-user-password-new-confirmation").value;
 
-        if(newPassword != newPasswordConfirmation) {
+        if (newPassword != newPasswordConfirmation) {
             return showAlert(Alert.ERROR, "Les mots de passe sont différents.");
         }
 

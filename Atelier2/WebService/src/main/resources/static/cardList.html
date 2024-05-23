@@ -21,6 +21,7 @@
         <div id="cards">
             <h3>Liste des cartes</h3>
             <div id="alerts"></div>
+            <br>
             <div class="stores-tabs">
             </div>
             <br>
@@ -42,7 +43,8 @@
                     </thead>
                     <tbody id="table-cards-body">
                         <template id="row">
-                            <tr class="card-row pointer">
+                            <tr class="card-row">
+                                <td class="hidden" data-image-id="{{id}}"></td>
                                 <td>
                                     <img class="row-image" src={{imgUrl}}><br><span>{{name}}</span>
                                 </td>
@@ -55,8 +57,8 @@
                                 <td>{{attack}}</td>
                                 <td>{{price}}$</td>
                                 <td>
-                                    <button class="button button-primary">
-                                        <i class="fa-solid fa-cart-arrow-down"></i> Acheter
+                                    <button class="button button-primary button-details">
+                                        <i class="fa-solid fa-magnifying-glass"></i> Détails
                                     </button>
                                 </td>
                             </tr>
@@ -66,10 +68,11 @@
                 <div id="card-preview" class="hidden">
                     <div class="card-image">
                         <img id="preview-image"
-                            src="https://static.wikia.nocookie.net/force-of-will-tcg/images/b/b5/Water_Sprite.png"
+                            src=""
                             alt="Aperçu de la carte">
                     </div>
                     <div class="card-details">
+                        <input type="hidden" id="image-id">
                         <h1 id="preview-name"></h1>
                         <p id="preview-description"></p>
                         <br>
@@ -83,7 +86,7 @@
                         </ul>
                         <span class="price"><strong>Prix :</strong> <span id="preview-price"></span>$
                             <div>
-                                <button class="button button-primary">
+                                <button class="button button-primary button-buy">
                                     <i class="fa-solid fa-cart-arrow-down"></i> Acheter
                                 </button>
                             </div>

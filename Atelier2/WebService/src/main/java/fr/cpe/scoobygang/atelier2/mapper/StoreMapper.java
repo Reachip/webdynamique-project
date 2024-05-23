@@ -25,7 +25,7 @@ public interface StoreMapper {
     List<StoreResponse> storesToStoreResponses (List<Store> stores);
 
     @Named("cardListToCardCount")
-    public static int cardListToCardCount(List<Card> cardList) {
+    static int cardListToCardCount(List<Card> cardList) {
         return cardList.size();
     }
 }

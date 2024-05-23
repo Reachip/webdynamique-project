@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -55,8 +56,6 @@ public class StoreService {
 
         // Récupération du propriétaire actuel de la carte
         User currentOwner = card.getOwner();
-        // On supprime la carte de la liste du propriétaire actuel
-        currentOwner.getCardList().remove(card);
         // On lui crédite l'argent de la vente
         currentOwner.setAccount(currentOwner.getAccount() + card.getPrice());
         // On définit le nouveau propriétaire de la carte
@@ -64,8 +63,6 @@ public class StoreService {
         //card.setOnSale(false);
         card.setStore(null);
 
-        // On lui ajoute la carte à sa liste car elle lui appartient désormais
-        newOwner.getCardList().add(card);
         // On lui débite le prix de la carte
         newOwner.setAccount(newOwner.getAccount() - card.getPrice());
 
@@ -73,19 +70,18 @@ public class StoreService {
         userRepository.save(newOwner);
         userRepository.save(currentOwner);
 
-        transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
+        Transaction buyTransaction = transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
         transactionService.createTransaction(currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
 
         return true;
     }
 
 
-    public boolean cancelSellCard(int cardId, int storeId, int userId){
+    public boolean cancelSellCard(int cardId, int storeId){
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        // Si la carte n'appartient pas à l'utilisateur ou n'est pas dans le magasin
-        if (card.getOwner().getId() != userId || card.getStore().getId() != storeId) return false;
+        if (card.getStore().getId() != storeId) return false;
 
         card.setStore(null);
 
