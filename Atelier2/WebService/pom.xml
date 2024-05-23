@@ -84,10 +84,9 @@
 			<version>20240303</version>
 		</dependency>
 		<dependency>
-			<groupId>com.arakelian</groupId>
-			<artifactId>faker</artifactId>
-			<version>4.0.1</version>
-			<scope>compile</scope>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
 

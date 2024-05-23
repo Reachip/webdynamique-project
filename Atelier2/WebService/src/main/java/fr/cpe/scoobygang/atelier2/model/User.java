@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier2.model;
 
-import com.arakelian.faker.model.Person;
+import com.github.javafaker.Faker;
 import fr.cpe.scoobygang.atelier2.utils.StringUtils;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -48,14 +48,14 @@ public class User {
         return user;
     }
 
-    public static User toUser(Person person) {
+    public static User toUser(Faker faker) {
         User user = new User();
 
-        user.setName(StringUtils.capitalizeFirstLetter(person.getFirstName()));
-        user.setSurname(StringUtils.capitalizeFirstLetter(person.getLastName()));
+        user.setName(faker.name().firstName());
+        user.setSurname(faker.name().lastName());
         user.setPassword("123");
 
-        String username = (person.getFirstName() + "." + person.getLastName()).toLowerCase();
+        String username = (user.getName() + "." + user.getSurname()).toLowerCase();
 
         user.setUsername(username);
         user.setEmail(username + "@cpe.fr");
