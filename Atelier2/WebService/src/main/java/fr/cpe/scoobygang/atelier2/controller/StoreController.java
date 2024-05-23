@@ -1,5 +1,7 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
+import fr.cpe.scoobygang.atelier2.mapper.TransactionMapper;
+import fr.cpe.scoobygang.atelier2.request.TransactionResponse;
 import fr.cpe.scoobygang.atelier2.runner.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
@@ -42,11 +44,11 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/buy"})
-    public ResponseEntity buyCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
-        if (storeService.buyCard(storeOrderRequest.getCardId(), storeOrderRequest.getUserId(), storeOrderRequest.getStoreId())) {
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<Transaction> buyCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
+        int userId = jwtService.fromAuthorization(authorization).get().getJwtInformation().getUserID();
+        Optional<Transaction> transaction = storeService.buyCard(storeOrderRequest.getCardId(), userId, storeOrderRequest.getStoreId());
+
+        return ResponseEntity.of(transaction);
     }
 
     @GetMapping(value = {"/store/{id}/cards"})
@@ -67,8 +69,10 @@ public class StoreController {
     }
 
     @PostMapping(value = {"/store/sell/cancel"})
-    public ResponseEntity<ResponseStatus> cancelSellCard(@RequestBody StoreOrderRequest storeOrderRequest){
-        if (storeService.cancelSellCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId(), storeOrderRequest.getUserId())) {
+    public ResponseEntity<ResponseStatus> cancelSellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest){
+        int userId = jwtService.fromAuthorization(authorization).get().getJwtInformation().getUserID();
+
+        if (storeService.cancelSellCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId(), userId)) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

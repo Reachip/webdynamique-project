@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.atelier2.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -42,7 +43,7 @@ public class StoreService {
         return true;
     }
 
-    public boolean buyCard(int cardId, int userId, int storeId){
+    public Optional<Transaction> buyCard(int cardId, int userId, int storeId){
         User newOwner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
 
@@ -50,7 +51,7 @@ public class StoreService {
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
         if (!newOwner.canBuy(card.getPrice()) || newOwner.getId() == card.getOwner().getId()){
-            return false;
+            return Optional.empty();
         }
 
         // Récupération du propriétaire actuel de la carte
@@ -73,10 +74,10 @@ public class StoreService {
         userRepository.save(newOwner);
         userRepository.save(currentOwner);
 
-        transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
+        Transaction buyTransaction = transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
         transactionService.createTransaction(currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
 
-        return true;
+        return Optional.of(buyTransaction);
     }
 
 
