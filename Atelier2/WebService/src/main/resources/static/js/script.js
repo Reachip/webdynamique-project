@@ -1,4 +1,5 @@
 import { showAlert, Alert } from './alerts.js';
+import { formatBalance } from './balance.js';
 
 document.addEventListener("DOMContentLoaded", function () {
   /* CREATE HEADER */
@@ -54,8 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const balanceBadge = document.createElement("div");
   balanceBadge.classList.add("badge");
-  usernameBadge.classList.add("badge-primary-dark");
-  balanceBadge.innerHTML = "Solde : 100,00 €";
+  balanceBadge.id = "badge-balance";
+  balanceBadge.classList.add("badge-primary-dark");
+  balanceBadge.innerHTML = "Solde : <span id='balance-badge-amount'>0,00</span> €";
   balanceBadge.classList.add("hidden");
 
   headerBadgesContainer.appendChild(usernameBadge);
@@ -105,6 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (identityInputEmail) identityInputEmail.value = user.email;
                 if (identityInputUsername) identityInputUsername.value = user.username;
               }
+
+              const balanceBadgeAmount = document.querySelector("#balance-badge-amount");
+              balanceBadgeAmount.innerHTML = formatBalance(user.balance);
+
+              const balanceBadge = document.querySelector("#badge-balance");
+              balanceBadge.classList.remove("hidden");
             }).catch(error => {
               console.error("Error when parsing JSON:", error);
               if (hasToken) {
