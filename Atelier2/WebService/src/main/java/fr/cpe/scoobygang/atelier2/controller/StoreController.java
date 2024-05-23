@@ -23,19 +23,13 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class StoreController {
     private final CardService cardService;
-    private final UserService userService;
     private final StoreService storeService;
     private final JWTService jwtService;
 
-
-    private final StoreApplicationRunner storeApplicationRunner;
-
-    public StoreController(JWTService jwtService, CardService cardService, UserService userService, StoreService storeService, StoreApplicationRunner storeApplicationRunner, TransactionService transactionService) {
+    public StoreController(JWTService jwtService, CardService cardService, StoreService storeService) {
         this.jwtService = jwtService;
         this.cardService = cardService;
-        this.userService = userService;
         this.storeService = storeService;
-        this.storeApplicationRunner = storeApplicationRunner;
     }
 
     @GetMapping(value = {"/stores"})
