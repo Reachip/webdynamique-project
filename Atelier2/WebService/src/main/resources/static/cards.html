@@ -40,7 +40,8 @@
                     </thead>
                     <tbody id="table-cards-body">
                         <template id="row">
-                            <tr class="card-row">
+                            <tr class="card-row" data-store-id="{{storeId}}">
+                                <td class="hidden" data-id="{{id}}"></td>
                                 <td>
                                     <img class="row-image" src={{imgUrl}}><br><span>{{name}}</span>
                                 </td>
