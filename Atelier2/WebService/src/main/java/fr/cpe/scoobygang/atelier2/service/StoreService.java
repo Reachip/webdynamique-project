@@ -80,12 +80,11 @@ public class StoreService {
     }
 
 
-    public boolean cancelSellCard(int cardId, int storeId, int userId){
+    public boolean cancelSellCard(int cardId, int storeId){
         Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new RuntimeException("Card not found for id " + cardId));
 
-        // Si la carte n'appartient pas à l'utilisateur ou n'est pas dans le magasin
-        if (card.getOwner().getId() != userId || card.getStore().getId() != storeId) return false;
+        if (card.getStore().getId() != storeId) return false;
 
         card.setStore(null);
         card.setOnSale(false);

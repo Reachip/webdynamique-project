@@ -8,6 +8,4 @@ import lombok.Setter;
 public class StoreOrderRequest {
     private int cardId;
     private int storeId;
-    private int userId;
-
 }
