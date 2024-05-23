@@ -56,8 +56,6 @@ public class StoreService {
 
         // Récupération du propriétaire actuel de la carte
         User currentOwner = card.getOwner();
-        // On supprime la carte de la liste du propriétaire actuel
-        currentOwner.getCardList().remove(card);
         // On lui crédite l'argent de la vente
         currentOwner.setAccount(currentOwner.getAccount() + card.getPrice());
         // On définit le nouveau propriétaire de la carte
@@ -65,8 +63,6 @@ public class StoreService {
         card.setOnSale(false);
         card.setStore(null);
 
-        // On lui ajoute la carte à sa liste car elle lui appartient désormais
-        newOwner.getCardList().add(card);
         // On lui débite le prix de la carte
         newOwner.setAccount(newOwner.getAccount() - card.getPrice());
 
