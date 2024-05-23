@@ -98,8 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                         "Content-type": "application/json; charset=UTF-8"
                                     }
                                 })
-                                    .then(response => response.json())
-                                    .then(json => console.log(json))
+                                    .then(_ => {
+                                        showAlert(Alert.SUCCESS, "Carte achetée avec succès !")
+                                        buyBtn.classList.add("unclickable")
+                                        setTimeout(() => {
+                                            window.location.reload();
+                                        }, 2000)
+                                    })
                             })
                         })
                     }).catch(error => {
