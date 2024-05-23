@@ -40,13 +40,18 @@ public class StoreController {
     @PostMapping(value = {"/store/buy"})
     public ResponseEntity<HttpStatus> buyCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
-        if (jwt.isPresent()) {
-            int userID = jwt.get().getJwtInformation().getUserID();
-            if (storeService.buyCard(storeOrderRequest.getCardId(), userID, storeOrderRequest.getStoreId())) {
-                return ResponseEntity.status(HttpStatus.OK).build();
-            }
+
+        if (jwt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        int userID = jwt.get().getJwtInformation().getUserID();
+
+        if (!storeService.buyCard(storeOrderRequest.getCardId(), userID, storeOrderRequest.getStoreId())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping(value = {"/store/{id}/cards"})
