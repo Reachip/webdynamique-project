@@ -134,7 +134,17 @@
      border: 1px solid var(--light-gray);
      border-radius: 4px;
 }
- .form-login-container button, .form-register-container button, .form-user-container button {
+
+.unclickable {
+    background-color: #dcdcdc !important;
+    cursor: not-allowed !important;
+}
+
+.unclickable:hover {
+    background-color: #dcdcdc !important;
+}
+
+.form-login-container button, .form-register-container button, .form-user-container button {
      width: 100%;
      padding: 10px;
      background-color: var(--primary);

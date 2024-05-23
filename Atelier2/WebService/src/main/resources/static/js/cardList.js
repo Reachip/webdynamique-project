@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             const clone = document.importNode(template.content, true);
 
                             const newContent = clone.firstElementChild.innerHTML
+                                .replace(/{{id}}/g, card.id)
                                 .replace(/{{family}}/g, card.family)
                                 .replace(/{{affinity}}/g, card.affinity)
                                 .replace(/{{imgUrl}}/g, card.imgUrl)
@@ -66,6 +67,41 @@ document.addEventListener("DOMContentLoaded", function () {
                                 });
                             });
                         }
+
+                        console.log("brn", document.querySelectorAll(".buy-btn"))
+                        document.querySelectorAll(".buy-btn").forEach(buyBtn => {
+                            const userToken = localStorage.getItem("scoobycards-user-token");
+
+                            if (userToken == null) {
+                                buyBtn.classList.add("unclickable")
+                                return;
+                            }
+
+                            buyBtn.addEventListener("click", () => {
+                                const cardId = parseInt(buyBtn.parentNode
+                                    .parentNode
+                                    .querySelector(".hidden")
+                                    .dataset
+                                    .imageId
+                                )
+
+                                const storeId = 1
+
+                                fetch("http://127.0.0.1:8080/store/buy", {
+                                    method: "POST",
+                                    body: JSON.stringify({
+                                        cardId,
+                                        storeId,
+                                    }),
+                                    headers: {
+                                        "Authorization": "Bearer " + userToken,
+                                        "Content-type": "application/json; charset=UTF-8"
+                                    }
+                                })
+                                    .then(response => response.json())
+                                    .then(json => console.log(json))
+                            })
+                        })
                     }).catch(error => {
                         console.error("Error when parsing JSON:", error);
                     });
