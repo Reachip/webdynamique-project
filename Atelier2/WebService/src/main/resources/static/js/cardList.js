@@ -70,22 +70,15 @@ document.addEventListener("DOMContentLoaded", function () {
                             });
                         }
 
-                        document.querySelectorAll(".buy-btn").forEach(buyBtn => {
-
+                        document.querySelectorAll(".button-buy").forEach(buyButton => {
                             if (userToken == null) {
-                                buyBtn.classList.add("unclickable")
+                                buyButton.classList.add("unclickable")
                                 return;
                             }
 
-                            buyBtn.addEventListener("click", () => {
-                                const cardId = parseInt(buyBtn.parentNode
-                                    .parentNode
-                                    .querySelector(".hidden")
-                                    .dataset
-                                    .imageId
-                                )
-
-                                const storeId = 1
+                            buyButton.addEventListener("click", () => {
+                                const cardId = parseInt(buyButton.parentNode.parentNode.querySelector(".hidden").dataset.imageId);
+                                const storeId = 1;
 
                                 fetch("http://127.0.0.1:8080/store/buy", {
                                     method: "POST",
@@ -100,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 })
                                     .then(_ => {
                                         showAlert(Alert.SUCCESS, "Carte achetée avec succès !")
-                                        buyBtn.classList.add("unclickable")
+                                        buyButton.classList.add("unclickable")
                                         setTimeout(() => {
                                             window.location.reload();
                                         }, 2000)
