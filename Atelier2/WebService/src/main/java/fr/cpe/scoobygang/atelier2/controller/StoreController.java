@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier2.controller;
 import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
+import fr.cpe.scoobygang.atelier2.model.Transaction;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier2.request.StoreResponse;
@@ -63,5 +64,12 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
+    @PostMapping(value = {"/store/sell/cancel"})
+    public ResponseEntity cancelSellCard(@RequestBody StoreOrderRequest storeOrderRequest){
+        if (storeService.cancelSellCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId(), storeOrderRequest.getUserId())) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
 
 }
