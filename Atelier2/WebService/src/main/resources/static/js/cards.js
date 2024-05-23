@@ -1,4 +1,4 @@
-import { showAlert, Alert } from './alerts.js';
+import {Alert, showAlert} from './alerts.js';
 
 document.addEventListener("DOMContentLoaded", function () {
     const userToken = localStorage.getItem("scoobycards-user-token");
@@ -82,21 +82,43 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 });
                                             });
 
-                                            const sellButtons = document.querySelectorAll(".button-sell");
-                                            sellButtons.forEach(sellButton => {
-                                                sellButton.addEventListener("click", function (event) {
-                                                    let storeId, cardId;
-                                                    const radios = event.target.parentElement.querySelectorAll("input[type='radio']");
-                                                    for (let i = 0; i < radios.length; i++) {
-                                                        const radio = radios[i];
-                                                        if (radio.checked) {
-                                                            storeId = radio.value;
-                                                            cardId = radio.getAttribute("data-card");
-                                                            break;
-                                                        }
+                                            const sellButton = row.querySelector(".button-sell");
+                                            console.log("row", row)
+                                            console.log("sell btn", sellButton)
+                                            let callback = (cardId, storeId) => {
+                                                fetch("http://127.0.0.1:8080/store/sell", {
+                                                    method: "POST",
+                                                    body: JSON.stringify({
+                                                        cardId: cardId,
+                                                        storeId: storeId
+                                                    }),
+                                                    headers: {
+                                                        "Authorization": "Bearer " + userToken,
+                                                        "Content-type": "application/json; charset=UTF-8"
                                                     }
+                                                })
+                                                    .then(response => {
+                                                        if (response.ok) {
+                                                            showAlert(Alert.SUCCESS, "Carte ajoutée à la vente.");
+                                                            setTimeout(() => {
+                                                                window.location.reload();
+                                                            }, 2000);
+                                                        } else {
+                                                            showAlert(Alert.ERROR, "Échec de la mise en vente de la carte.");
+                                                        }
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Fetch error:", error);
+                                                        showAlert(Alert.ERROR, "Une erreur est survenue.");
+                                                    });
+                                            }
 
-                                                    fetch("http://127.0.0.1:8080/store/sell", {
+                                            if (card.storeId != 0) {
+                                                console.log("card", card)
+                                                sellButton.innerText = "Annuler la vente"
+
+                                                callback = (cardId, storeId) => {
+                                                    fetch("http://127.0.0.1:8080/store/sell/cancel", {
                                                         method: "POST",
                                                         body: JSON.stringify({
                                                             cardId: cardId,
@@ -109,19 +131,35 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     })
                                                         .then(response => {
                                                             if (response.ok) {
-                                                                showAlert(Alert.SUCCESS, "Carte ajoutée à la vente.");
+                                                                showAlert(Alert.SUCCESS, "Carte retirée de la vente.");
                                                                 setTimeout(() => {
                                                                     window.location.reload();
                                                                 }, 2000);
                                                             } else {
-                                                                showAlert(Alert.ERROR, "Échec de la mise en vente de la carte.");
+                                                                showAlert(Alert.ERROR, "Échec de la supression de la vente de la carte.");
                                                             }
                                                         })
                                                         .catch(error => {
                                                             console.error("Fetch error:", error);
                                                             showAlert(Alert.ERROR, "Une erreur est survenue.");
                                                         });
-                                                });
+                                                }
+                                            }
+
+                                            sellButton.addEventListener("click", function (event) {
+                                                let storeId, cardId;
+                                                const radios = event.target.parentElement.querySelectorAll("input[type='radio']");
+
+                                                for (let i = 0; i < radios.length; i++) {
+                                                    const radio = radios[i];
+                                                    if (radio.checked) {
+                                                        storeId = radio.value;
+                                                        cardId = radio.getAttribute("data-card");
+                                                        break;
+                                                    }
+                                                }
+
+                                                callback(storeId, cardId);
                                             });
                                         }
                                     });
