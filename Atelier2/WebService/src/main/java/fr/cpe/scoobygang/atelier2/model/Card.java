@@ -24,7 +24,6 @@ public class Card {
     private double defense;
     private double attack;
     private double price;
-    //private boolean isOnSale;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")

@@ -17,7 +17,6 @@ public class CardResponse {
     private double defense;
     private double attack;
     private double price;
-    private boolean isOnSale;
     private int userId;
     private int storeId;
 
