@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.initializer.StoreApplicationRunner;
+import fr.cpe.scoobygang.atelier2.runner.StoreApplicationRunner;
 import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
 import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
 import fr.cpe.scoobygang.atelier2.request.CardResponse;

@@ -1,4 +1,4 @@
-package fr.cpe.scoobygang.atelier2.initializer;
+package fr.cpe.scoobygang.atelier2.runner;
 
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.resource.UserResource;
@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Order(1)
 public class UserApplicationRunner implements ApplicationRunner {
     private final UserResource userResource;
     private final UserService userService;
