@@ -40,6 +40,7 @@ public class CardApplicationRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         List<Card> cards = new ArrayList<>();
+        Random random = new Random();
 
         try {
             File file = cardResource.load().getFile();
@@ -59,7 +60,6 @@ public class CardApplicationRunner implements ApplicationRunner {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Card card = Card.toCard(jsonObject);
 
-                Random random = new Random();
                 boolean shouldAddStore = random.nextBoolean();
 
                 if (shouldAddStore) {
