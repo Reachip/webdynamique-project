@@ -32,25 +32,25 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/stores"})
-    public ResponseEntity<List<StoreResponse>> getStores() {
+    public ResponseEntity<List<StoreResponse>> getStores(@RequestHeader(value = "Authorization") String authorization) {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }
 
     @PostMapping(value = {"/store/buy"})
-    public ResponseEntity buyCard(@RequestBody StoreOrderRequest storeOrderRequest) {
+    public ResponseEntity buyCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         if (storeService.buyCard(storeOrderRequest.getCardId(), storeOrderRequest.getUserId(), storeOrderRequest.getStoreId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @GetMapping(value = {"/store/cards_to_sell/{storeId}"})
-    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int storeId) {
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(storeId)));
+    @GetMapping(value = {"/store/{id}/cards"})
+    public ResponseEntity<List<CardResponse>> sellCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(id)));
     }
 
     @PostMapping(value = {"/store/sell"})
-    public ResponseEntity sellCard(@RequestBody StoreOrderRequest storeOrderRequest) {
+    public ResponseEntity sellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         if (storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
