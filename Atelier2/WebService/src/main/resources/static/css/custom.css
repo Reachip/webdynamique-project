@@ -247,6 +247,29 @@
     margin-right: 5px;
     border-radius: 50%;
 }
+.dropdown-menu {
+    position: absolute;
+    background-color: var(--primary-dark);
+    border: 1px solid var(--white);
+    border-radius: 5px;
+    margin-top: 40px;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
+.dropdown-menu a {
+    color: var(--white);
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    font-size: 1em;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--primary);
+    border-radius: 5px;
+}
 /* CURSOR POINTER */
  .pointer {
      cursor: pointer;
