@@ -435,7 +435,7 @@
  .stores-tabs * {
      z-index: 2;
 }
- input[type=radio] {
+ input[type=radio].radio-hidden {
      display: none;
 }
  .store-tab {
@@ -461,10 +461,10 @@
      background-color: var(--secondary);
      transition: 0.15s ease-in;
 }
- input[type=radio]:checked + label {
+ input[type=radio].radio-hidden:checked + label {
      color: var(--primary-color);
 }
- input[type=radio]:checked + label > .items-count {
+ input[type=radio].radio-hidden:checked + label > .items-count {
      background-color: var(--primary);
      color: var(--white);
 }
