@@ -1,10 +1,9 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
-import fr.cpe.scoobygang.atelier2.runner.CardApplicationRunner;
-import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.dao.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.dao.request.CardRequest;
+import fr.cpe.scoobygang.atelier2.dao.response.CardResponse;
 import fr.cpe.scoobygang.atelier2.model.Card;
-import fr.cpe.scoobygang.atelier2.request.CardRequest;
-import fr.cpe.scoobygang.atelier2.request.CardResponse;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
@@ -22,12 +21,10 @@ import java.util.Optional;
 public class CardController {
     private final JWTService jwtService;
     private final CardService cardService;
-    private final CardApplicationRunner cardApplicationRunner;
 
-    public CardController(JWTService jwtService, CardService cardService, CardApplicationRunner cardApplicationRunner) {
+    public CardController(JWTService jwtService, CardService cardService) {
         this.jwtService = jwtService;
         this.cardService = cardService;
-        this.cardApplicationRunner = cardApplicationRunner;
     }
 
     @DeleteMapping(value = {"/card/{id}"})

@@ -1,4 +1,4 @@
-package fr.cpe.scoobygang.atelier2.filter.config;
+package fr.cpe.scoobygang.atelier2.filter.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

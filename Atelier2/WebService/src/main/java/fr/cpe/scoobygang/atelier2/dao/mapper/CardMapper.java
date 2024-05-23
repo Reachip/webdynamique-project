@@ -1,12 +1,10 @@
-package fr.cpe.scoobygang.atelier2.mapper;
+package fr.cpe.scoobygang.atelier2.dao.mapper;
 
+import fr.cpe.scoobygang.atelier2.dao.request.CardRequest;
+import fr.cpe.scoobygang.atelier2.dao.response.CardResponse;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.Store;
 import fr.cpe.scoobygang.atelier2.model.User;
-import fr.cpe.scoobygang.atelier2.request.CardRequest;
-import fr.cpe.scoobygang.atelier2.request.CardResponse;
-import fr.cpe.scoobygang.atelier2.request.UserRequest;
-import jdk.jfr.Name;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier2.filter;
 
-import fr.cpe.scoobygang.atelier2.filter.config.WebUtils;
+import fr.cpe.scoobygang.atelier2.filter.utils.WebUtils;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import jakarta.servlet.FilterChain;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
-import static fr.cpe.scoobygang.atelier2.filter.config.WebUtils.AUTHORIZATION_HEADER_NAME;
+import static fr.cpe.scoobygang.atelier2.filter.utils.WebUtils.AUTHORIZATION_HEADER_NAME;
 
 @Component
 public class AuthorizationFilter extends GenericFilterBean {

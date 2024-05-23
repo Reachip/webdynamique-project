@@ -1,12 +1,12 @@
 package fr.cpe.scoobygang.atelier2.service;
 
-import fr.cpe.scoobygang.atelier2.mapper.UserMapper;
+import fr.cpe.scoobygang.atelier2.dao.mapper.UserMapper;
+import fr.cpe.scoobygang.atelier2.dao.request.UserPutRequest;
+import fr.cpe.scoobygang.atelier2.exceptions.UserChangePasswordException;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.repository.UserRepository;
-import fr.cpe.scoobygang.atelier2.request.UserPutRequest;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
-import fr.cpe.scoobygang.atelier2.service.exceptions.UserChangePasswordException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

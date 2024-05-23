@@ -1,10 +1,10 @@
 package fr.cpe.scoobygang.atelier2.service;
 
-import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.dao.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.dao.request.CardRequest;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.User;
 import fr.cpe.scoobygang.atelier2.repository.CardRepository;
-import fr.cpe.scoobygang.atelier2.request.CardRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

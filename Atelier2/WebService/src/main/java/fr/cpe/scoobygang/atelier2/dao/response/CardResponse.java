@@ -1,4 +1,4 @@
-package fr.cpe.scoobygang.atelier2.request;
+package fr.cpe.scoobygang.atelier2.dao.response;
 
 import lombok.Getter;
 import lombok.Setter;

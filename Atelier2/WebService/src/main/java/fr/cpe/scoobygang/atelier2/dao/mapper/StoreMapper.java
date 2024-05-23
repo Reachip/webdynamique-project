@@ -1,9 +1,8 @@
-package fr.cpe.scoobygang.atelier2.mapper;
+package fr.cpe.scoobygang.atelier2.dao.mapper;
 
+import fr.cpe.scoobygang.atelier2.dao.response.StoreResponse;
 import fr.cpe.scoobygang.atelier2.model.Card;
 import fr.cpe.scoobygang.atelier2.model.Store;
-import fr.cpe.scoobygang.atelier2.model.User;
-import fr.cpe.scoobygang.atelier2.request.StoreResponse;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

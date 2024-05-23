@@ -1,4 +1,4 @@
-package fr.cpe.scoobygang.atelier2.request;
+package fr.cpe.scoobygang.atelier2.dao.request;
 
 import fr.cpe.scoobygang.atelier2.model.Card;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package fr.cpe.scoobygang.atelier2.request;
+package fr.cpe.scoobygang.atelier2.dao.response;
 
 import fr.cpe.scoobygang.atelier2.model.TransactionAction;
 import lombok.Getter;

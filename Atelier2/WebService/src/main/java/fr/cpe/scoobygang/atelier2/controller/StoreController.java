@@ -1,11 +1,11 @@
 package fr.cpe.scoobygang.atelier2.controller;
 
+import fr.cpe.scoobygang.atelier2.dao.mapper.CardMapper;
+import fr.cpe.scoobygang.atelier2.dao.mapper.StoreMapper;
+import fr.cpe.scoobygang.atelier2.dao.request.StoreOrderRequest;
+import fr.cpe.scoobygang.atelier2.dao.response.CardResponse;
+import fr.cpe.scoobygang.atelier2.dao.response.StoreResponse;
 import fr.cpe.scoobygang.atelier2.runner.StoreApplicationRunner;
-import fr.cpe.scoobygang.atelier2.mapper.CardMapper;
-import fr.cpe.scoobygang.atelier2.mapper.StoreMapper;
-import fr.cpe.scoobygang.atelier2.request.CardResponse;
-import fr.cpe.scoobygang.atelier2.request.StoreOrderRequest;
-import fr.cpe.scoobygang.atelier2.request.StoreResponse;
 import fr.cpe.scoobygang.atelier2.security.JWT;
 import fr.cpe.scoobygang.atelier2.security.JWTService;
 import fr.cpe.scoobygang.atelier2.service.CardService;
