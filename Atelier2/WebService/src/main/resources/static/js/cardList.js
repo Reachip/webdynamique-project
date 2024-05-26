@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             const previewDefense = document.querySelector('#preview-defense');
                             const previewAttack = document.querySelector('#preview-attack');
                             const previewPrice = document.querySelector('#preview-price');
+                            const id = document.querySelector('#image-id');
 
                             rows.forEach(row => {
                                 row.querySelector(".button-details").addEventListener("click", () => {
@@ -64,6 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     previewDefense.textContent = row.children[7].textContent;
                                     previewAttack.textContent = row.children[8].textContent;
                                     previewPrice.textContent = row.children[9].textContent.replace('$', '');
+                                    id.dataset.imageId = row.querySelector('.hidden').dataset.id;
 
                                     preview.classList.remove('hidden');
                                 });
@@ -77,7 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             }
 
                             buyButton.addEventListener("click", () => {
-                                const cardId = parseInt(buyButton.parentNode.parentNode.querySelector(".hidden").dataset.imageId);
+                                const cardId = parseInt(buyButton.parentNode.parentNode.querySelector("#image-id").dataset.imageId);
+                                console.log(cardId);
                                 const storeId = 1;
 
                                 fetch("http://127.0.0.1:8080/store/buy", {
