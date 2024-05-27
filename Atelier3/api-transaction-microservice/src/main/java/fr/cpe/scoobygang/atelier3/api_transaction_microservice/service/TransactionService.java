@@ -16,14 +16,12 @@ import java.util.stream.StreamSupport;
 @Service
 public class TransactionService {
     private final UserRepository userRepository;
-    private final JWTService jwtService;
     private final CardRepository cardRepository;
     private final StoreRepository storeRepository;
     private final TransactionRepository transactionRepository;
 
-    public TransactionService(UserRepository userRepository, JWTService jwtService, CardRepository cardRepository, StoreRepository storeRepository, TransactionRepository transactionRepository) {
+    public TransactionService(UserRepository userRepository, CardRepository cardRepository, StoreRepository storeRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
-        this.jwtService = jwtService;
         this.cardRepository = cardRepository;
         this.storeRepository = storeRepository;
         this.transactionRepository = transactionRepository;
