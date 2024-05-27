@@ -21,9 +21,4 @@ public class TransactionController {
     public ResponseEntity<List<Transaction>> getTransaction(@RequestHeader(value = "Authorization") String authorization, @PathVariable int userId){
         return ResponseEntity.ok(transactionService.getTransaction(userId));
     }
-
-    @GetMapping(value = {"/test"})
-    public ResponseEntity<List<Transaction>> getTransaction(){
-        return ResponseEntity.ok(transactionService.getTransaction(1));
-    }
 }
