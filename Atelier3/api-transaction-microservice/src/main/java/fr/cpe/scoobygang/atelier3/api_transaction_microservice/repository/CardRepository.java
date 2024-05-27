@@ -1,10 +1,11 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository;
 
-import fr.cpe.scoobygang.common.security.model.Card;
+import fr.cpe.scoobygang.common.model.Card;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+
 
 public interface CardRepository extends CrudRepository<Card, Integer> {
     List<Card> findByOwnerId(int userId);

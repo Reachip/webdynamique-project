@@ -4,7 +4,7 @@ import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.CardRe
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.StoreRepository;
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.TransactionRepository;
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.UserRepository;
-import fr.cpe.scoobygang.common.security.model.*;
+import fr.cpe.scoobygang.common.model.*;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
