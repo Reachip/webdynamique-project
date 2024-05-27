@@ -4,6 +4,7 @@ import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.CardRe
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.StoreRepository;
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.TransactionRepository;
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.UserRepository;
+import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.*;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,14 @@ import java.util.stream.StreamSupport;
 @Service
 public class TransactionService {
     private final UserRepository userRepository;
+    private final JWTService jwtService;
     private final CardRepository cardRepository;
     private final StoreRepository storeRepository;
     private final TransactionRepository transactionRepository;
 
-    public TransactionService(UserRepository userRepository, CardRepository cardRepository, StoreRepository storeRepository, TransactionRepository transactionRepository) {
+    public TransactionService(UserRepository userRepository, JWTService jwtService, CardRepository cardRepository, StoreRepository storeRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
         this.cardRepository = cardRepository;
         this.storeRepository = storeRepository;
         this.transactionRepository = transactionRepository;
