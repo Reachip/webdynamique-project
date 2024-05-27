@@ -1,6 +1,5 @@
 package fr.cpe.scoobygang.common.security.dao.request;
 
-import fr.cpe.scoobygang.atelier2.model.Card;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +16,5 @@ public class UserRequest {
     private String name;
     private String email;
     private double balance = 0;
-    private List<Card> cardList = new ArrayList<>();
+    private List<CardRequest> cardList = new ArrayList<>();
 }
