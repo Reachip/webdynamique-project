@@ -1,0 +1,77 @@
+### Etape 2 : Connecter un utilisateur
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+> {%
+    client.global.set("token", response.body.token)
+%}
+
+<> 2024-05-21T175808.200.json
+<> 2024-05-21T175619.200.json
+<> 2024-05-21T175509.200.json
+<> 2024-05-21T174338.200.json
+<> 2024-05-21T174007.200.json
+<> 2024-05-21T171727.200.json
+<> 2024-05-21T171443.200.json
+<> 2024-05-21T144845.200.json
+<> 2024-05-21T144820.200.json
+
+### Etape 3: Récupère tous les utilisateurs
+GET http://localhost:8080/users
+Authorization: Bearer {{ token }}
+
+<> 2024-05-21T175808-1.200.json
+<> 2024-05-21T175621.200.json
+<> 2024-05-21T175511.200.json
+<> 2024-05-21T174344.200.json
+<> 2024-05-21T174010.200.json
+<> 2024-05-21T171447.200.json
+<> 2024-05-21T144845-1.200.json
+<> 2024-05-21T144830.200.json
+
+### Récupère toutes les cartes
+GET http://localhost:8080/cards
+Authorization: Bearer {{ token }}
+
+### Etape 4: Récupère un utilisateur
+GET http://localhost:8080/users
+Authorization: Bearer {{ token }}
+
+<> 2024-05-21T175808-2.200.json
+<> 2024-05-21T175624.500.json
+<> 2024-05-21T175514.500.json
+<> 2024-05-21T174705.500.json
+<> 2024-05-21T174506.200.json
+<> 2024-05-21T174503.200.json
+<> 2024-05-21T174453.200.json
+<> 2024-05-21T174441.200.json
+<> 2024-05-21T174314.500.json
+<> 2024-05-21T174015.404.json
+
+###
+PUT http://localhost:8080/user/edit
+Authorization: Bearer {{ token }}
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "surName": "admin",
+  "lastName": "admin",
+  "email": "admin"
+}
+
+###
+PUT http://localhost:8080/user/edit/password
+Content-Type: application/json
+Authorization: Bearer {{ token }}
+
+{
+  "oldPassword": "admin",
+  "newPasword": "123"
+}
+

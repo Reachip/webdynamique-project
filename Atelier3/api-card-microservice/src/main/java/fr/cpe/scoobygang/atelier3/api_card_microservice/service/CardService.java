@@ -1,10 +1,10 @@
-package fr.cpe.scoobygang.atelier2.service;
+package fr.cpe.scoobygang.atelier3.api_card_microservice.service;
 
-import fr.cpe.scoobygang.atelier2.dao.mapper.CardMapper;
-import fr.cpe.scoobygang.atelier2.dao.request.CardRequest;
-import fr.cpe.scoobygang.atelier2.model.Card;
-import fr.cpe.scoobygang.atelier2.model.User;
-import fr.cpe.scoobygang.atelier2.repository.CardRepository;
+import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
+import fr.cpe.scoobygang.common.dto.request.CardRequest;
+import fr.cpe.scoobygang.common.model.Card;
+import fr.cpe.scoobygang.common.model.User;
+import fr.cpe.scoobygang.common.repository.CardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +16,10 @@ public class CardService {
     private final CardRepository cardRepository;
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
+    }
+
+    public List<Card> getAllCard(){
+        return cardRepository.findOnSaleCards();
     }
     public List<Card> getAllUserCard(int userId){
         Iterable<Card> iterable = cardRepository.findByOwnerId(userId);
@@ -36,8 +40,6 @@ public class CardService {
             Card cardToUpdate = optionalCard.get();
             CardMapper.INSTANCE.updateCard(cardToUpdate, cardRequest);
             cardRepository.save(cardToUpdate);
-
-            return Optional.of(cardToUpdate);
         }
 
         return Optional.empty();
