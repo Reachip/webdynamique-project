@@ -1,10 +1,9 @@
-package fr.cpe.scoobygang.atelier2.dao.mapper;
+package fr.cpe.scoobygang.common.dto.mapper;
 
-import fr.cpe.scoobygang.atelier2.dao.request.CardRequest;
-import fr.cpe.scoobygang.atelier2.dao.response.CardResponse;
-import fr.cpe.scoobygang.atelier2.model.Card;
-import fr.cpe.scoobygang.atelier2.model.Store;
-import fr.cpe.scoobygang.atelier2.model.User;
+import fr.cpe.scoobygang.common.dto.request.CardRequest;
+import fr.cpe.scoobygang.common.dto.response.*;
+import fr.cpe.scoobygang.common.model.*;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

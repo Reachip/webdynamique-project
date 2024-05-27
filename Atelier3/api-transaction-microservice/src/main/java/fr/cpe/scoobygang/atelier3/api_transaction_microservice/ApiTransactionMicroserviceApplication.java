@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
 		"fr.cpe.scoobygang.common.jwt",
 		"fr.cpe.scoobygang.common.resource",
+		"fr.cpe.scoobygang.common.repository",
 		"fr.cpe.scoobygang.common.config"
 })
 @EntityScan("fr.cpe.scoobygang.common.model")

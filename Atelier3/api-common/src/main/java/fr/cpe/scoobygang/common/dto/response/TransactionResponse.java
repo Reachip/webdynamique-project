@@ -1,6 +1,6 @@
-package fr.cpe.scoobygang.atelier2.dao.response;
+package fr.cpe.scoobygang.common.dto.response;
 
-import fr.cpe.scoobygang.atelier2.model.TransactionAction;
+import fr.cpe.scoobygang.common.model.TransactionAction;
 import lombok.Getter;
 import lombok.Setter;
 

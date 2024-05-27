@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
-import static fr.cpe.scoobygang.atelier2.filter.utils.WebUtils.AUTHORIZATION_HEADER_NAME;
-
 @Component
 public class AuthorizationFilter extends GenericFilterBean {
     private final JWTService jwtService;
@@ -29,7 +27,7 @@ public class AuthorizationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         Map<String, String> headers = WebUtils.getHeadersInfo((HttpServletRequest)servletRequest);
-        String bearer = headers.get(AUTHORIZATION_HEADER_NAME);
+        String bearer = headers.get(WebUtils.AUTHORIZATION_HEADER_NAME);
 
         if (bearer != null) {
             Optional<JWT> optionalJWT = jwtService.fromAuthorization(bearer);

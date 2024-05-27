@@ -1,11 +1,10 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
-import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.CardRepository;
-import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.StoreRepository;
-import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.TransactionRepository;
-import fr.cpe.scoobygang.atelier3.api_transaction_microservice.repository.UserRepository;
-import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.*;
+import fr.cpe.scoobygang.common.repository.CardRepository;
+import fr.cpe.scoobygang.common.repository.StoreRepository;
+import fr.cpe.scoobygang.common.repository.TransactionRepository;
+import fr.cpe.scoobygang.common.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
