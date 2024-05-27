@@ -34,7 +34,7 @@ public class UserController {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
 
-        cardService.attachUserToCard(createdUser);
+        //cardService.attachUserToCard(createdUser);
 
         if (response.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

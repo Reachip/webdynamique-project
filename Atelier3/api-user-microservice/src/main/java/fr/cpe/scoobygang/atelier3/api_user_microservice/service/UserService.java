@@ -18,8 +18,8 @@ import java.util.stream.StreamSupport;
 
 @Service
 public class UserService {
-    private UserRepository userRepository;
-    private JWTService jwtService;
+    private final UserRepository userRepository;
+    private final JWTService jwtService;
 
     public UserService(UserRepository userRepository, JWTService jwtService) {
         this.userRepository = userRepository;
@@ -55,15 +55,21 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<JWT> login(String username, String password) throws JSONException {
+    public Optional<JWT> login(String username, String password) {
         User existingUser = userRepository.findByUsername(username);
 
         if (existingUser == null || !Objects.equals(existingUser.getPassword(), password)) {
             return Optional.empty();
         }
 
-        JWT jwt = jwtService.fromUser(existingUser);
+        JWT jwt = null;
+        try {
+            jwt = jwtService.fromUser(existingUser);
+
         return Optional.of(jwt);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void deleteUser(int id) {
