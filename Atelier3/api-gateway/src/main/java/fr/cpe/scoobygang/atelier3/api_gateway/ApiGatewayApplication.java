@@ -18,8 +18,10 @@ public class ApiGatewayApplication {
 	@Bean
 	public RouteLocator routeLocator(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route("kitchen-route", r -> r.path("/kitchen/**").uri("lb://kitchen-service"))
-				.route("tracker-route", r -> r.path("/tracker/**").uri("lb://tracker-service"))
+				.route("user-route", r -> r.path("/user/**").uri("lb://user-service"))
+				.route("card-route", r -> r.path("/card/**").uri("lb://card-service"))
+				.route("store-route", r -> r.path("/store/**").uri("lb://store-service"))
+				.route("transaction-route", r -> r.path("/transaction/**").uri("lb://transaction-service"))
 				.build();
 	}
 }
