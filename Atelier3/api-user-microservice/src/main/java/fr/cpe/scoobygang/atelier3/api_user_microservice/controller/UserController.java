@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_user_microservice.controller;
 
+import fr.cpe.scoobygang.atelier3.api_user_microservice.service.UserService;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.ChangePasswordRequest;
 import fr.cpe.scoobygang.common.dto.request.LoginRequest;
@@ -22,12 +23,10 @@ import java.util.Optional;
 public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
-    private final CardService cardService;
 
-    public UserController(JWTService jwtService, UserService userService, CardService cardService) {
+    public UserController(JWTService jwtService, UserService userService) {
         this.jwtService = jwtService;
         this.userService = userService;
-        this.cardService = cardService;
     }
 
     @PostMapping(value="/register")
