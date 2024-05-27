@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"fr.cpe.scoobygang.common.jwt"})
+@ComponentScan(basePackages = {"fr.cpe.scoobygang.common.jwt", "fr.cpe.scoobygang.common.config"})
 @EntityScan("fr.cpe.scoobygang.common.model")
 public class ApiTransactionMicroserviceApplication {
 
