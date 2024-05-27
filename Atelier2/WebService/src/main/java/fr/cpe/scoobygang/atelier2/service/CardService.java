@@ -17,10 +17,6 @@ public class CardService {
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }
-
-    public List<Card> getAllCard(){
-        return cardRepository.findOnSaleCards();
-    }
     public List<Card> getAllUserCard(int userId){
         Iterable<Card> iterable = cardRepository.findByOwnerId(userId);
         return StreamSupport.stream(iterable.spliterator(), false)
@@ -40,6 +36,8 @@ public class CardService {
             Card cardToUpdate = optionalCard.get();
             CardMapper.INSTANCE.updateCard(cardToUpdate, cardRequest);
             cardRepository.save(cardToUpdate);
+
+            return Optional.of(cardToUpdate);
         }
 
         return Optional.empty();
