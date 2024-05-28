@@ -91,11 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Error when parsing JSON:", error);
                 });
             } else {
-                showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des cartes.");
+                showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des parties.");
             }
         })
         .catch(error => {
             console.error("Fetch error:", error);
-            showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des cartes.");
+            showAlert(Alert.ERROR, "Une erreur est survenue. Impossible de charger la liste des parties.");
         });
 });
