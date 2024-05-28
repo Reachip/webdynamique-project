@@ -1,6 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_store_microservice.service;
 
-import fr.cpe.scoobygang.atelier3.api_store_microservice.repository.CardRepository;
+import fr.cpe.scoobygang.common.repository.CardRepository;
 import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
 import fr.cpe.scoobygang.common.dto.request.CardRequest;
 import fr.cpe.scoobygang.common.model.Card;
