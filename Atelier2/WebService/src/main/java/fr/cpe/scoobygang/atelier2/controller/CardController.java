@@ -28,7 +28,7 @@ public class CardController {
     }
 
     @DeleteMapping(value = {"/card/{id}"})
-    public ResponseEntity<Void> deleteCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
+    public ResponseEntity<Void> deleteCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
         Optional<Card> card = cardService.deleteCard(id);
         if (card.isPresent()) {
             return ResponseEntity.noContent().build(); // 204 No Content

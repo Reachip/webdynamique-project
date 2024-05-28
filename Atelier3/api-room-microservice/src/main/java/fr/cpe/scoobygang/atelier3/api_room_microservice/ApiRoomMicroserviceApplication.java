@@ -16,9 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 })
 @EntityScan("fr.cpe.scoobygang.common.model")
 public class ApiRoomMicroserviceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ApiRoomMicroserviceApplication.class, args);
 	}
-
 }

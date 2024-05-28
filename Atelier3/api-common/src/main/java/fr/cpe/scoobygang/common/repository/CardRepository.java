@@ -10,6 +10,9 @@ import java.util.List;
 public interface CardRepository extends CrudRepository<Card, Integer> {
     List<Card> findByOwnerId(int userId);
 
+    @Query("SELECT count(c) FROM Card c")
+    long count();
+
     @Query("SELECT c FROM Card c WHERE c.store is not null")
     List<Card> findOnSaleCards();
 

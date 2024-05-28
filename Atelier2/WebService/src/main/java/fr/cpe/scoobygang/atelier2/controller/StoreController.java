@@ -64,8 +64,7 @@ public class StoreController {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
             int userID = jwt.get().getJwtInformation().getUserID();
-            boolean test1 = cardService.getAllUserCard(userID).stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId());
-            boolean test = storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId());
+
             if (cardService.getAllUserCard(userID).stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
                 return ResponseEntity.status(HttpStatus.OK).build();
             }

@@ -22,4 +22,16 @@ public class Room {
     private ROOM_STATUS status;
 
     private double bet;
+
+    public static Room random(User owner) {
+        int randomBet = (int)Math.floor(Math.random() * (50 - 5 + 1) + 5);
+
+        Room room = new Room();
+        room.setBet(randomBet);
+
+        room.setName(owner.getName() + "'s Room");
+        room.setOwner(owner);
+
+        return room;
+    }
 }
