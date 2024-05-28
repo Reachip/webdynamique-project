@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.common.model;
 
+import com.github.javafaker.Faker;
 import fr.cpe.scoobygang.common.model.enumeration.ROOM_STATUS;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,7 +30,11 @@ public class Room {
         Room room = new Room();
         room.setBet(randomBet);
 
-        room.setName(owner.getName() + "'s Room");
+        Faker faker = new Faker();
+        String roomName = faker.animal().name();
+        roomName = roomName.substring(0, 1).toUpperCase() + roomName.substring(1);
+
+        room.setName(roomName + "'s Room");
         room.setOwner(owner);
 
         return room;
