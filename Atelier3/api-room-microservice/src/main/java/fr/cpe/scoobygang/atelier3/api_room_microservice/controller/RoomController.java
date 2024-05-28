@@ -16,7 +16,7 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<Room>> getRooms() {
+    public ResponseEntity<List<RoomCreateRequest>> getRooms() {
         return ResponseEntity.ok(roomService.getRooms());
     }
 
