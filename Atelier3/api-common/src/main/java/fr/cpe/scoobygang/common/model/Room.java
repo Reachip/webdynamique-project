@@ -19,7 +19,11 @@ public class Room {
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User owner;
 
-    private ROOM_STATUS status;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private User challenger;
+
+    private ROOM_STATUS status = ROOM_STATUS.WAIT_FOR_PLAYER ;
 
     private double bet;
 
