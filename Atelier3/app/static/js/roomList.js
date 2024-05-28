@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     for (const room of data) {
                         const clone = document.importNode(template.content, true);
-                        console.log(room)
+                        
                         const newContent = clone.firstElementChild.innerHTML
                             .replace(/{{room}}/g, room.name)
-                            .replace(/{{player}}/g, room.player)
+                            .replace(/{{player}}/g, room.owner.username)
                             .replace(/{{bet}}/g, room.bet)
                         clone.firstElementChild.innerHTML = newContent;
 
