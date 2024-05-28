@@ -12,7 +12,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 		"fr.cpe.scoobygang.common.jwt",
 		"fr.cpe.scoobygang.common.resource",
 		"fr.cpe.scoobygang.common.repository",
-		"fr.cpe.scoobygang.common.config"
+		"fr.cpe.scoobygang.common.config",
+		"fr.cpe.scoobygang.atelier3.api_store_microservice.*",
 })
 @EntityScan("fr.cpe.scoobygang.common.model")
 public class ApiStoreMicroserviceApplication {
