@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/card")
 @CrossOrigin(origins = "*")
 public class CardController {
     private final JWTService jwtService;
