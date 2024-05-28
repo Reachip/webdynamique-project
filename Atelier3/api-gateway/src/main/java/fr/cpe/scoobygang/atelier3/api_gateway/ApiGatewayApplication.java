@@ -23,4 +23,4 @@ public class ApiGatewayApplication {
 				.route("user-route", r -> r.path("/user/**").uri("lb://api-user-microservice"))
 				.build();
 	}
-}
+}²
