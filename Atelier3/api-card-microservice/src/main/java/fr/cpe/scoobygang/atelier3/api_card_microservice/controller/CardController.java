@@ -78,9 +78,10 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
-    @PostMapping(value = {"/cards/attach/user/{id}"})
+    @PostMapping(value = {"/cards/attach/user"})
     public ResponseEntity<Void> attachCardsToUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
         cardService.attachUserToCard(user);
         return ResponseEntity.noContent().build();
     }
+
 }

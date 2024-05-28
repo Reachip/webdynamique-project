@@ -1,6 +1,5 @@
 package fr.cpe.scoobygang.atelier3.api_user_microservice.controller;
 
-import fr.cpe.scoobygang.atelier3.api_user_microservice.feign.CardServiceClient;
 import fr.cpe.scoobygang.atelier3.api_user_microservice.service.UserService;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.ChangePasswordRequest;
@@ -12,9 +11,12 @@ import fr.cpe.scoobygang.common.exceptions.UserChangePasswordException;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +38,17 @@ public class UserController {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
 
-        cardServiceClient.attachCardsToUser(createdUser.getId(), response.get().getToken());
+        String authorization = "Bearer " + response.get().getToken();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
+        HttpEntity<User> request = new HttpEntity<>(createdUser, headers);
 
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity("http://localhost:8086/card/cards/attach/user", request, Void.class);
+
+        if (response == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
         return ResponseEntity.ok(response);
     }
 
