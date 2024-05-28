@@ -53,6 +53,11 @@
 			<version>7.21.0</version>
 		</dependency>
 		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine-rest-openapi</artifactId>
+			<version>7.21.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.camunda.spin</groupId>
 			<artifactId>camunda-spin-dataformat-all</artifactId>
 			<version>1.23.0</version>
