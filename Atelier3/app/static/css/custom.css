@@ -8,6 +8,7 @@
      --primary: #007bff;
      --primary-dark: #0056b3;
      --secondary: #e6eef9;
+     --tertiary: #9FA6B2;
      --white: #f0f0f0;
      --light-gray: #ccc;
      --table-even: #f9f9f9;
@@ -237,6 +238,9 @@
  .badge-primary-dark {
      background-color: var(--primary-dark);
 }
+.badge-tertiary {
+    background-color: var(--tertiary);
+}
  .badge-small {
      font-size: 0.8em !important;
 }
@@ -365,13 +369,13 @@
  .button-light:hover {
      background-color: var(--light-gray);
 }
-/* CARD PREVIEW */
+/* CARD/ROOM PREVIEW */
  .table-and-preview {
      display: flex;
      justify-content: space-between;
      align-items: flex-start;
 }
- #card-preview {
+ #card-preview, #room-preview {
      width: 300px;
      padding: 20px;
      background-color: white;
@@ -382,19 +386,19 @@
      align-self: flex-start;
      margin-left: 20px;
 }
- #card-preview.hidden {
+ #card-preview.hidden, #room-preview.hidden {
      display: none;
 }
- #card-preview .card-image img {
+ #card-preview .card-image img, #room-preview .room-image img {
      max-width: 150px;
      max-height: 225px;
      border-radius: 8px;
 }
- #card-preview .card-details h1 {
+ #card-preview .card-details h1, #room-preview .room-details h1 {
      font-size: 24px;
      margin-bottom: 10px;
 }
- #card-preview .price {
+ #card-preview .price, #room-preview .price {
      font-size: 20px;
      font-weight: 600;
      color: var(--primary);
@@ -505,4 +509,19 @@ input[id=store-4]:checked ~ .glider {
      .stores-tabs {
          transform: scale(0.6);
     }
+}
+
+/* ROOM */
+#room-waiting {
+    text-align: center;
+    margin-top: 50px;
+}
+
+#room-waiting i {
+    font-size: 6em;
+}
+
+#room-waiting p {
+    font-size: 1.5em;
+    margin-top: 10px;
 }

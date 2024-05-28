@@ -18,25 +18,23 @@
 
 <body>
     <div id="content">
-        <div id="cards">
+        <div id="rooms">
             <h3>Liste des parties</h3>
             <div id="alerts"></div>
             <br>
-         
-            <br>
             <div class="table-and-preview">
-                <table id="table-cards">
+                <table id="table-rooms">
                     <thead>
                         <tr>
                             <th>Partie</th>
                             <th>Joueur</th>
                             <th>Mise</th>
-                            <th></th>
+                            <th style="width: 100px;"></th>
                         </tr>
                     </thead>
-                    <tbody id="table-cards-body">
+                    <tbody id="table-rooms-body">
                         <template id="row">
-                            <tr class="card-row">
+                            <tr class="room-row">
                                 <td>{{room}}</td>
                                 <td>{{player}}</td>
                                 <td>{{bet}}</td>
@@ -49,13 +47,11 @@
                         </template>
                     </tbody>
                 </table>
-                <div id="card-preview" class="hidden">
-                    <div class="card-image">
-                        <img id="preview-image"
-                            src=""
-                            alt="Aperçu de la partie">
+                <div id="room-preview" class="hidden">
+                    <div class="room-image">
+                        <img id="preview-image" src="" alt="Aperçu de la carte">
                     </div>
-                    <div class="card-details">
+                    <div class="room-details">
                         <input type="hidden" id="image-id">
                         <h1 id="preview-name"></h1>
                         <p id="preview-description"></p>
@@ -68,20 +64,17 @@
                             <li><strong>Défense :</strong> <span id="preview-defense"></span></li>
                             <li><strong>Attaque :</strong> <span id="preview-attack"></span></li>
                         </ul>
-                        <span class="price">
-                            <strong>Prix :</strong>
-                            <span id="preview-price"></span>$
-                        </span>
-                            <div>
-                                <button class="button button-primary button-buy">
-                                    <i class="fa-solid fa-cart-arrow-down"></i> Acheter
-                                </button>
-                            </div>
+                        <div>
+                            <button class="button button-primary button-play">
+                                <i class="fa-solid fa-gamepad"></i> Jouer
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="module" src="js/roomList.js"></script>
     <script type="module" src="js/script.js"></script>
 </body>
 

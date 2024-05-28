@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const links = [
     { text: "<i class=\"fa-solid fa-house\"></i> Accueil", href: "index.html" },
     { text: "<i class=\"fa-solid fa-list\"></i> Liste des cartes", href: "cardList.html" },
-    { text: "<i class=\"fa-solid fa-layer-group\"></i> Mes cartes", href: "cards.html" }
+    { text: "<i class=\"fa-solid fa-layer-group\"></i> Mes cartes", href: "cards.html" },
+    { text: "<i class=\"fa-solid fa-gamepad\"></i> Jouer", href: "roomList.html" }
   ];
 
   links.forEach(link => {
