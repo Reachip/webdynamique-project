@@ -4,7 +4,10 @@ import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.CardRepository;
 import fr.cpe.scoobygang.common.repository.StoreRepository;
 import fr.cpe.scoobygang.common.repository.UserRepository;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,13 +17,11 @@ public class StoreService {
     private final UserRepository userRepository;
     private final CardRepository cardRepository;
     private final StoreRepository storeRepository;
-    private final TransactionService transactionService;
 
-    public StoreService(UserRepository userRepository, CardRepository cardRepository, StoreRepository storeRepository, TransactionService transactionService) {
+    public StoreService(UserRepository userRepository, CardRepository cardRepository, StoreRepository storeRepository) {
         this.userRepository = userRepository;
         this.cardRepository = cardRepository;
         this.storeRepository = storeRepository;
-        this.transactionService = transactionService;
     }
 
     public boolean sellUserCard(int cardId, int storeId) {
@@ -42,7 +43,7 @@ public class StoreService {
         return true;
     }
 
-    public boolean buyCard(int cardId, int userId, int storeId){
+    public boolean buyCard(String authorization, int cardId, int userId, int storeId){
         User newOwner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found for id " + userId));
 
@@ -69,12 +70,25 @@ public class StoreService {
         userRepository.save(newOwner);
         userRepository.save(currentOwner);
 
-        Transaction buyTransaction = transactionService.createTransaction(userId, cardId, storeId, TransactionAction.BUY);
-        transactionService.createTransaction(currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
+        saveTransaction(authorization, userId, cardId, storeId, TransactionAction.BUY);
+        saveTransaction(authorization, currentOwner.getId(), cardId, storeId, TransactionAction.SELL);
 
         return true;
     }
 
+
+    public void saveTransaction(String authorization, int userId, int cardId, int storeId, TransactionAction action)
+    {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
+        TransactionRequest transactionRequest = new TransactionRequest(userId, cardId, storeId, action);
+
+
+        HttpEntity<Transaction> request = new HttpEntity<>(null, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Transaction> responseTransaction = restTemplate.exchange("http://localhost:8086/transaction/transaction/create", HttpMethod.POST, transactionRequest, Transaction.class);
+    }
 
     public boolean cancelSellCard(int cardId, int storeId){
         Card card = cardRepository.findById(cardId)
@@ -101,5 +115,21 @@ public class StoreService {
     public List<Store> getStores() {
         Iterable<Store> iterable = storeRepository.findAll();
         return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+    }
+
+    public List<Card> getCardsForUser(String authorization)
+    {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
+        HttpEntity<User> request = new HttpEntity<>(null, headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/cards/user", HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
+        if (responseListCard.getStatusCode().is2xxSuccessful())
+        {
+            return responseListCard.getBody();
+        }
+
+        return null;
     }
 }
