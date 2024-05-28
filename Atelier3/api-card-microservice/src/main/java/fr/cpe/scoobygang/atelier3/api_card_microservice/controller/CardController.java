@@ -7,6 +7,7 @@ import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.Card;
+import fr.cpe.scoobygang.common.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -74,5 +75,11 @@ public class CardController {
             return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getAllUserCard(userID)));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    }
+
+    @PostMapping(value = {"/cards/attach/user/{id}"})
+    public ResponseEntity<Void> attachCardsToUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
+        cardService.attachUserToCard(user);
+        return ResponseEntity.noContent().build();
     }
 }

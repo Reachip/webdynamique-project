@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_user_microservice.controller;
 
+import fr.cpe.scoobygang.atelier3.api_user_microservice.feign.CardServiceClient;
 import fr.cpe.scoobygang.atelier3.api_user_microservice.service.UserService;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.ChangePasswordRequest;
@@ -19,10 +20,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/user")
 @CrossOrigin(origins = "*")
 public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
+
 
     public UserController(JWTService jwtService, UserService userService) {
         this.jwtService = jwtService;
@@ -34,11 +37,8 @@ public class UserController {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
 
-        //cardService.attachUserToCard(createdUser);
+        // cardServiceClient.attachCardsToUser(createdUser.getId(), response.get().getToken());
 
-        if (response.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
         return ResponseEntity.ok(response);
     }
 
