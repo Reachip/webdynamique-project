@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/store")
 @CrossOrigin(origins = "*")
 public class StoreController {
     private final CardService cardService;
