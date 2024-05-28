@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class RoomCreateRequest {
     private String name;
-    private int userId;
-    private ROOM_STATUS status;
+    private Long id;
+    private String username;
     private double bet = 0;
 }

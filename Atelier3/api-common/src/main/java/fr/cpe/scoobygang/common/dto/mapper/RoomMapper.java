@@ -14,9 +14,12 @@ import java.util.List;
 public interface RoomMapper {
     RoomMapper INSTANCE = Mappers.getMapper( RoomMapper.class );
     Room roomToRoomCreateRequest(RoomCreateRequest room);
+
     @Mapping(source = "owner", target = "userId", qualifiedByName = "ownerToUserId")
     RoomCreateRequest roomCreateRequestToRoom(Room room);
+
     List<RoomCreateRequest> roomCreateRequestsToRooms(List<Room> rooms);
+
     @Named("ownerToUserId")
     static int ownerToUserId(User owner) {
         if (owner == null) {
@@ -24,4 +27,8 @@ public interface RoomMapper {
         }
         return owner.getId();
     }
+
+    RoomResponse roomToRoomResponse(Room room);
+
+    List<RoomResponse> roomsToRoomResponses(List<Room> rooms);
 }

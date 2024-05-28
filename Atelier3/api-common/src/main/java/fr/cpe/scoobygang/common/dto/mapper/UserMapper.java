@@ -28,6 +28,6 @@ public interface UserMapper {
     void userApply(@MappingTarget User userToUpdate, User user);
     UserRequest userToUserRequest(User car);
     UserResponse userToUserResponse(User user);
-
+    UserMinimalResponse userToUserMinimalResponse(User user);
     List<UserResponse> usersToUserResponses(List<User> users);
 }
