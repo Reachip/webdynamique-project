@@ -28,10 +28,9 @@ public class RoomService {
         return roomRepository.save(roomToModel);
     }
 
-    public Room joinRoom(UserRequest user, Long roomId) {
+    public Room joinRoom(User user, Long roomId) {
         Room room = roomRepository.findById(roomId).get();
-
-        //room.setChallenger(user);
+        room.setChallenger(user);
         return roomRepository.save(room);
     }
 }

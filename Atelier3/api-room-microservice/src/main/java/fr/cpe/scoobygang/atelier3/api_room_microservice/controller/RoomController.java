@@ -1,6 +1,7 @@
 package fr.cpe.scoobygang.atelier3.api_room_microservice.controller;
 
 import fr.cpe.scoobygang.atelier3.api_room_microservice.service.RoomService;
+import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.RoomCreateRequest;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.jwt.JWT;
@@ -37,7 +38,7 @@ public class RoomController {
     }
 
     @PutMapping("/room/{id}")
-    public ResponseEntity<Room> joinRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") int id) {
+    public ResponseEntity<Room> joinRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") Long id) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
             int userID = jwt.get().getJwtInformation().getUserID();
@@ -49,13 +50,13 @@ public class RoomController {
 
             RestTemplate restTemplate = new RestTemplate();
 
-            ResponseEntity<UserRequest> userRequest = restTemplate.exchange(
+            UserRequest userRequest = restTemplate.exchange(
                     "http://localhost:8085/user/user/" + userID,
                     HttpMethod.GET,
                     request,
-                    UserRequest.class);
-            //roomService.joinRoom(userRequest.getBody().getId(), id);
-
+                    UserRequest.class).getBody();
+            Room room = roomService.joinRoom(UserMapper.INSTANCE.userRequestToUser(userRequest), id);
+            return ResponseEntity.ok(room);
         }
         return ResponseEntity.ok().build();
     }
