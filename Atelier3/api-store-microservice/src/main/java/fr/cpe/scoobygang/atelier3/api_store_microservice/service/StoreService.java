@@ -102,4 +102,9 @@ public class StoreService {
         Iterable<Store> iterable = storeRepository.findAll();
         return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
     }
+
+    public Store getStore(int storeID){
+        return storeRepository.findById(storeID).get();
+    }
+
 }

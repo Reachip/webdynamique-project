@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8000")
 public class RoomController {
     private final RoomService roomService;
     private final JWTService jwtService;

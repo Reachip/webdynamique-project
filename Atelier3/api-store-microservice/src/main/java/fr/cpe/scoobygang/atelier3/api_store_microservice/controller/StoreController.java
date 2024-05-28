@@ -9,6 +9,7 @@ import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.dto.response.StoreResponse;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
+import fr.cpe.scoobygang.common.model.Store;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,11 @@ public class StoreController {
     @GetMapping(value = {"/stores"})
     public ResponseEntity<List<StoreResponse>> getStores() {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
+    }
+
+    @GetMapping(value = {"/store/{id}"})
+    public ResponseEntity<Store> getStores(@PathVariable int id) {
+        return ResponseEntity.ok(storeService.getStore(id));
     }
 
     @PostMapping(value = {"/store/buy"})
