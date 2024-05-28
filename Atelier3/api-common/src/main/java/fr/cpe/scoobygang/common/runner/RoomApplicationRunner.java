@@ -30,14 +30,15 @@ public class RoomApplicationRunner implements ApplicationRunner {
             return;
 
        List<User> users = new ArrayList<>();
-       Iterable<User> usersIterable = userRepository.findAll();
-
-       usersIterable.forEach(users::add);
+       userRepository.findAll().forEach(users::add);
 
        Collections.shuffle(users);
-       users = users.stream().limit(5).toList();
 
-       List<Room> rooms = users.stream().map(Room::random).toList();
+       List<Room> rooms = users.stream()
+               .limit(5)
+               .map(Room::random)
+               .toList();
+
        roomRepository.saveAll(rooms);
     }
 }
