@@ -1,12 +1,12 @@
 package fr.cpe.scoobygang.atelier3.api_user_microservice.service;
 
-import fr.cpe.scoobygang.atelier3.api_user_microservice.repository.UserRepository;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.UserPutRequest;
 import fr.cpe.scoobygang.common.exceptions.UserChangePasswordException;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.User;
+import fr.cpe.scoobygang.common.repository.UserRepository;
 import org.json.JSONException;
 import org.springframework.stereotype.Service;
 
