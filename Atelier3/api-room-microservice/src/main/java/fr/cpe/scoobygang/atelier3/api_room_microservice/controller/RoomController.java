@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:8000")
 public class RoomController {
     private final RoomService roomService;
     public RoomController(RoomService roomService) {
