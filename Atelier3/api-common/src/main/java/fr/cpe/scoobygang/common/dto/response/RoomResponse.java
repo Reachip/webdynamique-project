@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RoomResponse {
-    UserResponse owner;
-    UserResponse challenger;
     Long id;
+    String name;
+    UserMinimalResponse owner;
+    UserMinimalResponse challenger;
 }
