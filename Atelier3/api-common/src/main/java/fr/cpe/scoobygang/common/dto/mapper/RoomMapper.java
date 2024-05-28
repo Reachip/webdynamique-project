@@ -1,6 +1,7 @@
 package fr.cpe.scoobygang.common.dto.mapper;
 
 import fr.cpe.scoobygang.common.dto.request.RoomCreateRequest;
+import fr.cpe.scoobygang.common.dto.response.RoomResponse;
 import fr.cpe.scoobygang.common.model.Room;
 import fr.cpe.scoobygang.common.model.User;
 import org.mapstruct.Mapper;
@@ -25,4 +26,6 @@ public interface RoomMapper {
         }
         return owner.getId();
     }
+
+    RoomResponse roomToRoomResponse(Room room);
 }
