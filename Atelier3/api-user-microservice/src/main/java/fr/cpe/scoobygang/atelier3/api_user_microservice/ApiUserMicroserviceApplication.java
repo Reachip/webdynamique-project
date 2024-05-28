@@ -12,6 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "fr.cpe.scoobygang.common.repository")
 @ComponentScan(basePackages = {
 		"fr.cpe.scoobygang.common.*",
+		"fr.cpe.scoobygang.atelier3.api_user_microservice.*",
 })
 @EntityScan("fr.cpe.scoobygang.common.model")
 public class ApiUserMicroserviceApplication {

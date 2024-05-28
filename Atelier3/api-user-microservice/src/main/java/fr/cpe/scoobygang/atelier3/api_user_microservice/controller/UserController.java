@@ -26,7 +26,6 @@ public class UserController {
     private final JWTService jwtService;
     private final UserService userService;
 
-
     public UserController(JWTService jwtService, UserService userService) {
         this.jwtService = jwtService;
         this.userService = userService;
