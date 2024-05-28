@@ -18,7 +18,7 @@ public class RoomService {
     }
 
     public List<RoomCreateRequest> getRooms() {
-        return roomRepository.findAll().stream().map(RoomMapper.INSTANCE::roomCreateRequestToRoom).toList();
+        return RoomMapper.INSTANCE.roomCreateRequestsToRooms(roomRepository.findAll());
     }
 
     public Room createRoom(RoomCreateRequest room) {
