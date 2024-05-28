@@ -36,7 +36,7 @@ public class UserController {
         User createdUser = userService.addUser(UserMapper.INSTANCE.userRequestToUser(user));
         Optional<JWT> response = userService.login(createdUser.getUsername(), createdUser.getPassword());
 
-        // cardServiceClient.attachCardsToUser(createdUser.getId(), response.get().getToken());
+        cardServiceClient.attachCardsToUser(createdUser.getId(), response.get().getToken());
 
         return ResponseEntity.ok(response);
     }
