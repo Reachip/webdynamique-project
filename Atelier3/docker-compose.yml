@@ -1,9 +1,13 @@
-version: '3.8'
+# docker network create atelier3
+networks:
+  atelier3:
+    external: true
 
+version: '3.8'
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres-db
+    container_name: postgres-atelier3
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -12,15 +16,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  nginx:
-    image: nginx:latest
-    container_name: nginx-server
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - "80:80"
-    depends_on:
-      - postgres
+
 
 volumes:
   postgres_data:
