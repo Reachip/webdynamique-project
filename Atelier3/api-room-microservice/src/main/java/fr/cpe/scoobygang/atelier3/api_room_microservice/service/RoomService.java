@@ -19,8 +19,8 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    public List<Room> getRooms() {
-        return roomRepository.findAll();
+    public List<RoomCreateRequest> getRooms() {
+        return roomRepository.findAll().stream().map(RoomMapper.INSTANCE::roomCreateRequestToRoom).toList();
     }
 
     public Room createRoom(RoomCreateRequest room) {

@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_room_microservice.controller;
 
+import fr.cpe.scoobygang.common.dto.request.RoomCreateRequest;
 import fr.cpe.scoobygang.common.model.Room;
 import fr.cpe.scoobygang.common.repository.RoomRepository;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,10 +26,10 @@ class RoomControllerTest {
     void getRoomsIsOk() {
         roomRepository.saveAll(List.of(new Room(), new Room()));
 
-        ResponseEntity<List<Room>> rooms = roomController.getRooms();
+        ResponseEntity<List<RoomCreateRequest>> rooms = roomController.getRooms();
 
         assertEquals(HttpStatusCode.valueOf(200), rooms.getStatusCode());
-        assertEquals(2, rooms.getBody().size());
+        assertEquals(2, Objects.requireNonNull(rooms.getBody()).size());
     }
 
     @Test
