@@ -21,7 +21,7 @@ public class Room {
     private User owner;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @JoinColumn(name = "challengerId", referencedColumnName = "id")
     private User challenger;
 
     private ROOM_STATUS status = ROOM_STATUS.WAIT_FOR_PLAYER ;

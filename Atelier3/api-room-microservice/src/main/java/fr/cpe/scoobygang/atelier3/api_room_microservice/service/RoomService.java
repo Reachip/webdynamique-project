@@ -29,8 +29,12 @@ public class RoomService {
     }
 
     public Room joinRoom(User user, Long roomId) {
-        Room room = roomRepository.findById(roomId).get();
-        room.setChallenger(user);
-        return roomRepository.save(room);
+        Optional<Room> optRoom = roomRepository.findById(roomId);
+        if (optRoom.isPresent()){
+            Room room = optRoom.get();
+            room.setChallenger(user);
+            return roomRepository.save(room);
+        }
+        throw new RuntimeException();
     }
 }
