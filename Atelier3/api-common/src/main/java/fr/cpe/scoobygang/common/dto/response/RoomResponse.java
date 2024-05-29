@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.common.dto.response;
 
+import fr.cpe.scoobygang.common.model.Card;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,4 +12,6 @@ public class RoomResponse {
     double bet;
     UserMinimalResponse owner;
     UserMinimalResponse challenger;
+    Card ownerCard;
+    Card challengerCard;
 }

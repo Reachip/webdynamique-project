@@ -3,6 +3,7 @@ package fr.cpe.scoobygang.atelier3.api_room_microservice.controller;
 import fr.cpe.scoobygang.atelier3.api_room_microservice.service.RoomService;
 import fr.cpe.scoobygang.common.dto.mapper.RoomMapper;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
+import fr.cpe.scoobygang.common.dto.request.PutCardRoomRequest;
 import fr.cpe.scoobygang.common.dto.request.RoomCreateRequest;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.dto.response.RoomResponse;
@@ -10,10 +11,7 @@ import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.Room;
 import fr.cpe.scoobygang.common.model.User;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -68,4 +66,31 @@ public class RoomController {
     public ResponseEntity<RoomResponse> getRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") Long id) {
         return ResponseEntity.ok(RoomMapper.INSTANCE.roomToRoomResponse(roomService.getRoom(id)));
     }
+
+    @PutMapping("/room/card")
+    public ResponseEntity<RoomResponse> updateCardChoice(@RequestHeader(value = "Authorization") String authorization, @RequestBody PutCardRoomRequest cardRoomRequest) {
+        Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
+        if (jwt.isPresent()) {
+            int userID = jwt.get().getJwtInformation().getUserID();
+
+            String requestAuthorization = "Bearer " + jwt.get().getToken();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", requestAuthorization);
+            HttpEntity<User> request = new HttpEntity<>(headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            UserRequest userRequest = restTemplate.exchange(
+                    "http://localhost:8085/user/user/" + userID,
+                    HttpMethod.GET,
+                    request,
+                    UserRequest.class).getBody();
+
+            RoomResponse roomResponse = roomService.updateCard(UserMapper.INSTANCE.userRequestToUser(userRequest), cardRoomRequest);
+            return ResponseEntity.ok(roomResponse);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+
 }

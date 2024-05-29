@@ -1,7 +1,6 @@
 package fr.cpe.scoobygang.common.model;
 
 import com.github.javafaker.Faker;
-import fr.cpe.scoobygang.common.model.enumeration.ROOM_STATUS;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,7 +23,13 @@ public class Room {
     @JoinColumn(name = "challengerId", referencedColumnName = "id")
     private User challenger;
 
-    private ROOM_STATUS status = ROOM_STATUS.WAIT_FOR_PLAYER ;
+    @ManyToOne
+    @JoinColumn(name = "ownerCardId", referencedColumnName = "id")
+    private Card ownerCard;
+
+    @ManyToOne
+    @JoinColumn(name = "challengerCardId", referencedColumnName = "id")
+    private Card challengerCard;
 
     private double bet;
 
