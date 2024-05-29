@@ -3,7 +3,7 @@ import { showAlert, Alert } from './alerts.js';
 const userToken = localStorage.getItem("scoobycards-user-token");
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch(`http://127.0.0.1:8080/rooms`, {
+    fetch(`http://localhost:8080/rooms`, {
         method: "GET"
     })
         .then(response => {

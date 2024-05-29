@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const name = document.querySelector("#form-room-name").value;
         const bet = document.querySelector("#form-room-bet").value;
 
-        fetch("http://127.0.0.1:8080/room/create", {
+        fetch("http://localhost:8080/room/create", {
             method: "POST",
             body: JSON.stringify({
                 name: name,
