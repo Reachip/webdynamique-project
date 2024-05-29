@@ -240,7 +240,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -f api-store-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
   api-card-microservice:
-    name: API Store
+    name: API Card
     runs-on: ubuntu-latest
     defaults:
       run:
