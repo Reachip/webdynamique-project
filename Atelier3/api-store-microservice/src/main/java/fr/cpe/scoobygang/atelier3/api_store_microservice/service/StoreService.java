@@ -92,7 +92,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(card, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/card/card/save", request, Void.class);
+        restTemplate.postForEntity("http://localhost:8086/card/save", request, Void.class);
     }
 
     public void saveUser(String authorization, User user) {
@@ -101,7 +101,7 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(user, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/user/user/save", request, Void.class);
+        restTemplate.postForEntity("http://localhost:8086/user/save", request, Void.class);
     }
 
     public Card getCard(String authorization,int cardId) {

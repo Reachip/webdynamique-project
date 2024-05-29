@@ -74,11 +74,11 @@ class TransactionServiceTest {
 
     @Test
     void testCreateTransaction_Success() {
-        when(restTemplate.getForEntity(eq("http://localhost:8085/user/user/" + userId), eq(UserRequest.class)))
+        when(restTemplate.getForEntity(eq("http://localhost:8085/user/" + userId), eq(UserRequest.class)))
                 .thenReturn(new ResponseEntity<>(userRequest, HttpStatus.OK));
-        when(restTemplate.getForEntity(eq("http://localhost:8086/card/card/" + cardId), eq(Card.class)))
+        when(restTemplate.getForEntity(eq("http://localhost:8086/card/" + cardId), eq(Card.class)))
                 .thenReturn(new ResponseEntity<>(card, HttpStatus.OK));
-        when(restTemplate.getForEntity(eq("http://localhost:8086/store/store/" + storeId), eq(Store.class)))
+        when(restTemplate.getForEntity(eq("http://localhost:8086/store/" + storeId), eq(Store.class)))
                 .thenReturn(new ResponseEntity<>(store, HttpStatus.OK));
         when(transactionRepository.save(any(Transaction.class))).thenReturn(transaction);
 
