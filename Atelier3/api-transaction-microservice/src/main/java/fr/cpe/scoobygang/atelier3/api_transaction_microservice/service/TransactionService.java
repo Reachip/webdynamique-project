@@ -1,15 +1,12 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
-import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.model.*;
-import fr.cpe.scoobygang.common.repository.CardRepository;
-import fr.cpe.scoobygang.common.repository.StoreRepository;
 import fr.cpe.scoobygang.common.repository.TransactionRepository;
-import fr.cpe.scoobygang.common.repository.UserRepository;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,18 +19,17 @@ import java.util.stream.StreamSupport;
 @Service
 public class TransactionService {
     private final TransactionRepository transactionRepository;
+    private final RestTemplate restTemplate;
 
-    public TransactionService(TransactionRepository transactionRepository) {
+    public TransactionService(TransactionRepository transactionRepository, RestTemplate restTemplate) {
         this.transactionRepository = transactionRepository;
+        this.restTemplate = restTemplate;
     }
 
     public boolean createTransaction(String token, int userId, int cardId, int storeId, TransactionAction action) {
-
         String authorization = "Bearer " + token;
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
-
-        RestTemplate restTemplate = new RestTemplate();
 
         // Récupération de l'utilisateur
         ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
@@ -69,10 +65,10 @@ public class TransactionService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
 
-        RestTemplate restTemplate = new RestTemplate();
+        HttpEntity<User> request = new HttpEntity<>(headers);
 
         //Get user from userId
-        ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest = restTemplate.exchange("http://localhost:8085/user/user/"+userId, HttpMethod.GET, request, UserRequest.class);
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return null;
         User user = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
