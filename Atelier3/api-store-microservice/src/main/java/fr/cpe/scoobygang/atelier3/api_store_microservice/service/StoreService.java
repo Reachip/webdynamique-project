@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_store_microservice.service;
 
+import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.CardRepository;
 import fr.cpe.scoobygang.common.repository.StoreRepository;
@@ -81,13 +82,14 @@ public class StoreService {
     {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
-        TransactionRequest transactionRequest = new TransactionRequest(userId, cardId, storeId, action);
-
-
-        HttpEntity<Transaction> request = new HttpEntity<>(null, headers);
+        TransactionRequest transactionRequest = new TransactionRequest();
+        transactionRequest.setUserId(userId);
+        transactionRequest.setCardId(cardId);
+        transactionRequest.setStoreId(storeId);
+        transactionRequest.setAction(action);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Transaction> responseTransaction = restTemplate.exchange("http://localhost:8086/transaction/transaction/create", HttpMethod.POST, transactionRequest, Transaction.class);
+        restTemplate.postForEntity("http://localhost:8086/transaction/create", transactionRequest, Void.class);
     }
 
     public boolean cancelSellCard(int cardId, int storeId){
@@ -115,6 +117,10 @@ public class StoreService {
     public List<Store> getStores() {
         Iterable<Store> iterable = storeRepository.findAll();
         return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+    }
+
+    public Store getStore(int storeID){
+        return storeRepository.findById(storeID).get();
     }
 
     public List<Card> getCardsForUser(String authorization)

@@ -4,10 +4,7 @@ const userToken = localStorage.getItem("scoobycards-user-token");
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch(`http://127.0.0.1:8080/rooms`, {
-        method: "GET",
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
-        }
+        method: "GET"
     })
         .then(response => {
             if (response.ok) {
@@ -20,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     for (const room of data) {
                         const clone = document.importNode(template.content, true);
-
+                        console.log(room)
                         const newContent = clone.firstElementChild.innerHTML
                             .replace(/{{room}}/g, room.name)
                             .replace(/{{player}}/g, room.player)
