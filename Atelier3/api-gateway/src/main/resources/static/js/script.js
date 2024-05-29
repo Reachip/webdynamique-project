@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const hasToken = !!userToken;
   if (currentPage !== 'register.html' && currentPage !== 'login.html') {
     if (hasToken) {
-      fetch("http://127.0.0.1:8085/user/current", {
+      fetch("http://127.0.0.1:8080/user/current", {
         method: "GET",
         headers: {
           "Authorization": "Bearer " + userToken,

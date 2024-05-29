@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const username = document.querySelector("#form-login-username").value;
         const password = document.querySelector("#form-login-password").value;
         
-        fetch("http://127.0.0.1:8085/user/login", {
+        fetch("http://127.0.0.1:8080/user/login", {
             method: "POST",
             body: JSON.stringify({
                 username: username,
