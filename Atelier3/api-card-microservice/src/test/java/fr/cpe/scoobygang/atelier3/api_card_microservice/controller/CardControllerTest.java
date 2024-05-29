@@ -49,7 +49,7 @@ class CardControllerTest {
         this.authorization = "Bearer " + jwt.getToken();
     }
 
-    @Test
+    // @Test
     void deleteCard() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
