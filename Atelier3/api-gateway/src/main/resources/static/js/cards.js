@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     response.json().then(data => {
                         const template = document.querySelector("#row");
 
-                        fetch("http://127.0.0.1:8080/store/stores", {
+                        fetch("http://127.0.0.1:8080/store", {
                             method: "GET",
                             headers: {
                                 "Content-type": "application/json; charset=UTF-8"

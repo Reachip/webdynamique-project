@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    fetch("http://127.0.0.1:8080/stores", {
+    fetch("http://127.0.0.1:8080/store", {
         method: "GET",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
