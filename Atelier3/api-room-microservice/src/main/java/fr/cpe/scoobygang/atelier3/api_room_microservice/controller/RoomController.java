@@ -31,7 +31,7 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<RoomCreateRequest>> getRooms() {
+    public ResponseEntity<List<RoomResponse>> getRooms() {
         return ResponseEntity.ok(roomService.getRooms());
     }
 
@@ -62,5 +62,10 @@ public class RoomController {
             return ResponseEntity.ok(RoomMapper.INSTANCE.roomToRoomResponse(room));
         }
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/room/{id}")
+    public ResponseEntity<RoomResponse> getRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") Long id) {
+        return ResponseEntity.ok(RoomMapper.INSTANCE.roomToRoomResponse(roomService.getRoom(id)));
     }
 }
