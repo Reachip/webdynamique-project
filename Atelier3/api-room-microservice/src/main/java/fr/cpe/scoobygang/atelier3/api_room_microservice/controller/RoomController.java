@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8000")
+@RequestMapping("/room")
+@CrossOrigin(origins = "*")
 public class RoomController {
     private final RoomService roomService;
     private final JWTService jwtService;
@@ -33,12 +34,12 @@ public class RoomController {
         return ResponseEntity.ok(roomService.getRooms());
     }
 
-    @PostMapping("/room")
+    @PostMapping("/")
     public ResponseEntity<Room> createRoom(@RequestBody RoomCreateRequest request) {
         return ResponseEntity.ok(roomService.createRoom(request));
     }
 
-    @PutMapping("/room/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<RoomResponse> joinRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") Long id) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
@@ -62,12 +63,12 @@ public class RoomController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/room/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<RoomResponse> getRoom(@RequestHeader(value = "Authorization") String authorization, @PathVariable ("id") Long id) {
         return ResponseEntity.ok(RoomMapper.INSTANCE.roomToRoomResponse(roomService.getRoom(id)));
     }
 
-    @PutMapping("/room/card")
+    @PutMapping("/card")
     public ResponseEntity<RoomResponse> updateCardChoice(@RequestHeader(value = "Authorization") String authorization, @RequestBody PutCardRoomRequest cardRoomRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {

@@ -63,12 +63,12 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.INSTANCE.usersToUserResponses(userService.getAllUsers()));
     }
 
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<UserRequest> getUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
         return ResponseEntity.ok(UserMapper.INSTANCE.userToUserRequest(userService.getUser(id)));
     }
 
-    @PutMapping(value = "/user/edit")
+    @PutMapping(value = "/edit")
     public ResponseEntity<UserPutRequest> putUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody UserPutRequest userPutRequest) {
         JWT jwt = jwtService.fromAuthorization(authorization).get();
         UserPutRequest body = userService.putUser(jwt, userPutRequest);
@@ -76,13 +76,13 @@ public class UserController {
         return ResponseEntity.ok(body);
     }
 
-    @DeleteMapping(value = "/user/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@RequestHeader(value = "Authorization") String authorization, @PathVariable int id) {
         userService.deleteUser(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/current")
+    @GetMapping(value = "/current")
     public ResponseEntity<UserResponse> getCurrentUser(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
@@ -92,7 +92,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PutMapping(value = "/user/edit/password")
+    @PutMapping(value = "/edit/password")
     public ResponseEntity<UserResponse> resetPassword(@RequestHeader(value = "Authorization") String authorization, @RequestBody ChangePasswordRequest changePasswordRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
@@ -108,7 +108,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping(value = "/user/save")
+    @PostMapping(value = "/save")
     public ResponseEntity<Void> saveUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody UserRequest userRequest) {
         userService.saveUser(userRequest);
         return ResponseEntity.noContent().build();
