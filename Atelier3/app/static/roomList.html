@@ -37,7 +37,7 @@
                             <tr class="room-row">
                                 <td>{{room}}</td>
                                 <td>{{player}}</td>
-                                <td>{{bet}}</td>
+                                <td>{{bet}} €</td>
                                 <td>
                                     <button class="button button-primary button-details">
                                         <i class="fa-solid fa-magnifying-glass"></i> Détails
@@ -49,21 +49,15 @@
                 </table>
                 <div id="room-preview" class="hidden">
                     <div class="room-image">
-                        <img id="preview-image" src="" alt="Aperçu de la carte">
+                        <img id="preview-image" class="room-avatar" src="" alt="Image de l'utilisateur">
                     </div>
                     <div class="room-details">
-                        <input type="hidden" id="image-id">
-                        <h1 id="preview-name"></h1>
-                        <p id="preview-description"></p>
-                        <br>
-                        <ul class="preview-list">
-                            <li><strong>Famille :</strong> <span id="preview-family"></span></li>
-                            <li><strong>Affinité :</strong> <span id="preview-affinity"></span></li>
-                            <li><strong>PV :</strong> <span id="preview-hp"></span></li>
-                            <li><strong>Énergie :</strong> <span id="preview-energy"></span></li>
-                            <li><strong>Défense :</strong> <span id="preview-defense"></span></li>
-                            <li><strong>Attaque :</strong> <span id="preview-attack"></span></li>
-                        </ul>
+                        <h1 id="preview-room"></h1>
+                        <span id="preview-name"></span>
+                        <p class="price">
+                            <strong>Mise :</strong>
+                            <span id="preview-bet"></span>
+                        </p>
                         <div>
                             <button class="button button-primary button-play">
                                 <i class="fa-solid fa-gamepad"></i> Jouer

@@ -30,30 +30,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         const rows = document.querySelectorAll('.room-row');
                         const preview = document.querySelector('#room-preview');
                         const previewImage = document.querySelector('#preview-image');
+                        const previewRoom = document.querySelector('#preview-room');
                         const previewName = document.querySelector('#preview-name');
-                        const previewDescription = document.querySelector('#preview-description');
-                        const previewFamily = document.querySelector('#preview-family');
-                        const previewAffinity = document.querySelector('#preview-affinity');
-                        const previewHp = document.querySelector('#preview-hp');
-                        const previewEnergy = document.querySelector('#preview-energy');
-                        const previewDefense = document.querySelector('#preview-defense');
-                        const previewAttack = document.querySelector('#preview-attack');
-                        const previewPrice = document.querySelector('#preview-price');
-                        const id = document.querySelector('#image-id');
+                        const previewBet = document.querySelector('#preview-bet');
 
                         rows.forEach(row => {
                             row.querySelector(".button-details").addEventListener("click", () => {
-                                // previewImage.src = row.querySelector('.row-image').src;
-                                // previewName.textContent = row.querySelector('span').textContent;
-                                // previewDescription.textContent = row.children[2].textContent;
-                                // previewFamily.textContent = row.children[3].textContent;
-                                // previewAffinity.textContent = row.children[4].textContent;
-                                // previewHp.textContent = row.children[5].textContent;
-                                // previewEnergy.textContent = row.children[6].textContent;
-                                // previewDefense.textContent = row.children[7].textContent;
-                                // previewAttack.textContent = row.children[8].textContent;
-                                // previewPrice.textContent = row.children[9].textContent.replace('$', '');
-                                // id.dataset.imageId = row.querySelector('.hidden').dataset.id;
+                                previewImage.src = `https://api.dicebear.com/8.x/thumbs/svg?seed=${row.children[1].textContent}`;
+                                previewRoom.textContent = row.children[0].textContent;
+                                previewName.textContent = row.children[1].textContent;
+                                previewBet.textContent = row.children[2].textContent;
 
                                 preview.classList.remove('hidden');
                             });
