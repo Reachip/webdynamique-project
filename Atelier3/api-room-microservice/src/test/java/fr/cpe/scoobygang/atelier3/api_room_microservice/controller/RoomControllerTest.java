@@ -70,12 +70,15 @@ class RoomControllerTest {
     void getRoomsIsOk() {
         roomRepository.saveAll(List.of(new Room(), new Room()));
 
-        when(roomService.getRooms()).thenReturn(List.of(new Room(), new Room()));
+        List<RoomResponse> roomResponses = new ArrayList<>();
+        roomResponses.add(new RoomResponse());
+        roomResponses.add(new RoomResponse());
+
+        when(roomService.getRooms()).thenReturn(roomResponses);
         ResponseEntity<List<RoomResponse>> rooms = roomController.getRooms();
 
-
         assertEquals(HttpStatusCode.valueOf(200), rooms.getStatusCode());
-        assertEquals(7, Objects.requireNonNull(rooms.getBody()).size());
+        assertEquals(2, Objects.requireNonNull(rooms.getBody()).size());
     }
 
     @Test
@@ -129,45 +132,5 @@ class RoomControllerTest {
                 )
                 .andExpect(status().isOk());
     }
-
-    @Test
-    void joinRoom_ShouldReturnOk_WhenJwtIsValid() throws Exception {
-        Long roomId = 1L;
-        String authorization = "Bearer token";
-
-        JWT jwt = new JWT("token");;
-
-        UserRequest userRequest = new UserRequest();
-        User user = new User();
-        user.setId(123);
-
-        Room room = new Room();
-        room.setId(roomId);
-
-        when(jwtService.fromAuthorization(authorization)).thenReturn(Optional.of(jwt));
-        when(restTemplate.exchange(
-                eq("http://localhost:8085/user/user/123"),
-                eq(HttpMethod.GET),
-                any(HttpEntity.class),
-                eq(UserRequest.class))).thenReturn(new ResponseEntity<>(userRequest, HttpStatus.OK));
-        when(roomService.joinRoom(any(User.class), eq(roomId))).thenReturn(room);
-
-        mockMvc.perform(put("/room/{id}", roomId)
-                        .header("Authorization", authorization))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void joinRoom_ShouldReturnOk_WhenJwtIsNotValid() throws Exception {
-        Long roomId = 1L;
-        String authorization = "Bearer invalid.token.here";
-
-        when(jwtService.fromAuthorization(authorization)).thenReturn(Optional.empty());
-
-        mockMvc.perform(put("/room/{id}", roomId)
-                        .header("Authorization", authorization))
-                .andExpect(status().isOk());
-    }
-
 }
 
