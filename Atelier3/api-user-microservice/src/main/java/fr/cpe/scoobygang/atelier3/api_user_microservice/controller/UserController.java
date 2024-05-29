@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "")
     public ResponseEntity<List<UserResponse>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
         return ResponseEntity.ok(UserMapper.INSTANCE.usersToUserResponses(userService.getAllUsers()));
     }
