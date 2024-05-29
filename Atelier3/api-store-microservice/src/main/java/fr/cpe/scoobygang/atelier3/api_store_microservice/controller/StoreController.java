@@ -34,12 +34,12 @@ public class StoreController {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }
 
-    @GetMapping(value = {"/store/{id}"})
+    @GetMapping(value = {"/{id}"})
     public ResponseEntity<Store> getStores(@PathVariable int id) {
         return ResponseEntity.ok(storeService.getStore(id));
     }
 
-    @PostMapping(value = {"/store/buy"})
+    @PostMapping(value = {"/buy"})
     public ResponseEntity<HttpStatus> buyCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
 
@@ -56,12 +56,12 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @GetMapping(value = {"/store/{id}/cards"})
+    @GetMapping(value = {"/{id}/cards"})
     public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(id)));
     }
 
-    @PostMapping(value = {"/store/sell"})
+    @PostMapping(value = {"/sell"})
     public ResponseEntity<ResponseStatus> sellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
@@ -73,7 +73,7 @@ public class StoreController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping(value = {"/store/sell/cancel"})
+    @PostMapping(value = {"/sell/cancel"})
     public ResponseEntity<ResponseStatus> cancelSellCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody StoreOrderRequest storeOrderRequest) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {

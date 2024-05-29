@@ -29,7 +29,7 @@ public class CardController {
         this.cardService = cardService;
     }
 
-    @DeleteMapping(value = {"/card/{id}"})
+    @DeleteMapping(value = {"/{id}"})
     public ResponseEntity<Void> deleteCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
         Optional<Card> card = cardService.deleteCard(id);
         if (card.isPresent()) {
@@ -39,7 +39,7 @@ public class CardController {
         }
     }
 
-    @PostMapping(value = {"/card"})
+    @PostMapping(value = {"/"})
     public ResponseEntity<Card> createCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
         Card createdCard = cardService.saveCard(cardRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -49,14 +49,14 @@ public class CardController {
         return ResponseEntity.created(location).body(createdCard);
     }
 
-    @PutMapping(value = {"/card/{id}"})
+    @PutMapping(value = {"/{id}"})
     public ResponseEntity<Card> updateCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id, @RequestBody CardRequest cardRequest) {
         Optional<Card> updatedCard = cardService.updateCard(id, cardRequest);
         return updatedCard.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping(value = {"/card/{id}"})
+    @GetMapping(value = {"/{id}"})
     public ResponseEntity<Card> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
         return cardService.getCard(id)
                 .map(ResponseEntity::ok)
@@ -84,7 +84,7 @@ public class CardController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = {"/card/save"})
+    @PostMapping(value = {" /save"})
     public ResponseEntity<Void> saveCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
         cardService.saveCard(cardRequest);
         return ResponseEntity.noContent().build();
