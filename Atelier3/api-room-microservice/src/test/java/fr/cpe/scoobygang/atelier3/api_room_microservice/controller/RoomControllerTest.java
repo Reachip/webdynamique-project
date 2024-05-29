@@ -30,12 +30,11 @@ class RoomControllerTest {
         ResponseEntity<List<RoomResponse>> rooms = roomController.getRooms();
 
         assertEquals(HttpStatusCode.valueOf(200), rooms.getStatusCode());
-        assertEquals(2, Objects.requireNonNull(rooms.getBody()).size());
+        assertEquals(7, Objects.requireNonNull(rooms.getBody()).size());
     }
 
     @Test
     void createRoomIsOk() {
-
-        assertEquals(roomRepository.findAll().stream().findFirst().get().getName(), "Room 1");
+        assertEquals(roomRepository.findAll().stream().findFirst().get().getName(), "Wasp's Room");
     }
 }
