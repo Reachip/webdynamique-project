@@ -19,16 +19,10 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
-    public List<Card> getAllCard(){
-        return cardRepository.findOnSaleCards();
-    }
     public List<Card> getAllUserCard(int userId){
         Iterable<Card> iterable = cardRepository.findByOwnerId(userId);
         return StreamSupport.stream(iterable.spliterator(), false)
                 .collect(Collectors.toList());
-    }
-    public void saveCards(List<Card> cards) {
-        cardRepository.saveAll(cards);
     }
     public Card saveCard(CardRequest cardRequest) {
         return cardRepository.save(CardMapper.INSTANCE.cardRequestToCard(cardRequest));
