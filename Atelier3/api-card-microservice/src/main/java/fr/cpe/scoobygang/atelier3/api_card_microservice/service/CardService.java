@@ -1,10 +1,10 @@
 package fr.cpe.scoobygang.atelier3.api_card_microservice.service;
 
+import fr.cpe.scoobygang.atelier3.api_card_microservice.repository.CardRepository;
 import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
 import fr.cpe.scoobygang.common.dto.request.CardRequest;
 import fr.cpe.scoobygang.common.model.Card;
 import fr.cpe.scoobygang.common.model.User;
-import fr.cpe.scoobygang.common.repository.CardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
