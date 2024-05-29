@@ -14,6 +14,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class CardService {
     private final CardRepository cardRepository;
+
     public CardService(CardRepository cardRepository) {
         this.cardRepository = cardRepository;
     }

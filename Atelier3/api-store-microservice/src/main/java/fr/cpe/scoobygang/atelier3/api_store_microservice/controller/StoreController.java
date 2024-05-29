@@ -35,8 +35,8 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/{id}"})
-    public ResponseEntity<Store> getStores(@PathVariable int id) {
-        return ResponseEntity.ok(storeService.getStore(id));
+    public ResponseEntity<StoreResponse> getStores(@PathVariable int id) {
+        return ResponseEntity.ok( StoreMapper.INSTANCE.storeToStoreResponse(storeService.getStore(id)));
     }
 
     @PostMapping(value = {"/buy"})

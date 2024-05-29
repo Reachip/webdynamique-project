@@ -1,7 +1,11 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
+import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
+import fr.cpe.scoobygang.common.dto.mapper.StoreMapper;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
+import fr.cpe.scoobygang.common.dto.response.CardResponse;
+import fr.cpe.scoobygang.common.dto.response.StoreResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.TransactionRepository;
 import org.springframework.http.HttpEntity;
@@ -27,23 +31,28 @@ public class TransactionService {
     }
 
     public boolean createTransaction(String token, int userId, int cardId, int storeId, TransactionAction action) {
-        String authorization = "Bearer " + token;
+        System.out.println("token!!!!! :"+token);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorization);
+        headers.set("Authorization", token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
         // Récupération de l'utilisateur
-        ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest = restTemplate.exchange("http://localhost:8080/user/"+userId, HttpMethod.GET,entity,UserRequest.class);
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return false;
+
+        System.out.println("owner !!!: "+userRequest.getBody());
         User owner = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
 
-        ResponseEntity<Card> cardResponse =  restTemplate.getForEntity("http://localhost:8086/card/"+cardId, null, Card.class);
-        if (!cardResponse.getStatusCode().is2xxSuccessful()) return false;
-        Card card = cardResponse.getBody();
+        ResponseEntity<CardResponse> cardResponse =  restTemplate.exchange("http://localhost:8080/card/"+cardId, HttpMethod.GET,entity,CardResponse.class);
 
-        ResponseEntity<Store> storeResponse =  restTemplate.getForEntity("http://localhost:8086/store/"+storeId, null, Store.class);
+        if (!cardResponse.getStatusCode().is2xxSuccessful()) return false;
+        Card card = CardMapper.INSTANCE.cardReponseToCard(cardResponse.getBody());
+
+        ResponseEntity<StoreResponse> storeResponse =  restTemplate.exchange("http://localhost:8080/store/"+storeId, HttpMethod.GET ,entity, StoreResponse.class);
         if (!storeResponse.getStatusCode().is2xxSuccessful()) return false;
-        Store store = storeResponse.getBody();
+
+        Store store = StoreMapper.INSTANCE.StoreResponsesToStore(storeResponse.getBody());
 
         // Create new Transaction
         Transaction transaction = new Transaction();

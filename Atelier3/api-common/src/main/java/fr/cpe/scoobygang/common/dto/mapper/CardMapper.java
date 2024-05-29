@@ -24,6 +24,9 @@ public interface CardMapper {
 
     List<CardResponse> cardsToCardResponses(List<Card> cards);
 
+    Card cardReponseToCard(CardResponse cardResponse);
+
+
     @Named("ownerToUserId")
     public static int ownerToUserId(User owner) {
         if (owner == null) {
