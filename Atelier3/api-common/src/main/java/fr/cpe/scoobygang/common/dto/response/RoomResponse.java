@@ -8,6 +8,7 @@ import lombok.Setter;
 public class RoomResponse {
     Long id;
     String name;
+    double bet;
     UserMinimalResponse owner;
     UserMinimalResponse challenger;
 }
