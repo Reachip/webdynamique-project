@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build, Run & SonarCloud
 on:
   push:
     branches:
@@ -16,12 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -38,7 +38,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-gateway
+
   api-common:
     name: API Common
     runs-on: ubuntu-latest
@@ -48,12 +49,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -70,7 +71,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-common
+
   api-orchestrator-microservice:
     name: API Orchestrator
     runs-on: ubuntu-latest
@@ -80,12 +82,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -102,7 +104,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-orchestrator-microservice
+
   api-room-microservice:
     name: API Room
     runs-on: ubuntu-latest
@@ -112,12 +115,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -136,7 +139,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f api-room-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -f api-room-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-room-microservice
+
   api-transaction-microservice:
     name: API Transaction
     runs-on: ubuntu-latest
@@ -146,12 +150,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -170,7 +174,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f api-transaction-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -f api-transaction-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-transaction-microservice
+
   api-user-microservice:
     name: API User
     runs-on: ubuntu-latest
@@ -180,12 +185,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -204,7 +209,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f api-user-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -f api-user-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-user-microservice
+
   api-store-microservice:
     name: API Store
     runs-on: ubuntu-latest
@@ -214,12 +220,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -238,7 +244,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f api-store-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_webdynamique-project
+        run: mvn -f api-store-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-store-microservice
+
   api-card-microservice:
     name: API Card
     runs-on: ubuntu-latest
@@ -248,12 +255,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
       - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           java-version: 20
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -272,4 +279,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -f api-card-microservice
+        run: mvn -f api-card-microservice -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=asi-microservice-cpe_api-card-microservice
