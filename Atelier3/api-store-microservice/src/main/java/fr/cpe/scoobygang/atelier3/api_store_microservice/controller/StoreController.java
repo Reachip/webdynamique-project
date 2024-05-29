@@ -66,7 +66,7 @@ public class StoreController {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
             List<Card> cards = storeService.getCardsForUser(authorization);
-            if (cards.stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
+            if (cards.stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.sellUserCard(authorization, storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
                 return ResponseEntity.status(HttpStatus.OK).build();
             }
         }
@@ -78,7 +78,7 @@ public class StoreController {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
             List<Card> cards = storeService.getCardsForUser(authorization);
-            if (cards.stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.cancelSellCard(storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
+            if (cards.stream().anyMatch(c -> c.getId() == storeOrderRequest.getCardId()) && storeService.cancelSellCard(authorization, storeOrderRequest.getCardId(), storeOrderRequest.getStoreId())) {
                 return ResponseEntity.status(HttpStatus.OK).build();
             }
         }

@@ -84,4 +84,15 @@ public class CardController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping(value = {"/card/save"})
+    public ResponseEntity<Void> saveCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
+        cardService.saveCard(cardRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = {"/cards/store/{storeId}"})
+    public ResponseEntity<List<CardResponse>> getCardsFromStore(@RequestHeader(value = "Authorization") String authorization, @PathVariable("storeId") int storeId) {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCardsFromStore(storeId)));
+    }
+
 }
