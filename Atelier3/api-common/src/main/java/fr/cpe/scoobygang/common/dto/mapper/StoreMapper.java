@@ -19,11 +19,13 @@ public interface StoreMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(source = "cardList", target = "cardCount", qualifiedByName = "cardListToCardCount")
-    StoreResponse storeToStoreResponse(Store store);
+
 
     List<StoreResponse> storesToStoreResponses (List<Store> stores);
 
     Store StoreResponsesToStore (StoreResponse storeResponse);
+
+    StoreResponse storeToStoreResponse(Store store);
 
 
     @Named("cardListToCardCount")

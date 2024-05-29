@@ -1,6 +1,7 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
+import fr.cpe.scoobygang.common.dto.response.TransactionResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,7 +103,7 @@ class TransactionServiceTest {
         when(transactionRepository.findByOwner(any(User.class)))
                 .thenReturn(Arrays.asList(transaction));
 
-        List<Transaction> transactions = transactionService.getTransaction(token, userId);
+        List<TransactionResponse> transactions = transactionService.getTransaction(token, userId);
         assertEquals(1, transactions.size());
         assertEquals(transaction, transactions.get(0));
     }
@@ -112,7 +113,7 @@ class TransactionServiceTest {
         when(restTemplate.getForEntity(eq("http://localhost:8085/user/user/" + userId), eq(UserRequest.class)))
                 .thenReturn(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
-        List<Transaction> transactions = transactionService.getTransaction(token, userId);
+        List<TransactionResponse> transactions = transactionService.getTransaction(token, userId);
         assertNull(transactions);
     }
 }

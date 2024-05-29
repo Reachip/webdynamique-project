@@ -1,7 +1,9 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.controller;
 
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.service.TransactionService;
+import fr.cpe.scoobygang.common.dto.mapper.TransactionMapper;
 import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
+import fr.cpe.scoobygang.common.dto.response.TransactionResponse;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.Transaction;
@@ -35,9 +37,9 @@ class TransactionControllerTest {
     void getTransaction() {
         int userId = 1;
 
-        Mockito.when(transactionService.getTransaction(authorization, userId)).thenReturn(List.of(new Transaction(), new Transaction()));
+        Mockito.when(transactionService.getTransaction(authorization, userId)).thenReturn(List.of(new TransactionResponse(), new TransactionResponse()));
 
-        ResponseEntity<List<Transaction>> transaction = transactionController.getTransaction(
+        ResponseEntity<List<TransactionResponse>> transaction = transactionController.getTransaction(
                 authorization, userId
         );
 

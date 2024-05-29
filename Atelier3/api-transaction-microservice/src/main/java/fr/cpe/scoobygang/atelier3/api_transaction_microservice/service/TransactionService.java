@@ -2,10 +2,12 @@ package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
 import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
 import fr.cpe.scoobygang.common.dto.mapper.StoreMapper;
+import fr.cpe.scoobygang.common.dto.mapper.TransactionMapper;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.dto.response.StoreResponse;
+import fr.cpe.scoobygang.common.dto.response.TransactionResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.TransactionRepository;
 import org.springframework.http.HttpEntity;
@@ -31,7 +33,6 @@ public class TransactionService {
     }
 
     public boolean createTransaction(String token, int userId, int cardId, int storeId, TransactionAction action) {
-        System.out.println("token!!!!! :"+token);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -41,7 +42,6 @@ public class TransactionService {
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return false;
 
-        System.out.println("owner !!!: "+userRequest.getBody());
         User owner = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
 
         ResponseEntity<CardResponse> cardResponse =  restTemplate.exchange("http://localhost:8080/card/"+cardId, HttpMethod.GET,entity,CardResponse.class);
@@ -69,21 +69,22 @@ public class TransactionService {
         return true;
     }
 
-    public List<Transaction> getTransaction(String token, int userId){
-        String authorization = "Bearer " + token;
+    public List<TransactionResponse> getTransaction(String token, int userId){
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorization);
+        headers.set("Authorization", token);
 
         HttpEntity<User> request = new HttpEntity<>(headers);
 
         //Get user from userId
-        ResponseEntity<UserRequest> userRequest = restTemplate.exchange("http://localhost:8085/user/user/"+userId, HttpMethod.GET, request, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest = restTemplate.exchange("http://localhost:8080/user/"+userId, HttpMethod.GET, request, UserRequest.class);
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return null;
         User user = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
 
         Iterable<Transaction> iterable = transactionRepository.findByOwner(user);
-        return StreamSupport.stream(iterable.spliterator(), false)
-                .collect(Collectors.toList());
+
+        List<Transaction> transactionList = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+
+        return TransactionMapper.INSTANCE.transactionsToTransactionResponses(transactionList);
     }
 }
