@@ -110,7 +110,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8086/card/card/"+cardId, null, Card.class);
+        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8086/card/"+cardId, null, Card.class);
         if (cardRequest.getStatusCode().is2xxSuccessful())
         {
             return CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
@@ -123,7 +123,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/cards/store/"+storeId, HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
+        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/store/"+storeId, HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
         if (responseListCard.getStatusCode().is2xxSuccessful())
         {
             return responseListCard.getBody();
@@ -180,7 +180,7 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/cards/user", HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
+        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/user", HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
         if (responseListCard.getStatusCode().is2xxSuccessful())
         {
             return responseListCard.getBody();
