@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/transaction")
+@CrossOrigin(origins = "*")
 public class TransactionController {
     private final TransactionService transactionService;
     private final JWTService jwtService;

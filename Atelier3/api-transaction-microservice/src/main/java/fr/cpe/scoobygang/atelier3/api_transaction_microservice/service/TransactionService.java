@@ -1,5 +1,6 @@
 package fr.cpe.scoobygang.atelier3.api_transaction_microservice.service;
 
+import fr.cpe.scoobygang.atelier2.dao.response.StoreResponse;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.model.*;
@@ -27,21 +28,25 @@ public class TransactionService {
     }
 
     public boolean createTransaction(String token, int userId, int cardId, int storeId, TransactionAction action) {
-        String authorization = "Bearer " + token;
+        System.out.println("token!!!!! :"+token);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorization);
+        headers.set("Authorization", token);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
 
         // Récupération de l'utilisateur
-        ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest = restTemplate.exchange("http://localhost:8080/user/user/"+userId, HttpMethod.GET,entity,UserRequest.class);
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return false;
+
+        System.out.println("owner !!!: "+userRequest.getBody());
         User owner = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
 
-        ResponseEntity<Card> cardResponse =  restTemplate.getForEntity("http://localhost:8086/card/card/"+cardId, null, Card.class);
+        ResponseEntity<Card> cardResponse =  restTemplate.exchange("http://localhost:8080/card/card/"+cardId, HttpMethod.GET,entity,Card.class);
+
         if (!cardResponse.getStatusCode().is2xxSuccessful()) return false;
         Card card = cardResponse.getBody();
 
-        ResponseEntity<Store> storeResponse =  restTemplate.getForEntity("http://localhost:8086/store/store/"+storeId, null, Store.class);
+        ResponseEntity<StoreResponse> storeResponse =  restTemplate.exchange("http://localhost:8080/store/store/"+storeId, HttpMethod.GET ,entity, StoreResponse.class);
         if (!storeResponse.getStatusCode().is2xxSuccessful()) return false;
         Store store = storeResponse.getBody();
 

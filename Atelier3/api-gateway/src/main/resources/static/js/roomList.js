@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         const clone = document.importNode(template.content, true);
                         
                         const newContent = clone.firstElementChild.innerHTML
+                            .replace(/{{id}}/g, room.id)
                             .replace(/{{room}}/g, room.name)
                             .replace(/{{player}}/g, room.owner.username)
                             .replace(/{{bet}}/g, room.bet)
@@ -33,43 +34,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         const previewRoom = document.querySelector('#preview-room');
                         const previewName = document.querySelector('#preview-name');
                         const previewBet = document.querySelector('#preview-bet');
+                        const playButton = document.querySelector('.button-play');
 
                         rows.forEach(row => {
                             row.querySelector(".button-details").addEventListener("click", () => {
-                                previewImage.src = `https://api.dicebear.com/8.x/thumbs/svg?seed=${row.children[1].textContent}`;
-                                previewRoom.textContent = row.children[0].textContent;
-                                previewName.textContent = row.children[1].textContent;
-                                previewBet.textContent = row.children[2].textContent;
+                                previewImage.src = `https://api.dicebear.com/8.x/thumbs/svg?seed=${row.children[2].textContent}`;
+                                previewRoom.textContent = row.children[1].textContent;
+                                previewName.textContent = row.children[2].textContent;
+                                previewBet.textContent = row.children[3].textContent;
+                                playButton.href = `room.html?id=${row.children[0].textContent}`;
 
                                 preview.classList.remove('hidden');
                             });
                         });
                     }
-
-                    document.querySelectorAll(".button-play").forEach(playButton => {
-                        if (userToken == null) {
-                            playButton.classList.add("unclickable")
-                            return;
-                        }
-
-                        playButton.addEventListener("click", () => {
-                            const roomId = parseInt(playButton.parentNode.parentNode.querySelector("#image-id").dataset.imageId);
-
-                            fetch("http://127.0.0.1:8080/room", {
-                                method: "POST",
-                                body: JSON.stringify({
-                                    roomId
-                                }),
-                                headers: {
-                                    "Authorization": "Bearer " + userToken,
-                                    "Content-type": "application/json; charset=UTF-8"
-                                }
-                            })
-                                .then(() => {
-                                    // //
-                                });
-                        })
-                    })
                 }).catch(error => {
                     console.error("Error when parsing JSON:", error);
                 });
