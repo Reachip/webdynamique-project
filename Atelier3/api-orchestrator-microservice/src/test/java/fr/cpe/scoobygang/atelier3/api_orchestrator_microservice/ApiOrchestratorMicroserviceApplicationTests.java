@@ -1,13 +1,12 @@
 package fr.cpe.scoobygang.atelier3.api_orchestrator_microservice;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiOrchestratorMicroserviceApplicationTests {
-
+public class ApiOrchestratorMicroserviceApplicationTests {
 	@Test
-	void contextLoads() {
+    public void contextLoads() {
 	}
 
 }
