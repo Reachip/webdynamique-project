@@ -11,6 +11,7 @@
     <properties>
         <sonar.organization>asi-microservice-cpe</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <java.version>17</java.version>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
@@ -56,8 +57,13 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.5.Final</version>
-            <scope>compile</scope>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.javafaker</groupId>

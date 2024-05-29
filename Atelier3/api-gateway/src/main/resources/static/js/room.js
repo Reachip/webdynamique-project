@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     setInterval(() => {
-        fetch(`http://127.0.0.1:8080/room/${roomId}`, {
+        fetch(`http://localhost:8080/room/${roomId}`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + userToken

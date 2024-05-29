@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userToken = localStorage.getItem("scoobycards-user-token");
     const hasToken = !!userToken;
     if (hasToken) {
-        fetch("http://127.0.0.1:8080/card/user", {
+        fetch("http://localhost:8080/card/user", {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + userToken,
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     response.json().then(data => {
                         const template = document.querySelector("#row");
 
-                        fetch("http://127.0.0.1:8080/store", {
+                        fetch("http://localhost:8080/store", {
                             method: "GET",
                             headers: {
                                 "Content-type": "application/json; charset=UTF-8"
@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const closestCheckedRadio = event.target.closest('#preview-button')?.querySelector('input[type="radio"]:checked');
 
                 if (closestCheckedRadio) {
-                    fetch("http://127.0.0.1:8080/store/sell", {
+                    fetch("http://localhost:8080/store/sell", {
                         method: "POST",
                         body: JSON.stringify({
                             cardId: event.target.getAttribute("data-card"),
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
             } else if (event.target.id == "button-sell-cancel") {
-                fetch("http://127.0.0.1:8080/store/sell/cancel", {
+                fetch("http://localhost:8080/store/sell/cancel", {
                     method: "POST",
                     body: JSON.stringify({
                         cardId: event.target.getAttribute("data-card")

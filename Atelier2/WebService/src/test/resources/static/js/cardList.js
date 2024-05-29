@@ -4,7 +4,7 @@ const userToken = localStorage.getItem("scoobycards-user-token");
 
 document.addEventListener("DOMContentLoaded", function () {
     function loadStore(id) {
-        fetch(`http://127.0.0.1:8080/store/${id}/cards`, {
+        fetch(`http://localhost:8080/store/${id}/cards`, {
             method: "GET",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 console.log(cardId);
                                 const storeId = 1;
 
-                                fetch("http://127.0.0.1:8080/store/buy", {
+                                fetch("http://localhost:8080/store/buy", {
                                     method: "POST",
                                     body: JSON.stringify({
                                         cardId,
@@ -116,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    fetch("http://127.0.0.1:8080/stores", {
+    fetch("http://localhost:8080/stores", {
         method: "GET",
         headers: {
             "Content-type": "application/json; charset=UTF-8"
