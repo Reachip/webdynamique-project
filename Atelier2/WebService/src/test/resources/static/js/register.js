@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return showAlert(Alert.ERROR, "Les mots de passe sont différents.");
         }
 
-        fetch("http://127.0.0.1:8080/register", {
+        fetch("http://localhost:8080/register", {
             method: "POST",
             body: JSON.stringify({
                 surname: surname,
