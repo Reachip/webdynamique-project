@@ -25,6 +25,7 @@ public class ApiGatewayApplication {
 				.route("rooms-route", r -> r.path("/rooms/**").uri("lb://api-room-microservice"))
 				.route("room-route", r -> r.path("/room/**").uri("lb://api-room-microservice"))
 				.route("store-route", r -> r.path("/store/**").uri("lb://api-store-microservice"))
+				.route("orchestrator-route", r -> r.path("/orchestrator/**").uri("lb://api-orchestrator-microservice"))
 				.build();
 	}
 }
