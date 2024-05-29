@@ -394,6 +394,11 @@
      max-height: 225px;
      border-radius: 8px;
 }
+#room-preview .room-image img {
+    max-width: 85px;
+    max-height: 85px;
+    border-radius: 50%;
+}
  #card-preview .card-details h1, #room-preview .room-details h1 {
      font-size: 24px;
      margin-bottom: 10px;
@@ -524,4 +529,8 @@ input[id=store-4]:checked ~ .glider {
 #room-waiting p {
     font-size: 1.5em;
     margin-top: 10px;
+}
+
+.room-avatar {
+    max-width: 25px;
 }
