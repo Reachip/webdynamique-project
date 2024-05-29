@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.querySelector("#form-user-email").value;
         const username = document.querySelector("#form-user-username").value;
 
-        fetch("http://127.0.0.1:8080/user/edit", {
+        fetch("http://localhost:8080/user/edit", {
             method: "PUT",
             body: JSON.stringify({
                 surname: surname,
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return showAlert(Alert.ERROR, "Les mots de passe sont différents.");
         }
 
-        fetch("http://127.0.0.1:8080/user/edit/password", {
+        fetch("http://localhost:8080/user/edit/password", {
             method: "PUT",
             body: JSON.stringify({
                 oldPassword: oldPassword,
