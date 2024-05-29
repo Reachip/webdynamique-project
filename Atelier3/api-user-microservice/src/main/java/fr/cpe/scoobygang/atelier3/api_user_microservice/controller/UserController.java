@@ -2,10 +2,7 @@ package fr.cpe.scoobygang.atelier3.api_user_microservice.controller;
 
 import fr.cpe.scoobygang.atelier3.api_user_microservice.service.UserService;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
-import fr.cpe.scoobygang.common.dto.request.ChangePasswordRequest;
-import fr.cpe.scoobygang.common.dto.request.LoginRequest;
-import fr.cpe.scoobygang.common.dto.request.UserPutRequest;
-import fr.cpe.scoobygang.common.dto.request.UserRequest;
+import fr.cpe.scoobygang.common.dto.request.*;
 import fr.cpe.scoobygang.common.dto.response.UserResponse;
 import fr.cpe.scoobygang.common.exceptions.UserChangePasswordException;
 import fr.cpe.scoobygang.common.jwt.JWT;
@@ -109,5 +106,11 @@ public class UserController {
             }
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PostMapping(value = "/user/save")
+    public ResponseEntity<Void> saveUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody UserRequest userRequest) {
+        userService.saveUser(userRequest);
+        return ResponseEntity.noContent().build();
     }
 }
