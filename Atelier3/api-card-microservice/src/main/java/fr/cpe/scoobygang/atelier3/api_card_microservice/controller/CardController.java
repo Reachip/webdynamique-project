@@ -39,7 +39,7 @@ public class CardController {
         }
     }
 
-    @PostMapping(value = {"/"})
+    @PostMapping(value = {""})
     public ResponseEntity<Card> createCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
         Card createdCard = cardService.saveCard(cardRequest);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -57,18 +57,21 @@ public class CardController {
     }
 
     @GetMapping(value = {"/{id}"})
-    public ResponseEntity<Card> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
-        return cardService.getCard(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CardResponse> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
+        Optional<Card> cardOptional = cardService.getCard(id);
+        if (cardOptional.isPresent()) {
+            Card card = cardOptional.get();
+            return ResponseEntity.ok(CardMapper.INSTANCE.cardToCardResponse(card));
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @GetMapping(value = {"/cards"})
+    @GetMapping(value = {""})
     public ResponseEntity<List<CardResponse>> getCards(@RequestHeader(value = "Authorization") String authorization) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCards()));
     }
 
-    @GetMapping(value = {"/cards/user"})
+    @GetMapping(value = {"/user"})
     public ResponseEntity<List<CardResponse>> getCurrentUserCards(@RequestHeader(value = "Authorization") String authorization) {
         Optional<JWT> jwt = jwtService.fromAuthorization(authorization);
         if (jwt.isPresent()) {
@@ -78,19 +81,19 @@ public class CardController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
-    @PostMapping(value = {"/cards/attach/user"})
+    @PostMapping(value = {"/attach/user"})
     public ResponseEntity<Void> attachCardsToUser(@RequestHeader(value = "Authorization") String authorization, @RequestBody User user) {
         cardService.attachUserToCard(user);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value = {" /save"})
+    @PostMapping(value = {"/save"})
     public ResponseEntity<Void> saveCard(@RequestHeader(value = "Authorization") String authorization, @RequestBody CardRequest cardRequest) {
         cardService.saveCard(cardRequest);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping(value = {"/cards/store/{storeId}"})
+    @GetMapping(value = {"/store/{storeId}"})
     public ResponseEntity<List<CardResponse>> getCardsFromStore(@RequestHeader(value = "Authorization") String authorization, @PathVariable("storeId") int storeId) {
         return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(cardService.getCardsFromStore(storeId)));
     }

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userToken = localStorage.getItem("scoobycards-user-token");
     const hasToken = !!userToken;
     if (hasToken) {
-        fetch("http://127.0.0.1:8080/card/cards/user", {
+        fetch("http://127.0.0.1:8080/card/user", {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + userToken,
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     response.json().then(data => {
                         const template = document.querySelector("#row");
 
-                        fetch("http://127.0.0.1:8080/store/stores", {
+                        fetch("http://127.0.0.1:8080/store", {
                             method: "GET",
                             headers: {
                                 "Content-type": "application/json; charset=UTF-8"

@@ -29,7 +29,7 @@ public class StoreController {
         this.storeService = storeService;
     }
 
-    @GetMapping(value = {"/stores"})
+    @GetMapping(value = {""})
     public ResponseEntity<List<StoreResponse>> getStores() {
         return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
     }

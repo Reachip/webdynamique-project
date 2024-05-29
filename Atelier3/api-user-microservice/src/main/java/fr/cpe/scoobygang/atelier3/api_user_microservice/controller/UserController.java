@@ -41,7 +41,7 @@ public class UserController {
         HttpEntity<User> request = new HttpEntity<>(createdUser, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/card/cards/attach/user", request, Void.class);
+        restTemplate.postForEntity("http://localhost:8086/card/attach/user", request, Void.class);
 
         if (response == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -58,7 +58,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "")
     public ResponseEntity<List<UserResponse>> getAllUsers(@RequestHeader(value = "Authorization") String authorization) {
         return ResponseEntity.ok(UserMapper.INSTANCE.usersToUserResponses(userService.getAllUsers()));
     }
