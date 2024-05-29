@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Named
 @RequiredArgsConstructor
-public class RollbackSaveAddressAdapter implements JavaDelegate {
+public class GetCardAdapter implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
         System.out.println("Spring Bean invoked.");
