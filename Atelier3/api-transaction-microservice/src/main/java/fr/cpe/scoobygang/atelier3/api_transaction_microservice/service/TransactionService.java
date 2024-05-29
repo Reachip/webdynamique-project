@@ -32,16 +32,16 @@ public class TransactionService {
         headers.set("Authorization", authorization);
 
         // Récupération de l'utilisateur
-        ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest = restTemplate.getForEntity("http://localhost:8085/user/"+userId, null, UserRequest.class);
 
         if (!userRequest.getStatusCode().is2xxSuccessful()) return false;
         User owner = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
 
-        ResponseEntity<Card> cardResponse =  restTemplate.getForEntity("http://localhost:8086/card/card/"+cardId, null, Card.class);
+        ResponseEntity<Card> cardResponse =  restTemplate.getForEntity("http://localhost:8086/card/"+cardId, null, Card.class);
         if (!cardResponse.getStatusCode().is2xxSuccessful()) return false;
         Card card = cardResponse.getBody();
 
-        ResponseEntity<Store> storeResponse =  restTemplate.getForEntity("http://localhost:8086/store/store/"+storeId, null, Store.class);
+        ResponseEntity<Store> storeResponse =  restTemplate.getForEntity("http://localhost:8086/store/"+storeId, null, Store.class);
         if (!storeResponse.getStatusCode().is2xxSuccessful()) return false;
         Store store = storeResponse.getBody();
 
