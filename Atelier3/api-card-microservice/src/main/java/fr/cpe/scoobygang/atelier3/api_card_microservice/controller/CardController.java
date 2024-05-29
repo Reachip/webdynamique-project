@@ -57,10 +57,13 @@ public class CardController {
     }
 
     @GetMapping(value = {"/card/{id}"})
-    public ResponseEntity<Card> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
-        return cardService.getCard(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<CardResponse> getCard(@RequestHeader(value = "Authorization") String authorization, @PathVariable("id") int id) {
+        Optional<Card> cardOptional = cardService.getCard(id);
+        if (cardOptional.isPresent()) {
+            Card card = cardOptional.get();
+            return ResponseEntity.ok(CardMapper.INSTANCE.cardToCardResponse(card));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping(value = {"/cards"})
