@@ -83,5 +83,9 @@ public class CardService {
 
         cardRepository.saveAll(userCards);
     }
+
+    public List<Card> getCardsFromStore(int storeId) {
+        return cardRepository.findByStoreId(storeId);
+    }
 }
 
