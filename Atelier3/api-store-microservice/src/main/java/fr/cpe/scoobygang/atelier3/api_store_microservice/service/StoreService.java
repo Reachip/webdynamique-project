@@ -114,7 +114,7 @@ public class StoreService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8080/card/"+cardId, null, Card.class);
+        ResponseEntity<CardRequest> cardRequest =  restTemplate.exchange("http://localhost:8080/card/"+cardId, HttpMethod.GET, request, CardRequest.class);
 
         if (cardRequest.getStatusCode().is2xxSuccessful())
         {
@@ -130,7 +130,7 @@ public class StoreService {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<UserRequest> userRequest =  restTemplate.getForEntity("http://localhost:8080/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest =  restTemplate.exchange("http://localhost:8080/user/"+userId, HttpMethod.GET, request, UserRequest.class);
 
         if (userRequest.getStatusCode().is2xxSuccessful())
         {
