@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`http://localhost:8080/store/${id}/cards`, {
             method: "GET",
             headers: {
+                "Authorization": "Bearer " + userToken,
                 "Content-type": "application/json; charset=UTF-8"
             }
         })

@@ -57,8 +57,8 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/{id}/cards"})
-    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id) {
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(id)));
+    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id, @RequestHeader(value = "Authorization") String authorization) {
+        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(authorization, id)));
     }
 
     @PostMapping(value = {"/sell"})

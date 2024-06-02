@@ -116,8 +116,9 @@ public class StoreService {
         return null;
     }
 
-    public List<Card> getCardsFromStore(int storeId) {
+    public List<Card> getCardsFromStore(String authorization, int storeId) {
         HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", authorization);
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
@@ -158,12 +159,13 @@ public class StoreService {
         storeRepository.saveAll(stores);
     }
 
-    public List<Card> getCardsById(int storeId) {
-        return getCardsFromStore(storeId);
+    public List<Card> getCardsById(String authorization, int storeId) {
+        return getCardsFromStore(authorization, storeId);
     }
 
     public List<Store> getStores() {
         Iterable<Store> iterable = storeRepository.findAll();
+        var test = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
         return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
     }
 
