@@ -30,6 +30,6 @@ public interface StoreMapper {
 
     @Named("cardListToCardCount")
     static int cardListToCardCount(List<Card> cardList) {
-        return cardList.size();
+        return (cardList != null) ? cardList.size() : 0; // Ajout d'une vérification de nullité
     }
 }

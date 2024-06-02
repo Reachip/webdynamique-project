@@ -31,7 +31,7 @@ public class StoreController {
 
     @GetMapping(value = {""})
     public ResponseEntity<List<StoreResponse>> getStores() {
-        return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
+        return ResponseEntity.ok(storeService.getStores());
     }
 
     @GetMapping(value = {"/{id}"})

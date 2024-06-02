@@ -1,10 +1,12 @@
 package fr.cpe.scoobygang.atelier3.api_store_microservice.service;
 
 import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
+import fr.cpe.scoobygang.common.dto.mapper.StoreMapper;
 import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.CardRequest;
 import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
+import fr.cpe.scoobygang.common.dto.response.StoreResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.StoreRepository;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,6 +14,8 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.swing.text.html.HTMLDocument;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -81,7 +85,7 @@ public class StoreService {
         transactionRequest.setAction(action);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/transaction/create", transactionRequest, Void.class);
+        restTemplate.postForEntity("http://localhost:8080/transaction/create", transactionRequest, Void.class);
     }
 
     public void saveCard(String authorization, Card card) {
@@ -90,7 +94,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(card, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/card/save", request, Void.class);
+        restTemplate.postForEntity("http://localhost:8080/card/save", request, Void.class);
     }
 
     public void saveUser(String authorization, User user) {
@@ -99,7 +103,7 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(user, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8086/user/save", request, Void.class);
+        restTemplate.postForEntity("http://localhost:8080/user/save", request, Void.class);
     }
 
     public Card getCard(String authorization,int cardId) {
@@ -108,7 +112,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8086/card/"+cardId, null, Card.class);
+        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8080/card/"+cardId, null, Card.class);
         if (cardRequest.getStatusCode().is2xxSuccessful())
         {
             return CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
@@ -122,7 +126,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/store/"+storeId, HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
+        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8080/card/store/"+storeId, HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
         if (responseListCard.getStatusCode().is2xxSuccessful())
         {
             return responseListCard.getBody();
@@ -137,7 +141,7 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserRequest> userRequest =  restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest =  restTemplate.getForEntity("http://localhost:8080/user/"+userId, null, UserRequest.class);
         if (userRequest.getStatusCode().is2xxSuccessful())
         {
             return UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
@@ -163,10 +167,23 @@ public class StoreService {
         return getCardsFromStore(authorization, storeId);
     }
 
-    public List<Store> getStores() {
+    public List<StoreResponse> getStores() {
         Iterable<Store> iterable = storeRepository.findAll();
-        var test = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
-        return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+
+        List<Store> storeList = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+
+        // Mapping de la liste des stores en storeResponses
+        List<StoreResponse> storeResponseList = StoreMapper.INSTANCE.storesToStoreResponses(storeList);
+
+        // Parcourir les storeResponse pour fixer cardCount basé sur la taille de cardList de chaque Store
+        for (int i = 0; i < storeResponseList.size(); i++) {
+            StoreResponse storeResponse = storeResponseList.get(i);
+            Store store = storeList.get(i);
+            storeResponse.setCardCount(store.getCardList() != null ? store.getCardList().size() : 0);
+            System.out.println("Store name: " + storeResponse.getName() + ", nb: " + storeResponse.getCardCount());
+        }
+
+        return storeResponseList;
     }
 
     public Store getStore(int storeID){
@@ -180,7 +197,7 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8086/card/user", HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
+        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8080/card/user", HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
         if (responseListCard.getStatusCode().is2xxSuccessful())
         {
             return responseListCard.getBody();
