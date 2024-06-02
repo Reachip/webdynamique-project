@@ -108,7 +108,7 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8086/card/"+cardId, null, Card.class);
+        ResponseEntity<CardRequest> cardRequest =  restTemplate.exchange("http://localhost:8086/card/"+cardId, HttpMethod.GET, request, CardRequest.class);
         if (cardRequest.getStatusCode().is2xxSuccessful())
         {
             return CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
@@ -137,7 +137,8 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<UserRequest> userRequest =  restTemplate.getForEntity("http://localhost:8085/user/user/"+userId, null, UserRequest.class);
+        ResponseEntity<UserRequest> userRequest =  restTemplate.exchange("http://localhost:8085/user/"+userId, HttpMethod.GET, request, UserRequest.class);
+
         if (userRequest.getStatusCode().is2xxSuccessful())
         {
             return UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
@@ -165,7 +166,6 @@ public class StoreService {
 
     public List<Store> getStores() {
         Iterable<Store> iterable = storeRepository.findAll();
-        var test = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
         return StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
     }
 
