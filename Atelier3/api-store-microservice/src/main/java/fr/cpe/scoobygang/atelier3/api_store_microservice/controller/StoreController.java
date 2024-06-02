@@ -1,14 +1,12 @@
 package fr.cpe.scoobygang.atelier3.api_store_microservice.controller;
 
 import fr.cpe.scoobygang.common.dto.mapper.CardMapper;
-import fr.cpe.scoobygang.common.dto.mapper.StoreMapper;
 import fr.cpe.scoobygang.common.dto.request.StoreOrderRequest;
 import fr.cpe.scoobygang.atelier3.api_store_microservice.service.StoreService;
 import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.dto.response.StoreResponse;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
-import fr.cpe.scoobygang.common.model.Store;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +29,12 @@ public class StoreController {
 
     @GetMapping(value = {""})
     public ResponseEntity<List<StoreResponse>> getStores() {
-        return ResponseEntity.ok(StoreMapper.INSTANCE.storesToStoreResponses(storeService.getStores()));
+        return ResponseEntity.ok(storeService.getStores());
     }
 
     @GetMapping(value = {"/{id}"})
     public ResponseEntity<StoreResponse> getStores(@PathVariable int id) {
-        return ResponseEntity.ok( StoreMapper.INSTANCE.storeToStoreResponse(storeService.getStore(id)));
+        return ResponseEntity.ok(storeService.getStore(id));
     }
 
     @PostMapping(value = {"/buy"})
@@ -57,8 +55,8 @@ public class StoreController {
     }
 
     @GetMapping(value = {"/{id}/cards"})
-    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id) {
-        return ResponseEntity.ok(CardMapper.INSTANCE.cardsToCardResponses(storeService.getCardsById(id)));
+    public ResponseEntity<List<CardResponse>> sellCard(@PathVariable int id, @RequestHeader(value = "Authorization") String authorization) {
+        return ResponseEntity.ok(storeService.getCardsByIdStore(id));
     }
 
     @PostMapping(value = {"/sell"})

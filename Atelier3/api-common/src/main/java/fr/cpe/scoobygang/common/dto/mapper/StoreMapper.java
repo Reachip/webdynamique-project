@@ -19,15 +19,17 @@ public interface StoreMapper {
     @Mapping(target = "id", source = "id")
     @Mapping(target = "name", source = "name")
     @Mapping(source = "cardList", target = "cardCount", qualifiedByName = "cardListToCardCount")
-    StoreResponse storeToStoreResponse(Store store);
+
 
     List<StoreResponse> storesToStoreResponses (List<Store> stores);
 
     Store StoreResponsesToStore (StoreResponse storeResponse);
 
+    StoreResponse storeToStoreResponse(Store store);
+
 
     @Named("cardListToCardCount")
     static int cardListToCardCount(List<Card> cardList) {
-        return cardList.size();
+        return (cardList != null) ? cardList.size() : 0; // Ajout d'une vérification de nullité
     }
 }

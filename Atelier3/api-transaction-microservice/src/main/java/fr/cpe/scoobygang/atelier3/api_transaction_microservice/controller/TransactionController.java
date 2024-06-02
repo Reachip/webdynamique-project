@@ -2,6 +2,7 @@ package fr.cpe.scoobygang.atelier3.api_transaction_microservice.controller;
 
 import fr.cpe.scoobygang.atelier3.api_transaction_microservice.service.TransactionService;
 import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
+import fr.cpe.scoobygang.common.dto.response.TransactionResponse;
 import fr.cpe.scoobygang.common.jwt.JWT;
 import fr.cpe.scoobygang.common.jwt.JWTService;
 import fr.cpe.scoobygang.common.model.Transaction;
@@ -26,7 +27,7 @@ public class TransactionController {
     }
 
     @GetMapping(value = {"/{userId}"})
-    public ResponseEntity<List<Transaction>> getTransaction(@RequestHeader(value = "Authorization") String authorization, @PathVariable int userId){
+    public ResponseEntity<List<TransactionResponse>> getTransaction(@RequestHeader(value = "Authorization") String authorization, @PathVariable int userId){
         return ResponseEntity.ok(transactionService.getTransaction(authorization,userId));
     }
 
