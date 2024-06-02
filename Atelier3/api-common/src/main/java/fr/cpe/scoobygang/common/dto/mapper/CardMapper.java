@@ -18,6 +18,8 @@ public interface CardMapper {
     void updateCard(@MappingTarget Card card, CardRequest cardRequest);
     Card cardRequestToCard(CardRequest car);
 
+    CardRequest cardToCardRequest(Card card);
+
     @Mapping(source = "owner", target = "userId", qualifiedByName = "ownerToUserId")
     @Mapping(source = "store", target = "storeId", qualifiedByName = "storeToStoreId")
     CardResponse cardToCardResponse(Card card);
