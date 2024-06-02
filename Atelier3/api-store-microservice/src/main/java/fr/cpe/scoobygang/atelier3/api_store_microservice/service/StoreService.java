@@ -112,7 +112,9 @@ public class StoreService {
         HttpEntity<Card> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
+
         ResponseEntity<CardRequest> cardRequest =  restTemplate.getForEntity("http://localhost:8080/card/"+cardId, null, Card.class);
+
         if (cardRequest.getStatusCode().is2xxSuccessful())
         {
             return CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
@@ -141,7 +143,9 @@ public class StoreService {
         HttpEntity<User> request = new HttpEntity<>(null, headers);
 
         RestTemplate restTemplate = new RestTemplate();
+
         ResponseEntity<UserRequest> userRequest =  restTemplate.getForEntity("http://localhost:8080/user/"+userId, null, UserRequest.class);
+
         if (userRequest.getStatusCode().is2xxSuccessful())
         {
             return UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
@@ -184,6 +188,7 @@ public class StoreService {
         }
 
         return storeResponseList;
+
     }
 
     public Store getStore(int storeID){
