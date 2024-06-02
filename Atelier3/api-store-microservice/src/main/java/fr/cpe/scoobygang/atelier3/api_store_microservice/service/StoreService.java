@@ -8,6 +8,7 @@ import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
 import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.dto.response.StoreResponse;
+import fr.cpe.scoobygang.common.dto.response.UserResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.StoreRepository;
 import org.springframework.core.ParameterizedTypeReference;
@@ -15,6 +16,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,14 +41,19 @@ public class StoreService {
     }
 
     public boolean buyCard(String authorization, int cardId, int userId, int storeId){
+        System.out.println("ACHAT ");
 
         // Récupération du nouvel acheteur
         User newOwner = getUser(authorization, userId);
         if (newOwner == null) return false;
 
+        System.out.println("Owner : "+newOwner.getUsername());
+
         // Récupération de la carte
         Card card = getCard(authorization, cardId);
         if (card == null) return false;
+
+        System.out.println("Card : "+card.getName()+" Owner : "+card.getOwner());
 
         if (!newOwner.canBuy(card.getPrice()) || newOwner.getId() == card.getOwner().getId()){
             return false;
@@ -58,7 +65,7 @@ public class StoreService {
         currentOwner.setBalance(currentOwner.getBalance() + card.getPrice());
         // On définit le nouveau propriétaire de la carte
         card.setOwner(newOwner);
-        //card.setOnSale(false);
+
         card.setStore(null);
 
         // On lui débite le prix de la carte
@@ -85,8 +92,10 @@ public class StoreService {
         transactionRequest.setStoreId(storeId);
         transactionRequest.setAction(action);
 
+        HttpEntity<TransactionRequest> requestEntity = new HttpEntity<>(transactionRequest, headers);
+
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity("http://localhost:8080/transaction/create", transactionRequest, Void.class);
+        restTemplate.exchange("http://localhost:8080/transaction/create", HttpMethod.POST, requestEntity, String.class);
     }
 
     public void saveCard(String authorization, Card card) {
@@ -116,9 +125,18 @@ public class StoreService {
 
         ResponseEntity<CardRequest> cardRequest =  restTemplate.exchange("http://localhost:8080/card/"+cardId, HttpMethod.GET, request, CardRequest.class);
 
-        if (cardRequest.getStatusCode().is2xxSuccessful())
+        System.out.println("Owner id : "+cardRequest.getBody().getUserId());
+        int userId = cardRequest.getBody().getUserId();
+
+        ResponseEntity<UserRequest> userRequest =  restTemplate.exchange("http://localhost:8080/user/"+userId, HttpMethod.GET, request, UserRequest.class);
+
+        if (cardRequest.getStatusCode().is2xxSuccessful() && userRequest.getStatusCode().is2xxSuccessful())
         {
-            return CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
+            User user = UserMapper.INSTANCE.userRequestToUser(userRequest.getBody());
+            Card card = CardMapper.INSTANCE.cardRequestToCard(cardRequest.getBody());
+            card.setOwner(user);
+
+            return card ;
         }
         return null;
     }
