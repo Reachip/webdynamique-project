@@ -6,6 +6,7 @@ import fr.cpe.scoobygang.common.dto.mapper.UserMapper;
 import fr.cpe.scoobygang.common.dto.request.CardRequest;
 import fr.cpe.scoobygang.common.dto.request.TransactionRequest;
 import fr.cpe.scoobygang.common.dto.request.UserRequest;
+import fr.cpe.scoobygang.common.dto.response.CardResponse;
 import fr.cpe.scoobygang.common.dto.response.StoreResponse;
 import fr.cpe.scoobygang.common.model.*;
 import fr.cpe.scoobygang.common.repository.StoreRepository;
@@ -14,9 +15,9 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.swing.text.html.HTMLDocument;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 @Service
@@ -122,21 +123,6 @@ public class StoreService {
         return null;
     }
 
-    public List<Card> getCardsFromStore(String authorization, int storeId) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", authorization);
-        HttpEntity<Card> request = new HttpEntity<>(null, headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<List<Card>> responseListCard = restTemplate.exchange("http://localhost:8080/card/store/"+storeId, HttpMethod.GET, request, new ParameterizedTypeReference<List<Card>>() {});
-        if (responseListCard.getStatusCode().is2xxSuccessful())
-        {
-            return responseListCard.getBody();
-        }
-
-        return null;
-    }
-
     public User getUser(String authorization,int userId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", authorization);
@@ -167,8 +153,16 @@ public class StoreService {
         storeRepository.saveAll(stores);
     }
 
-    public List<Card> getCardsById(String authorization, int storeId) {
-        return getCardsFromStore(authorization, storeId);
+    public List<CardResponse> getCardsByIdStore(int storeId) {
+        Optional<Store> storeOptional = storeRepository.findById(storeId);
+
+        if (!storeOptional.isPresent()) return new ArrayList<>();
+
+        Store store = storeOptional.get();
+
+        List<Card> cards = store.getCardList();
+
+        return CardMapper.INSTANCE.cardsToCardResponses(cards);
     }
 
     public List<StoreResponse> getStores() {
@@ -184,15 +178,20 @@ public class StoreService {
             StoreResponse storeResponse = storeResponseList.get(i);
             Store store = storeList.get(i);
             storeResponse.setCardCount(store.getCardList() != null ? store.getCardList().size() : 0);
-            System.out.println("Store name: " + storeResponse.getName() + ", nb: " + storeResponse.getCardCount());
         }
 
         return storeResponseList;
 
     }
 
-    public Store getStore(int storeID){
-        return storeRepository.findById(storeID).get();
+    public StoreResponse getStore(int storeID){
+        Store store = storeRepository.findById(storeID).get();
+
+        StoreResponse storeResponse = StoreMapper.INSTANCE.storeToStoreResponse(store);
+
+        storeResponse.setCardCount(store.getCardList() != null ? store.getCardList().size() : 0);
+
+        return storeResponse;
     }
 
     public List<Card> getCardsForUser(String authorization)

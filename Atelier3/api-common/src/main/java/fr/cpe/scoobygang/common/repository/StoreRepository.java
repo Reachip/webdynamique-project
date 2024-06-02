@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface StoreRepository extends CrudRepository<Store, Integer> {
     @Query("SELECT count(c) FROM Store c")
     long count();
+
 }
