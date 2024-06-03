@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CardRequest {
+    private int id;
     private String name;
     private String description;
     private String family;
@@ -17,4 +18,5 @@ public class CardRequest {
     private int attack;
     private int price;
     private int userId;
+    private int storeId;
 }
